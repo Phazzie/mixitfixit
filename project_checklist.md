@@ -55,8 +55,14 @@
         - [x] Implement the logic to show the required data.
         -   [ ] verify that the code is commented.
         -   [ ] commit changes
+         -  [ ] Verify that the code is commented.
+         -  [ ] Verify the changes were commited.
+         -  [ ] Verify all the tests are passing.
+    -   [ ] **Create the basic Data Access Layer**. (Estimated time: 4 hours, Priority: High)
         -   [ ] Create a new module for data access.
         -   [ ] Move all storage-related code into this module.
+        -   [ ] verify that the code is commented.
+        -   [ ] commit changes
          -  [ ] Verify that the code is commented.
          -  [ ] Verify the changes were commited.
          -  [ ] Verify all the tests are passing.

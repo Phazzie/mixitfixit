@@ -1,8 +1,12 @@
 # Refactoring Guide: Relationship Resolver Project
 
+**[Relationship Resolver App: Full Process Overview](projguid.md#relationship-resolver-app-full-process-overview)**
+
 **[Link to Project Checklist](project_checklist.md)**
 
 **[Link to Glossary](#glossary)**
+
+
 
 
 ## Introduction
@@ -78,7 +82,7 @@ The Relationship Resolver project is in the mid-stages of development. It aims t
     *   Temporary `localStorage` for data persistence.
 *   **Development:** Google IDX
 
-**Areas Needing Improvement:**
+**Areas Needing Improvement and Implementation:**
 
 *   **Error Handling:** Incomplete; needs proper HTTP status codes, detailed error messages, and user-friendly feedback.
 *   **Input Validation:** Lacking; needs data validation in both frontend and backend.
@@ -88,6 +92,12 @@ The Relationship Resolver project is in the mid-stages of development. It aims t
     *   Unclear modularity and separation of concerns.
     * Unsure extensibility.
 *   **Testing:** No tests implemented, no CI.
+* **Steel-Manning:** Not implemented at all.
+* **Locked Statements:** Partially implemented (storage), but the "locked" aspect (immutability) is not.
+* **Resolution:** Partially implemented (AI summarization), but other key aspects are missing.
+* **Contract-Driven Development**: Not implemented.
+* **Data Access Layer**: Not implemented.
+* **Issue Proposal and Agreement**: Not implemented.
 
 ## 2. Rationale for Deep Refactor
 
@@ -98,6 +108,7 @@ A deep refactor is essential to transition the project from a rapidly developed 
 *   **Rapid Development Compromises:** The initial focus on rapid development might have led to shortcuts that now hinder long-term maintainability.
 *   **Project Guidelines:** The project aims to adhere to software development best practices:
     *   **Single Responsibility Principle (SRP):** Ensure each function, module, and component has a single, well-defined responsibility.
+    * **Steel manning**: Implement steel manning, to make sure the code follows the user experience and guidelines.
     *   **Don't Repeat Yourself (DRY):** Eliminate code duplication and promote code reuse.
     *   **Keep It Simple, Stupid (KISS):** Simplify overly complex code.
     *   **Modularity:** Organize the code into independent modules for better organization and maintainability.
@@ -108,6 +119,10 @@ A deep refactor is essential to transition the project from a rapidly developed 
 *   **Input Validation:** Prevent issues caused by invalid data and ensure data integrity.
 * **Testing**: to make sure there are no regressions and code works as intended.
 * **Code review**: To make sure the code is correct, readable and maintainable.
+* **Data Access Layer**: To make sure we are following the correct practices.
+* **Contract-Driven Development**: To make sure we are following the correct practices.
+* **Issue Proposal and Agreement**: To make sure the code follows the user experience and guidelines.
+* **Resolution**: To make sure the code follows the user experience and guidelines.
 
 ## 3. Refactoring Objectives
 
@@ -331,7 +346,7 @@ This guide provides a robust framework for refactoring the Relationship Resolver
 
 ### Phase 3: General Review and Cleanup / Tests in Progress
 
-**Goals:**
+**Goals**(now out of scope, we will implement the code first):
 
 *   **Improve Code Quality**: Make sure the code is more readable, maintainable, and modular.
 *   **Implement CI for Testing**: Start using CI to run tests.
@@ -372,7 +387,7 @@ This guide provides a robust framework for refactoring the Relationship Resolver
 
 ### Phase 4: Extensibility and advanced refactoring
 
-**Goals:**
+**Goals**(now out of scope, we will implement the code first):
 
 *   **Extensibility:** Set up the data structures to be very extensible.
 *   **Data Access Layer:** Set up the data access layer.
@@ -400,7 +415,7 @@ This guide provides a robust framework for refactoring the Relationship Resolver
 
 ### Phase 5: Expanded Testing and quality check
 
-**Goals:**
+**Goals**(now out of scope, we will implement the code first):
 
 *   **Comprehensive Testing**: Implement unit, integration, and end-to-end tests.
 * **Quality**: Ensure the quality of the code.
@@ -423,7 +438,7 @@ This guide provides a robust framework for refactoring the Relationship Resolver
 
 ### Phase 6: Database
 
-**Goals:**
+**Goals**(now out of scope, we will implement the code first):
 
 *   **Database:** Migrate all data to the database.
 
@@ -434,7 +449,7 @@ This guide provides a robust framework for refactoring the Relationship Resolver
 
 ### Phase 7: Further Considerations (Post-MVP)
 
-**Goals:**
+**Goals**(now out of scope, we will implement the code first):
 
 *   **Deep Refactor:** Refactor parts of the code that are still bad.
 * **New Features**: Implement new features.

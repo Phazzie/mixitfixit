@@ -2,23 +2,63 @@
 
 [Link to Refactoring Guide](refactoring_guide.md)
 
+## Phase 3: Implement Missing Features (Estimated Time: 28 hours, Priority: High)
+
+    -   [ ] **Implement Issue Proposal and Agreement** (Estimated time: 4 hours, Priority: High)
+        -   [x] Implement UI elements.
+        -   [x] Implement logic for handling Accept, Modify, Reject actions.
+        -   [x] Ensure discussion cannot start until an issue is agreed upon.
+        -   [x] verify that the code is commented.
+        -   [x] Commit changes
+    -   [ ] **Implement Basic Steel-Manning** (Estimated time: 4 hours, Priority: High)
+        -   [ ] Implement UI elements.
+        -   [ ] Implement logic for restating.
+        -   [ ] Implement logic for confirming understanding.
+        - **Dependencies**: This must be done after implementing Issue Proposal and agreement.
+         -  [ ] verify that the code is commented.
+    -   [ ] **Implement Basic Statement Locking** (Estimated time: 2 hours, Priority: High)
+        -   [ ] Modify UI to "lock" statements.
+        -   [ ] Implement code to prevent editing.
+    - [ ] **Implement Basic Discussion Phase**. (Estimated time: 4 hours, Priority: High)
+        - [ ] Create basic UI for real-time back-and-forth typing.
+    - [ ] **Implement Basic Resolution Phase**. (Estimated time: 4 hours, Priority: High)
+        - [ ] Implement UI elements.
+        - [ ] Implement logic for handling Accept, Modify, Reject actions.
+        - [ ] Implement logic to lock the resolution.
+    - [ ] **Implement Basic Summary Phase**. (Estimated time: 4 hours, Priority: High)
+        - [ ] Implement the UI for the summary.
+        - [ ] Implement the logic to show the required data.
+    -   [ ] **Create the basic Data Access Layer**. (Estimated time: 4 hours, Priority: High)
+        -   [ ] Create a new module for data access.
+        -   [ ] Move all storage-related code into this module.
+    -   [ ] **Create basic contracts for the Data Access Layer**. (Estimated time: 2 hours, Priority: High)
+        -   [ ] Create the corresponding interface files.
+        -   [ ] Create unit tests to validate contracts.
+       - **Verification steps**:
+            - [ ] Verify that the code is commented.
+            - [ ] Verify the changes were commited.
+            - [ ] Verify all the new features are implemented.
+            - [ ] Check all the tests are passing.
+
+
 ## Phase 3: General Review and Cleanup / Tests in Progress
+
 
 **Phase 3 Objectives:** In this phase, we focus on improving the existing codebase by addressing fundamental code quality issues, such as code duplication, complexity, readability, and adherence to the Single Responsibility Principle (SRP). We will also implement the CI for tests. This phase will lay a solid foundation for future development.
 
     -   **[ ] Prioritize key features**: (Estimated time: 4 hours, Priority: High)
         -   [ ] Identify the most important features (steel-manning, locked statements, resolution). (Estimated time: 1 hour, Priority: High)
         - **Dependencies**: This must be done before refactoring.
-        -   [ ] Refactor the steel-manning feature. (Estimated time: 1 hour, Priority: High)
-          - **Dependencies**: This must be done after identifying the features.
+        -   [ ] Refactor the steel-manning feature. (Estimated time: 1 hour, Priority: High) 
+         - **Dependencies**: This must be done after implementing and identifying the features.
         -   [ ] Add unit tests for the steel-manning feature.
           - **Dependencies**: This must be done after refactoring.
-        -   [ ] Refactor the locked-statements feature.
-          - **Dependencies**: This must be done after identifying the features.
+        -   [ ] Refactor the locked-statements feature. (Estimated time: 1 hour, Priority: High)
+         - **Dependencies**: This must be done after implementing and identifying the features.
         -   [ ] Add unit tests for the locked-statements feature.
           - **Dependencies**: This must be done after refactoring.
-        - [ ] Refactor the resolution feature.
-        - [ ] Add unit tests for the resolution feature.
+        - [ ] Refactor the resolution feature. (Estimated time: 1 hour, Priority: High)
+         - [ ] Add unit tests for the resolution feature.
         - **Verification steps**:
              - [ ] Make sure all the prioritized features are correct.
              - [ ] Check that the refactor is done properly.
@@ -34,7 +74,6 @@
             - [ ] Verify that there is no code duplication.
             - [ ] Check that the functions are reusable.
             - [ ] Check all the tests are passing.
-            - [ ] Code reviewed by another person.
     -   **[ ] KISS (Keep It Simple, Stupid)**:
         -   [ ] Identify complex code sections.
         -   [ ] Simplify complex code sections.
@@ -43,7 +82,6 @@
             - [ ] Check that the code is simpler.
             - [ ] Verify the code still works correctly.
             - [ ] Check all the tests are passing.
-            - [ ] Code reviewed by another person.
     -   **[ ] Modularity**:
         -   [ ] Identify code that can be split into modules. (Estimated time: 1 hour, Priority: High)
          - **Dependencies**: This must be done before splitting.
@@ -55,7 +93,6 @@
             - [ ] Verify that the code is correctly split into modules.
             - [ ] Check that the code still works.
             - [ ] Verify all the tests are passing.
-            - [ ] Code reviewed by another person.
     -   **[ ] Readability**: (Estimated time: 2 hours, Priority: Medium)
         -   [ ] Review all files for consistent formatting. (Estimated time: 1 hour, Priority: Medium)
         -   [ ] Improve naming where needed. (Estimated time: 1 hour, Priority: Medium)
@@ -63,15 +100,12 @@
             - [ ] Verify that the code follows consistent formatting.
             - [ ] Check all names are clear.
             - [ ] Code reviewed by another person.
-    -   **[ ] Comments**: (Estimated time: 1 hour, Priority: Low)
-        -   [ ] Add comments to complex sections that are not currently well-documented. (Estimated time: 1 hour, Priority: Low)
-        - **Verification steps**:
-            - [ ] Check that the complex code is properly documented.
-            - [ ] Code reviewed by another person.
+
     -   **[ ] SRP**: (Estimated time: 4 hours, Priority: Medium)
          -   [ ] Identify components or modules that have multiple responsibilities.
          -   [ ] Refactor to separate responsibilities into different components.
          - [ ] Add tests to all the new components.
+
          - **Verification steps**:
             - [ ] Check that the components have only one responsability.
             - [ ] Check that the code still works.
@@ -101,7 +135,7 @@
              -   [ ] Verify that the functions have the correct types.
              - [ ] Check all the tests are passing.
              - [ ] Code reviewed by another person.
- - **[ ] Design Data structures**:
+ - **[ ] Design Data structures**: (Estimated time: 6 hours, Priority: Medium)
         - [ ] Identify all the different types of data.
           - **Dependencies**: This must be done before creating the data structures.
         - [ ] Create a data structure for each type.
@@ -113,7 +147,7 @@
             - [ ] Check all the data structures are being used.
             - [ ] Verify all the tests are passing.
             - [ ] Code reviewed by another person.
-- **[ ] Contract-driven development**:
+- **[ ] Contract-driven development**: (Estimated time: 5 hours, Priority: Medium)
         - [ ] Identify the different modules. (Estimated time: 1 hour, Priority: Medium)
          - **Dependencies**: This must be done before creating the contracts.
         - [ ] Create a contract for each module. (Estimated time: 2 hours, Priority: Medium)
@@ -126,7 +160,7 @@
             - [ ] Verify all the contracts are complete.
             - [ ] Verify all code follows the contracts.
             - [ ] Check all the tests are passing.
-            - [ ] Code reviewed by another person.
+
 - **[ ] Advanced Data structures**:
     - [ ] Research advanced data structures. (Estimated time: 2 hours, Priority: Low)
      - **Dependencies**: This must be done before identifying.
@@ -138,7 +172,7 @@
         - [ ] Verify that the advanced data structures are correct.
         - [ ] Check that the code still works.
         - [ ] Verify all the tests are passing.
-        - [ ] Code reviewed by another person.
+
  -  **[ ] Implement Supabase**:
         -   [ ] Create a Supabase account.
          - **Dependencies**: This must be done before creating the project.
@@ -153,7 +187,6 @@
             - [ ] Verify all the tables were created.
             - [ ] Check that the code still works.
             - [ ] Verify all the tests are passing.
-            - [ ] Code reviewed by another person.
   - **[ ] Modular development**:
        - [ ] Identify the different modules.
         - **Dependencies**: This must be done before separating the code.
@@ -165,7 +198,7 @@
             - [ ] Check the code is correctly separated into modules.
             - [ ] Verify the tests pass.
             - [ ] Code reviewed by another person.
-
+        
 ## Phase 5: Expanded Testing and quality check
 - **[ ] Prioritize key workflows**:
         - [ ] Identify the key workflows. (Estimated time: 1 hours, Priority: High)
@@ -204,7 +237,6 @@
             - [ ] Check that the issues were fixed.
             - [ ] Code reviewed by another person.
  - **[ ] Robust Error Handling**:
-     - [ ] Review the error handling. (Estimated time: 1 hours, Priority: Medium)
      - **Dependencies**: This must be done before implementing.
      - [ ] Implement robust error handling. (Estimated time: 2 hours, Priority: Medium)
      - **Dependencies**: This must be done before testing.
@@ -214,7 +246,6 @@
             - [ ] Check the error handling covers all types of errors.
             - [ ] Check all the tests pass.
             - [ ] Code reviewed by another person.
-             - [ ] Check for edge cases.
 - **[ ] Performance optimization**:
     - [ ] Profile the app. (Estimated time: 2 hours, Priority: Low)
      - **Dependencies**: This must be done before identifying.
@@ -239,8 +270,7 @@
      - [ ] Refactor the whole project. (Estimated time: 16 hours, Priority: Low)
     - **Verification steps**:
         - [ ] Code reviewed by another person.
-        - [ ] Check all the tests pass.
-- **[ ] Advanced AI Integration**:
+- **[ ] Advanced AI Integration**: (Estimated time: 12 hours, Priority: Low)
     - [ ] Research AI integrations. (Estimated time: 4 hours, Priority: Low)
     - [ ] Implement AI integrations. (Estimated time: 8 hours, Priority: Low)
        - **Verification steps**:

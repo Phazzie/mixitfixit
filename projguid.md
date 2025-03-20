@@ -1,6 +1,109 @@
 # Project Guide: Relationship Resolver - World-Class Plan
 
 
+## Relationship Resolver App: Full Process Overview
+This is a step-by-step explanation of how the "Relationship Resolver" app will work from start to finish. This focuses purely on the user experience without technical details.
+
+1. **Session Initialization**
+    *   Both people log in to the app.
+    *   The app creates a shared conversation space where both users can interact in real-time.
+    *   The session is now open, but no conversation can start until the first issue is raised and agreed upon.
+2. **Issue Proposal and Agreement**
+    *   Person A proposes an issue for discussion (e.g., "I feel ignored when you're on your phone during dinner").
+    *   Person B has three options:
+        *   **Accept** – Accept the issue as stated.
+        *   **Modify** – Edit the issue to reflect their understanding of the problem.
+        *   **Reject** – Decline to discuss the issue (or suggest a new one).
+    *   If modified, the issue is sent back to Person A for approval.
+    *   The app will not allow the discussion to start until both parties have agreed on the wording of the issue.
+    *   👉 **Example:**
+        *   Person A: "I feel like you don’t listen to me when I’m talking."
+        *   Person B: "I think it’s more that I’m distracted by stress, not that I’m ignoring you."
+        *   Person A: "Okay, let’s frame it as ‘Feeling unheard due to distractions.’”
+        *   ✅ Agreement reached → Discussion phase can begin.
+3. **Steel-Manning Phase**
+    *   Before you can share your side of the story, you have to explain the other person’s side accurately.
+    *   Each person types out how they think the other person feels and what their position is.
+    *   The app won’t allow the discussion to start until both people agree that the other person has accurately represented their perspective.
+    *   👉 **Example:**
+        *   Person A: "You feel like I’m distracted because of work stress and that I’m not deliberately ignoring you."
+        *   Person B: "Yes, that’s accurate."
+        *   Person B: "You feel like I’m prioritizing other things over listening to you."
+        *   Person A: "Not quite. It’s not that you’re prioritizing other things—it’s that I feel like you don’t care."
+        *   Person B adjusts their response → Person A approves.
+        *   💡 **Why This Matters:** This ensures that both people understand each other’s position before moving forward.
+4. **Statement Locking Phase**
+    *   After mutual understanding is reached, each person writes their personal statement about the issue.
+    *   Once submitted, the statements are locked—they cannot be edited.
+    *   These locked statements become the "ground truth" for the discussion.
+    *   👉 **Example:**
+        *   Person A: "I feel unheard when you’re focused on your phone instead of listening to me."
+        *   Person B: "I feel like I’m trying to manage stress, and I don’t mean to ignore you."
+        *   🔒 Locked and ready for discussion.
+5. **Discussion Phase**
+    *   Once the statements are locked, the real discussion begins.
+    *   Both people can type back and forth in real time.
+    *   The AI steps in to help by:
+        *   Suggesting clarifying questions.
+        *   Pointing out misunderstandings or contradictions.
+        *   Highlighting unhelpful language (like blaming or defensiveness).
+    *   👉 **Example:**
+        *   Person A: "You never listen to me!"
+        *   AI: "Try rephrasing this as ‘I feel unheard when you’re distracted.’"
+        *   Person B: "I’m not ignoring you!"
+        *   AI: "Could you explain why you feel that way?"
+        *   💡 The goal is to keep the conversation productive and focused.
+6. **Resolution Phase**
+    *   When the discussion has reached a point where a solution seems possible, either person can propose a resolution.
+    *   The other person can:
+        *   **Accept** – The resolution becomes official.
+        *   **Modify** – Adjust the resolution and send it back for approval.
+        *   **Reject** – Keep discussing.
+    *   The app won’t allow the resolution to be finalized until both parties agree.
+    *   👉 **Example:**
+        *   Person A: "Can we agree to put our phones away during dinner?"
+        *   Person B: "Yes, but maybe with exceptions for emergencies."
+        *   Person A modifies the resolution to include the exception.
+        *   ✅ Agreement reached → Resolution locked.
+7. **Summary and Export Phase**
+    *   Once a resolution is agreed upon, the app generates a summary of the session, including:
+        *   The original issue.
+        *   Each person’s locked statement.
+        *   Key points from the discussion.
+        *   The agreed-upon resolution.
+    *   This summary is emailed to both users or made available as a downloadable document.
+    *   👉 **Example:**
+        *   Issue: Feeling unheard during dinner.
+        *   Person A's Statement: Feels ignored when Person B is on their phone.
+        *   Person B's Statement: Feels like phone use is a coping mechanism for stress.
+        *   Resolution: Designate phone-free meals, with exceptions for emergencies.
+        *   💡 This ensures both parties have a clear record of what was agreed upon.
+8. **Session Closure**
+    *   Once the resolution is accepted and the summary is saved, the session officially closes.
+    *   Both parties can provide feedback on how helpful the session was.
+    *   The app tracks whether the session was completed successfully or left unresolved.
+    *   ✅ **Core Principles at Work**
+        *   ⭐ **Steel-Manning:**
+            *   You cannot explain your side until you’ve shown that you understand the other person’s side.
+            *   Ensures both parties feel heard and understood before the conversation begins.
+        *   ⭐ **Locked Statements:**
+            *   Personal statements are locked to prevent revisionist history or "moving the goalposts."
+            *   Maintains accountability and clarity.
+        *   ⭐ **AI as a Mediator:**
+            *   AI helps reframe aggressive or defensive language.
+            *   AI points out contradictions and logical gaps.
+            *   AI keeps the discussion focused and productive.
+        *   ⭐ **Mutual Agreement:**
+            *   No discussion begins until the issue is agreed upon.
+            *   No resolution is final unless both parties accept it.
+    *   🚀 **Summary**
+        *   The app creates a structured space where two people can work through conflicts.
+        *   Steel-manning ensures both sides feel heard and understood.
+        *   Locked statements prevent misunderstanding or shifting narratives.
+        *   AI guidance helps keep the conversation clear and respectful.
+        *   The app generates a structured resolution that both people agree on.
+        *   The process ends with a clear summary for future reference.
+
 **[Link to Project Checklist](project_checklist.md)**
 
 ## Executive Summary
@@ -8,7 +111,7 @@
 This document serves as the comprehensive guide for the Relationship Resolver project, a web application designed to facilitate constructive discussions between individuals in conflict. By leveraging AI (Google Gemini API) and a structured conversation format, the app helps users communicate more effectively and reach resolutions. This project employs a "World-Class" development approach, emphasizing exceptional code quality, advanced testing, and future-proofing. It also focuses on modularity, value-first development, user feedback, contracts, advanced data structures, automated code analysis, robust error handling, and performance optimization. The project is being developed by a small team and prioritizes simplicity, rapid development, and maintainability.
 
 **Target Audience:** This document is intended for developers, testers, and project stakeholders involved in the development and maintenance of the Relationship Resolver application.
-
+    
 ## Project Limitations, Risks, and Resources Needed
 
 **Limitations:**
@@ -39,11 +142,11 @@ This document serves as the comprehensive guide for the Relationship Resolver pr
 *   **AI-Powered Insights:** Leverage AI to provide meaningful summaries, highlight key points, and guide users towards resolution.
 *   **User-Friendly:** Create an intuitive and easy-to-use interface.
 *   **High Quality Code:** Build a robust, maintainable, and extensible codebase.
-* **Value-First Development**: Prioritize the development of features that deliver the most value to users.
-* **Limitations**: Create a project that is simple, easy to mantain, and easy to extend.
-* **Resources**: Use only the needed resources, and avoid doing anything that is not needed.
+*   **Value-First Development**: Prioritize the development of features that deliver the most value to users.
+*   **Limitations**: Create a project that is simple, easy to mantain, and easy to extend.
+*   **Resources**: Use only the needed resources, and avoid doing anything that is not needed.
 
-## How to Get User Feedback
+## User Feedback
 
 To ensure the app meets user needs, we will:
 
@@ -51,8 +154,8 @@ To ensure the app meets user needs, we will:
 - **Testing**: Get users to test the app, to see if there are any problems.
 - **Surveys**: Ask users for their feedback in surveys.
 * **User feedback**: Get user feedback early, and adapt the app based on that feedback.
-
-**World-Class Plan:** We are committed to building this application using a "World-Class" development approach. This means we will strive for:
+    
+## World-Class Plan
 
 *   **Exceptional Code Quality:** Writing clean, well-structured, and maintainable code.
 *   **Advanced Testing:** Implementing comprehensive testing (unit, integration, end-to-end).
@@ -62,19 +165,31 @@ To ensure the app meets user needs, we will:
 * **Value-First Development**: Prioritize the development of features that deliver the most value to users.
 * **User feedback**: Get user feedback early, and adapt the app based on that feedback.
 
-## Visual Aids
-
-### Modularity
+## Visual Aids (Modularity)
 
 ![Modularity Diagram](https://i.imgur.com/uRj21Tq.png)
 
 ## Glossary of Terms
 
-* **MVP:** Minimum Viable Product.
-* **CI**: Continuous Integration.
-* **CD**: Continuous Deployment.
-* **SRP**: Single Responsibility Principle.
-* **DRY**: Don't Repeat Yourself.
+*   **MVP:** Minimum Viable Product.
+*   **CI**: Continuous Integration.
+*   **CD**: Continuous Deployment.
+*   **SRP**: Single Responsibility Principle.
+*   **DRY**: Don't Repeat Yourself.
+*   **Steel-Manning**: Steel-manning is the practice of restating someone else's argument in its strongest, most accurate form. It’s about ensuring that you fully understand and fairly represent the other person's perspective, even if you might disagree with it.
+*   **Locked Statements**: Locked (or frozen) statements are inputs that, once submitted, become uneditable. This ensures the original sentiment and content remain intact for later reference and analysis.
+*   **Resolution**: A resolution is a conclusive summary that encapsulates the discussion, identifies key issues and logical fallacies, and outlines agreed-upon steps or compromises.
+*   **Prioritize Key Features**: Prioritizing key features means identifying and focusing on the functionalities that provide the highest user value and are critical to the core purpose of the app.
+*   **KISS**: KISS is a design principle that promotes simplicity. It encourages developers to write straightforward code that is easy to understand and maintain.
+*   **Modularity**: Modularity is the practice of dividing a system into distinct, independent modules that can be developed, tested, and maintained separately.
+*   **Contract-Driven Development**: Contract-driven development (CDD) involves designing software around well-defined interfaces or contracts. These contracts specify how different parts of the system interact, ensuring that each module meets agreed-upon expectations.
+*   **Data Access Layer**: The Data Access Layer (DAL) is a dedicated layer that handles all interactions with data storage systems, abstracting the details of data retrieval and manipulation from the rest of the application.
+*   **Value-First Development**: Value-first development prioritizes features and changes that deliver the most tangible value to the end user, ensuring that the most important problems are addressed before less critical enhancements.
+
+
+
+
+
 
 ## Key Decisions & Architecture
 
@@ -168,7 +283,7 @@ These guidelines combine project requirements with explanations of how software 
 ### Phase 4: Extensibility and Advanced Refactoring
 
 **Goals:**
-* Prepare the codebase for extensibility.
+* Prepare the codebase for extensibility. 
 * Implement advanced refactoring techniques.
 * Implement a data access layer.
 * Implement Supabase.

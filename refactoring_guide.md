@@ -10,11 +10,10 @@
 
 
 ## Introduction
-
+We have already implemented the basic features of the app, so now it's time to refactor.
 This guide outlines the comprehensive plan for the refactoring and development of the Relationship Resolver project, following the World-Class Plan. Our goal is to build an exceptional application that helps resolve relationship conflicts effectively and intuitively. This guide details our current state, the principles guiding our refactoring efforts, our objectives, and a detailed plan with specific actions to enhance the codebase. We will also focus on value-first development, user feedback, and CI for testing.
 
 ## Guiding Principles
-
 ## Why Refactor?
 
 Refactoring is a crucial step in the evolution of any software project. For the Relationship Resolver, refactoring is not just about improving the existing code, but about laying a solid foundation for future growth and innovation. Here are the primary reasons why we're embarking on this refactoring journey:
@@ -27,13 +26,12 @@ Refactoring is a crucial step in the evolution of any software project. For the 
 * **Extensibility**: Refactoring allows us to make the code more extensible, so it's easier to add new features.
 * **Testability**: Refactoring allows us to make the code more testable, so it's easier to test it.
 
-
-
 ## Examples
-
+This guide will use several examples to illustrate the concepts.
 Here are some examples to illustrate the concepts:
 
 *   **Single Responsibility Principle (SRP):** Instead of having a function that does multiple tasks, like saving to local storage and updating the UI, we break it into two functions.
+    * We will create a test for each of the new functions.
 *   **Don't Repeat Yourself (DRY):** If we find duplicate code, like validation logic in the frontend and backend, we create a shared module.
 *   **Keep It Simple, Stupid (KISS):** If a function has a lot of if statements, we simplify it by breaking it into smaller functions.
 *   **Modularity**: Instead of having all the code in one file, we create multiple files, like components, utils, etc, to break down the code.
@@ -41,7 +39,6 @@ Here are some examples to illustrate the concepts:
 * **Code review**: Instead of just hoping the code is correct, we review the code, to find errors, and improve quality.
 
 
-## Guiding Principles
 
 We will follow the World-Class Plan and its principles:
 
@@ -60,18 +57,35 @@ We will follow the World-Class Plan and its principles:
 
 ## 1. Current State Analysis
  
-The Relationship Resolver project is in the mid-stages of development. It aims to create an MVP web application to help resolve relationship conflicts through user-inputted statements and AI-generated summaries.
- 
+The Relationship Resolver project has implemented the core features of the app, all of them are in a basic state, and will need to be refactored.
+The next step is to refactor the code.
+
+We will refactor the code in phases, starting by cleaning the existing code, adding error handling, improving the UI, and making sure the code is testable.
 **Key Components & Features:**
 
-*   **Frontend (React):**
-    *   UI for code generation.
-    *   Text areas for user input.
-    *   Submit buttons for each text area.
-    *   Display area for submitted statements.
-    *   "Summarize with AI" button.
-    *  Code Generation
-    * Local Storage
+*   **Implemented Features:**
+    *   **[Issue Proposal and Agreement](client/src/App.js):** Users can propose an issue, and the other user can accept, modify or reject it.
+    *   **[Steel-Manning](client/src/App.js):** Users can restate the other users issue, and the other user can agree if it is correct.
+    *   **[Statement Locking](client/src/App.js):** Once a user sends a statement, it is locked.
+    *   **[Discussion](client/src/App.js):** Users can discuss in real time.
+    *   **[Resolution](client/src/App.js):** Users can propose a resolution, and the other user can accept, modify or reject it.
+    *   **[Summary](client/src/App.js):** Users can see a summary of the process.
+    *   **[Basic Data Access Layer](client/src/data/dataManager.js):** The data access layer has been created, and it now manages all of the storage related actions.
+    * **[Basic Contracts](client/src/data/dataContracts.js)**: The basic contracts have been created.
+        * The contracts provide a definition of the functions in the data access layer.
+    * **[Tests](client/src/data/dataManager.test.js)**: Tests have been created.
+*   **Basic Implementation:** All of the features have been implemented in a basic way. All of them need a refactor.
+
+
+
+
+
+
+
+
+
+
+
 *   **Backend (Node.js/Express):**
     *   `/api/ai-summarize` endpoint.
     *   Integration with the Google Gemini API.
@@ -91,13 +105,8 @@ The Relationship Resolver project is in the mid-stages of development. It aims t
     *   Readability issues (naming, indentation, commenting).
     *   Unclear modularity and separation of concerns.
     * Unsure extensibility.
-*   **Testing:** No tests implemented, no CI.
-* **Steel-Manning:** Not implemented at all.
-* **Locked Statements:** Partially implemented (storage), but the "locked" aspect (immutability) is not.
-* **Resolution:** Partially implemented (AI summarization), but other key aspects are missing.
-* **Contract-Driven Development**: Not implemented.
-* **Data Access Layer**: Not implemented.
-* **Issue Proposal and Agreement**: Not implemented.
+
+We will use phased refactoring to refactor the code, to reduce the risk, and make it more manageable.
 
 ## 2. Rationale for Deep Refactor
 
@@ -110,7 +119,7 @@ A deep refactor is essential to transition the project from a rapidly developed 
     *   **Single Responsibility Principle (SRP):** Ensure each function, module, and component has a single, well-defined responsibility.
     * **Steel manning**: Implement steel manning, to make sure the code follows the user experience and guidelines.
     *   **Don't Repeat Yourself (DRY):** Eliminate code duplication and promote code reuse.
-    *   **Keep It Simple, Stupid (KISS):** Simplify overly complex code.
+    *   **Keep It Simple, Stupid (KISS):** Simplify overly complex code or logic.
     *   **Modularity:** Organize the code into independent modules for better organization and maintainability.
     *   **Separation of Concerns:** Clearly separate UI, logic, and data handling.
     *   **Readability:** Improve code clarity through consistent indentation, meaningful names, and useful comments.
@@ -118,13 +127,10 @@ A deep refactor is essential to transition the project from a rapidly developed 
 *   **Error Handling:** Enhance error handling to provide robustness and improve debugging.
 *   **Input Validation:** Prevent issues caused by invalid data and ensure data integrity.
 * **Testing**: to make sure there are no regressions and code works as intended.
-* **Code review**: To make sure the code is correct, readable and maintainable.
 * **Data Access Layer**: To make sure we are following the correct practices.
 * **Contract-Driven Development**: To make sure we are following the correct practices.
-* **Issue Proposal and Agreement**: To make sure the code follows the user experience and guidelines.
-* **Resolution**: To make sure the code follows the user experience and guidelines.
-
 ## 3. Refactoring Objectives
+These are the main objectives for the refactor.
 
 Our primary goals are to:
 
@@ -134,7 +140,6 @@ Our primary goals are to:
 *   **Future-Proof the Application:** Set up the codebase for effortless integration of future features and enhancements.
 
 
-## 4. Refactoring Plan
 
 ### Component Breakdown
 
@@ -307,11 +312,44 @@ Our primary goals are to:
         *   **Example:** Test the interaction between the front end and the backend when posting data and receiving a summary.
 *   **Checks**:
     * Make sure the application works the same as before the refactor.
+    * **Run the tests**: Make sure to run the tests.
     * Check the browser console for any errors.
     * Check the backend console for any errors.
+* **Creating tests**: Before refactoring any piece of code, you need to create or update the tests.
+    * **New functions**: For each new function you create, make sure to create a test for it.
+    * **Updated functions**: If you change any existing function, make sure to update its tests.
+    * **Failed tests**: If there is any failing test, you need to fix it before moving to the next refactor.
+
+### Running Tests
+
+Regularly running tests is crucial to ensure the ongoing quality and reliability of our codebase. Here are some guidelines for running tests effectively:
+
+1.  **Run Tests Frequently**: Make it a habit to run tests frequently, such as after making a set of related changes or before committing your code.
+2.  **Run All Tests**: When running tests, make sure you run the complete test suite to catch any unintended side effects of your changes.
+3.  **Fix Failing Tests**: If any tests fail, you must fix them before proceeding. Failing tests indicate that your changes have broken existing functionality or introduced new bugs.
+4. **CI**: We will use CI to make sure the tests are running.
+5. **Unit tests**: We will use unit tests to test individual functions and modules.
+6. **Integration tests**: We will use integration tests to make sure that the modules work well together.
+
+
+### Test Driven Development
+
+We will be using test-driven development:
+
+1. **Write a failing test**: We will write a failing test for each new feature or fix.
+2. **Write the code**: We will write the code to pass the test.
+3. **Refactor**: We will refactor the code, making sure it passes all the tests.
+4. **Repeat**: We will repeat the process for each new feature or fix.
+
+### Code Review
+
+* **Have someone else review your code**: Have another person review your code, this person should check for:
+    * Correctness.
+    * Readability.
+    * Comments.
+
 
 ### Bug Fixes
-
 Fixing bugs effectively is critical for creating high-quality software. Here are some guidelines for bug fixes:
 
 * **Understand the Bug:** Before attempting a fix, make sure you fully understand the bug. Try to reproduce it reliably.
@@ -322,15 +360,7 @@ Fixing bugs effectively is critical for creating high-quality software. Here are
 * **Test Thoroughly:** Don't rely solely on the test you wrote. Test the surrounding code and related features to ensure that the bug fix didn't create any new problems.
 * **Document the Fix:** Add comments to the code explaining the bug and the fix. This will help others (and your future self) understand the history of the code.
 * **Code Review:** Have another developer review your bug fix to ensure its correctness and quality.
-
-### Code review
-
-* **Have someone else review your code**: Have another person review your code, this person should check for:
-    * Correctness.
-    * Readability.
-    * Comments.
-
-## 5. Next Steps
+### 5. Next Steps
 
 After completing the deep refactor:
 
@@ -344,10 +374,11 @@ This guide provides a robust framework for refactoring the Relationship Resolver
 
 ## Phases
 
+We will refactor the code in phases. This is to reduce the risk and make it more manageable.
 ### Phase 3: General Review and Cleanup / Tests in Progress
 
 **Goals**(now out of scope, we will implement the code first):
-
+    We will work on this phase, once we implement all the features.
 *   **Improve Code Quality**: Make sure the code is more readable, maintainable, and modular.
 *   **Implement CI for Testing**: Start using CI to run tests.
 * **Prioritize key features**: Refactor the most important features.
@@ -388,6 +419,7 @@ This guide provides a robust framework for refactoring the Relationship Resolver
 ### Phase 4: Extensibility and advanced refactoring
 
 **Goals**(now out of scope, we will implement the code first):
+    We will work on this phase, once we implement all the features.
 
 *   **Extensibility:** Set up the data structures to be very extensible.
 *   **Data Access Layer:** Set up the data access layer.
@@ -416,6 +448,7 @@ This guide provides a robust framework for refactoring the Relationship Resolver
 ### Phase 5: Expanded Testing and quality check
 
 **Goals**(now out of scope, we will implement the code first):
+    We will work on this phase, once we implement all the features.
 
 *   **Comprehensive Testing**: Implement unit, integration, and end-to-end tests.
 * **Quality**: Ensure the quality of the code.
@@ -439,6 +472,7 @@ This guide provides a robust framework for refactoring the Relationship Resolver
 ### Phase 6: Database
 
 **Goals**(now out of scope, we will implement the code first):
+    We will work on this phase, once we implement all the features.
 
 *   **Database:** Migrate all data to the database.
 
@@ -450,6 +484,7 @@ This guide provides a robust framework for refactoring the Relationship Resolver
 ### Phase 7: Further Considerations (Post-MVP)
 
 **Goals**(now out of scope, we will implement the code first):
+    We will work on this phase, once we implement all the features.
 
 *   **Deep Refactor:** Refactor parts of the code that are still bad.
 * **New Features**: Implement new features.

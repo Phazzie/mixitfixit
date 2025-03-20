@@ -43,8 +43,8 @@
         -   [x] Improved component readability.
         - [x] Added a parameter to change the code length.
     -   [ ] Analyze `CodeEntry.js`: Confirmed it's well-structured and follows SRP. 
-    -   [x] Analyze `StatementDisplay.js`: Identified opportunities to improve separation of concerns.
-    -   [x] Investigate `useSummarization.js` and `useSummarizeStatements.js`: identified that they could be merged.
+    -   [x] Analyze `StatementDisplay.js`: Identified opportunities to improve separation of concerns.    -   [x] Investigate `useSummarization.js` and `useSummarizeStatements.js`: identified that they could be merged.
+    -   [x] Review `useStatements.js` and `useStatementLoader.js`: identified that they could be improved.
     -   [x] merge useSummarization and useSummarizeStatements.
     -   [x] remove useSummarization.
     - [ ] Investigate `useStatementLoader.js` and `useStatements.js`: identified that they could be improved.
@@ -54,6 +54,10 @@
         - [x] Create `LoadingMessage.js`, `ErrorMessage.js` and `NoValuesMessage.js` to display those messages.
         - [x] Extract Storage logic.
         - [x] Update StatementDisplay. Remove redundant comments.
+    -   **Hooks Refactor:**
+        - [x] Create `useStorageManager.js`
+        - [x] Refactor `useStatementLoader.js`
+        - [x] Refactor `useStatements.js`
 
 ## Detailed Refactoring Plan
 
@@ -79,7 +83,7 @@
 2.  **Review `useStatements.js` and `useStatementLoader.js`:**
     *   [ ] Read both files and identify how they are used.
     *   [ ] Determine if their responsibilities are clear.
-    * [ ] Identify ways of improving them.
+    *   [ ] Identify ways of improving them.
 3. **Update checklist**: Add to the `Refactoring Progress` section.
 
 **Phase 3: General Review and Cleanup**

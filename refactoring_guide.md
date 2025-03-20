@@ -1,13 +1,63 @@
-# Deep Refactoring Guide: Relationship Resolver Project
+# Refactoring Guide: Relationship Resolver Project
+
+**[Link to Project Checklist](project_checklist.md)**
+
+**[Link to Glossary](#glossary)**
+
 
 ## Introduction
 
-This guide provides a comprehensive plan for conducting a deep refactor of the Relationship Resolver project. It outlines the current state, the rationale for refactoring, key objectives, and a detailed plan with specific actions to improve the codebase.
+This guide outlines the comprehensive plan for the refactoring and development of the Relationship Resolver project, following the World-Class Plan. Our goal is to build an exceptional application that helps resolve relationship conflicts effectively and intuitively. This guide details our current state, the principles guiding our refactoring efforts, our objectives, and a detailed plan with specific actions to enhance the codebase. We will also focus on value-first development, user feedback, and CI for testing.
+
+## Guiding Principles
+
+## Why Refactor?
+
+Refactoring is a crucial step in the evolution of any software project. For the Relationship Resolver, refactoring is not just about improving the existing code, but about laying a solid foundation for future growth and innovation. Here are the primary reasons why we're embarking on this refactoring journey:
+
+*   **Improve Code Quality:** Refactoring allows us to apply best practices to our codebase, resulting in code that is more readable, maintainable, and less error-prone.
+*   **Enhance Maintainability:** By organizing our code into clear modules and following principles like SRP, DRY, and KISS, we'll make it much easier to modify and update the codebase in the future.
+*   **Boost Performance:** Refactoring can help us identify and address performance bottlenecks, leading to a faster and more responsive application.
+*   **Enable Future Feature Development:** A well-structured codebase makes it significantly easier to add new features and functionalities down the line.
+* **Reduce bugs**: Refactoring, and testing allows us to find bugs, and have less errors.
+* **Extensibility**: Refactoring allows us to make the code more extensible, so it's easier to add new features.
+* **Testability**: Refactoring allows us to make the code more testable, so it's easier to test it.
+
+
+
+## Examples
+
+Here are some examples to illustrate the concepts:
+
+*   **Single Responsibility Principle (SRP):** Instead of having a function that does multiple tasks, like saving to local storage and updating the UI, we break it into two functions.
+*   **Don't Repeat Yourself (DRY):** If we find duplicate code, like validation logic in the frontend and backend, we create a shared module.
+*   **Keep It Simple, Stupid (KISS):** If a function has a lot of if statements, we simplify it by breaking it into smaller functions.
+*   **Modularity**: Instead of having all the code in one file, we create multiple files, like components, utils, etc, to break down the code.
+* **Testing**: Instead of just hoping the code works, we create tests that check that the code works correctly.
+* **Code review**: Instead of just hoping the code is correct, we review the code, to find errors, and improve quality.
+
+
+## Guiding Principles
+
+We will follow the World-Class Plan and its principles:
+
+* **Contract-Driven Development**: We will use contracts to define the behavior of each module.
+* **Prioritized Incremental Refactoring**: We will break down the code into logical modules, define contracts for those modules, and then refactor them one by one.
+* **Value-First Development**: We will prioritize refactoring and testing areas that deliver the most immediate value to users.
+* **Modularity**: We will develop the app in modules, making sure we separate the different responsibilities.
+* **Readability**: We will make sure the code is readable, with the right naming and comments.
+* **Comprehensive Testing**: We will implement extensive testing (unit, integration, end-to-end) from the start.
+* **CI for Testing**: We will use CI to implement automated tests.
+* **User Feedback**: We will get user feedback early and often.
+* **Advanced Data Structures**: We will design our data structures to be very advanced.
+* **Automated Code Analysis**: We will use tools to check the code.
+* **Robust Error Handling**: We will use a robust error handling.
+* **Performance Optimization**: We will try to optimize performance.
 
 ## 1. Current State Analysis
-
+ 
 The Relationship Resolver project is in the mid-stages of development. It aims to create an MVP web application to help resolve relationship conflicts through user-inputted statements and AI-generated summaries.
-
+ 
 **Key Components & Features:**
 
 *   **Frontend (React):**
@@ -37,7 +87,7 @@ The Relationship Resolver project is in the mid-stages of development. It aims t
     *   Readability issues (naming, indentation, commenting).
     *   Unclear modularity and separation of concerns.
     * Unsure extensibility.
-*   **Testing:** No tests implemented.
+*   **Testing:** No tests implemented, no CI.
 
 ## 2. Rationale for Deep Refactor
 
@@ -57,15 +107,17 @@ A deep refactor is essential to transition the project from a rapidly developed 
 *   **Error Handling:** Enhance error handling to provide robustness and improve debugging.
 *   **Input Validation:** Prevent issues caused by invalid data and ensure data integrity.
 * **Testing**: to make sure there are no regressions and code works as intended.
+* **Code review**: To make sure the code is correct, readable and maintainable.
 
 ## 3. Refactoring Objectives
 
-The primary goals of this refactoring process are to:
+Our primary goals are to:
 
-*   **Improve Code Quality:** Ensure adherence to SRP, DRY, KISS, Modularity, Separation of Concerns, Readability, and Extensibility.
-*   **Reduce Bugs:** Enhance error handling and input validation to prevent and manage errors effectively.
-*   **Enhance Maintainability:** Make the code easier to understand, modify, and extend.
-*   **Prepare for Future Growth:** Structure the codebase to easily incorporate new features and functionalities.
+*   **Elevate Code Quality:** Ensure we are using SRP, DRY, KISS, Modularity, Separation of Concerns, Readability, Extensibility, and contracts.
+*   **Minimize Bugs:** Strengthen error handling and input validation to preemptively manage errors.
+*   **Maximize Maintainability:** Craft code that is clear, concise, and easy to update or expand.
+*   **Future-Proof the Application:** Set up the codebase for effortless integration of future features and enhancements.
+
 
 ## 4. Refactoring Plan
 
@@ -117,6 +169,7 @@ The primary goals of this refactoring process are to:
 *   **Action:** Review the backend code. Identify areas that can be grouped together, such as API related code, or database related code.
 * **Example:**
     *   **Original Location:** API call to gemini might be in `backend/server.js`.
+    * **Contract**: There should be a clear contract with the gemini API, so it can be changed if needed.
     *   **New Location:** Move the logic into a separate module `backend/geminiApi.js`.
     *   **Broken References:** `backend/server.js` will no longer directly make calls to the gemini API.
     *   **Relinking Steps:**
@@ -125,6 +178,7 @@ The primary goals of this refactoring process are to:
         3.  Update `backend/server.js` to import and use the functions from `geminiApi.js`.
 * **Action:** Create a module for input validation.
     * **Original Location:** validation logic is currently in `backend/server.js`.
+    * **Contract**: Create a contract for the validation functions, so it can be changed if needed.
     * **New Location:** create `backend/validation.js`.
     * **Broken References**: `backend/server.js` will no longer be doing validation logic.
     * **Relinking Steps:**
@@ -138,6 +192,7 @@ The primary goals of this refactoring process are to:
 *   **Example:**
     *   **Original Location:** `frontend/App.js` might have a function `handleSubmit` that handles both storing user input in `localStorage` and updating the UI.
     *   **New Location:** Create separate functions: `storeInput(code, user, text)` for storing the data, and `updateSubmissionDisplay()` for the UI.
+    * **Contracts**: Both functions should have a contract.
     *   **Broken References:** The code that is calling `handleSubmit` will need to be modified to call `storeInput()` and `updateSubmissionDisplay()`
     *   **Relinking Steps:**
         1. Create the new `storeInput(code, user, text)` function.
@@ -149,6 +204,7 @@ The primary goals of this refactoring process are to:
 *   **Example:**
     * **Original Location:** `backend/server.js` might have a function that both handles the api request, and builds the request to send to gemini.
     * **New Location:** move the code responsible for building the gemini request to a new function, like `buildGeminiRequest()`.
+    * **Contract**: This function should have a contract.
     * **Broken References:** the code that called the original function will now call both `buildGeminiRequest()` and the rest of the request logic.
     * **Relinking Steps:**
         1. create the new function.
@@ -161,6 +217,7 @@ The primary goals of this refactoring process are to:
 *   **Example:**
     *   **Original Location:** Similar code to validate input is in both the frontend and the backend.
     *   **New Location:** Create a `validation.js` file (or module) in both the frontend and backend. Move the validation functions to these new files.
+    * **Contracts**: The validation functions should have a contract.
     *   **Broken References:** Files that had validation logic will no longer have it.
     *   **Relinking Steps:**
         1.  Create the `validation.js` files.
@@ -178,6 +235,7 @@ The primary goals of this refactoring process are to:
     *   Use consistent indentation (e.g., 2 or 4 spaces) throughout the project.
 *   **Commenting:**
     *   Add comments to explain complex logic, non-obvious code, or critical decisions.
+    *  use JSDoc when commenting.
     *   Avoid redundant comments that simply state what the code is doing.
 
 ### Error Handling
@@ -226,15 +284,36 @@ The primary goals of this refactoring process are to:
 *   **Types of Tests:**
     *   **Unit Tests:** Test individual functions and components in isolation.
         *   **Example:** Test the `generateRandomCode()` function to ensure it generates codes of the correct length and format.
+        * **Contract**: Make sure to test the function against the contract.
         *   **Example:** Test the `validateStatement()` function to ensure it correctly detects invalid input.
+        * **Contract**: Make sure to test the function against the contract.
     *   **Integration Tests:** Test how components or modules work together.
         *   **Example:** Test the interaction between the `InputArea` component and the `localStorage` storage.
         *   **Example:** Test the interaction between the front end and the backend when posting data and receiving a summary.
-* **Checks**:
-    * Make sure all tests pass.
+*   **Checks**:
     * Make sure the application works the same as before the refactor.
     * Check the browser console for any errors.
     * Check the backend console for any errors.
+
+### Bug Fixes
+
+Fixing bugs effectively is critical for creating high-quality software. Here are some guidelines for bug fixes:
+
+* **Understand the Bug:** Before attempting a fix, make sure you fully understand the bug. Try to reproduce it reliably.
+* **Isolate the Problem:** Pinpoint the exact code section causing the issue.
+* **Write a Test:** If possible, write a failing test that reproduces the bug. This will help ensure that the bug is truly fixed and won't reappear later.
+* **Fix the Bug:** Make the necessary code changes to resolve the issue.
+* **Run the Test:** Run the test you wrote (or an existing test) to confirm that the bug is fixed.
+* **Test Thoroughly:** Don't rely solely on the test you wrote. Test the surrounding code and related features to ensure that the bug fix didn't create any new problems.
+* **Document the Fix:** Add comments to the code explaining the bug and the fix. This will help others (and your future self) understand the history of the code.
+* **Code Review:** Have another developer review your bug fix to ensure its correctness and quality.
+
+### Code review
+
+* **Have someone else review your code**: Have another person review your code, this person should check for:
+    * Correctness.
+    * Readability.
+    * Comments.
 
 ## 5. Next Steps
 
@@ -247,3 +326,142 @@ After completing the deep refactor:
 5.  **Monitor and Maintain:** Regularly review and update the code to prevent code quality issues from accumulating.
 
 This guide provides a robust framework for refactoring the Relationship Resolver project. By following these steps, we can significantly improve the quality, maintainability, and extensibility of the codebase.
+
+## Phases
+
+### Phase 3: General Review and Cleanup / Tests in Progress
+
+**Goals:**
+
+*   **Improve Code Quality**: Make sure the code is more readable, maintainable, and modular.
+*   **Implement CI for Testing**: Start using CI to run tests.
+* **Prioritize key features**: Refactor the most important features.
+
+**Tasks:**
+
+*   **Prioritize key features**:
+    *   Identify the most important features (steel-manning, locked statements).
+    *   Refactor the steel-manning feature.
+        * add unit tests for the steel-manning feature.
+    *   Refactor the locked-statements feature.
+        * Add unit tests for the locked-statements feature.
+*   **DRY (Don't Repeat Yourself)**:
+    *   Analyze the codebase for code duplication.
+    *   Refactor duplicated code into reusable functions.
+        * Add unit tests for the new functions.
+*   **KISS (Keep It Simple, Stupid)**:
+    *   Identify complex code sections.
+    *   Simplify complex code sections.
+        * Add unit tests for the simplified code.
+*   **Modularity**:
+    *   Identify code that can be split into modules.
+    *   Split the code into modules.
+        * Add tests to all the modules.
+*   **Readability**:
+    *   Ensure consistent formatting, naming, and commenting.
+        * add unit tests for refactored code.
+*   **Comments**:
+    * Add comments where needed.
+        * add unit tests for refactored code.
+*   **SRP**:
+    * Ensure all functions have a single responsability.
+        * add unit tests for refactored code.
+* **Implement CI for tests**:
+    * Choose a CI service (e.g., GitHub Actions).
+    * Configure the CI service to run unit tests on every push.
+
+### Phase 4: Extensibility and advanced refactoring
+
+**Goals:**
+
+*   **Extensibility:** Set up the data structures to be very extensible.
+*   **Data Access Layer:** Set up the data access layer.
+*   **Supabase:** Add supabase.
+* **Modular development**: Ensure all the code is modular.
+
+**Tasks:**
+
+*   **Create a data access layer**:
+    *   Create a data access layer.
+        * Add tests for functions in the data access layer.
+*   **Design Data structures**:
+    * Design the data structures.
+    * Make sure they are being used correctly.
+*   **Contract-driven development**:
+    * Make sure all the code follows a contract.
+*   **Advanced Data structures**:
+    * Make sure the data structures are designed in the best way.
+*   **Implement Supabase**:
+    * Set up Supabase.
+    * Integrate Supabase.
+        * Add tests for Supabase integration.
+* **Modular development**:
+    * Make the app modular.
+
+### Phase 5: Expanded Testing and quality check
+
+**Goals:**
+
+*   **Comprehensive Testing**: Implement unit, integration, and end-to-end tests.
+* **Quality**: Ensure the quality of the code.
+
+**Tasks:**
+* **Prioritize key workflows**:
+    * Focus testing in key workflows.
+*   **Unit Tests**:
+    * Finish all the unit tests.
+*   **Integration Tests**:
+    * Do integration tests to make sure all parts of the code work well.
+*   **End to End Tests**:
+    * Make sure all workflows work correctly.
+*   **Automated Code Analysis**:
+    * Add automated code analysis.
+*   **Robust Error Handling**:
+    * Implement a robust error handling.
+*   **Performance optimization**:
+    * Do performance optimizations.
+
+### Phase 6: Database
+
+**Goals:**
+
+*   **Database:** Migrate all data to the database.
+
+**Tasks:**
+
+*   **Implement database**:
+    *   Migrate all data to the database.
+
+### Phase 7: Further Considerations (Post-MVP)
+
+**Goals:**
+
+*   **Deep Refactor:** Refactor parts of the code that are still bad.
+* **New Features**: Implement new features.
+* **User feedback**: Use user feedback to change the app.
+* **User testing**: Do user testing.
+* **Continuous Deployment**: Implement continuous deployment.
+
+**Tasks:**
+
+*   **Deep Refactor.**
+*   **Advanced AI Integration.**
+* **User testing**:
+    * Do user testing.
+* **User Feedback**:
+    * Get user feedback.
+    * Implement user feedback.
+* **Implement CD (Optional)**:
+    * Consider implementing CD.
+
+## User feedback
+
+* We will get user feedback as soon as possible.
+* We will use user feedback to make changes to the app.
+* We will focus on the user needs.
+
+## Value First
+
+* We will focus on value first, by implementing the features that will give more value to the users.
+* We will add the features that are most needed first.
+* We will try to deliver value as soon as possible.

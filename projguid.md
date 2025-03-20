@@ -1,19 +1,91 @@
-# Relationship Resolver - MVP Project Plan (Google IDX)
+# Project Guide: Relationship Resolver - World-Class Plan
 
-## Project Goal & Overview
 
-This project aims to create a *Minimum Viable Product (MVP)* for a web application that facilitates constructive discussions between two individuals experiencing a relationship conflict. The core functionality is to allow users to input their perspectives on a shared issue and then leverage the Google Gemini API to provide a summary of the discussion. This initial version prioritizes rapid development and simplicity over advanced features. We'll be using Google IDX as our development environment.
+**[Link to Project Checklist](project_checklist.md)**
+
+## Executive Summary
+
+This document serves as the comprehensive guide for the Relationship Resolver project, a web application designed to facilitate constructive discussions between individuals in conflict. By leveraging AI (Google Gemini API) and a structured conversation format, the app helps users communicate more effectively and reach resolutions. This project employs a "World-Class" development approach, emphasizing exceptional code quality, advanced testing, and future-proofing. It also focuses on modularity, value-first development, user feedback, contracts, advanced data structures, automated code analysis, robust error handling, and performance optimization. The project is being developed by a small team and prioritizes simplicity, rapid development, and maintainability.
+
+**Target Audience:** This document is intended for developers, testers, and project stakeholders involved in the development and maintenance of the Relationship Resolver application.
+
+## Project Limitations, Risks, and Resources Needed
+
+**Limitations:**
+- Current team size is limited to two people.
+- The project is currently using `localStorage`.
+- The app is not using real time.
+- The current app is an MVP, and doesn't have all the features.
+
+**Risks:**
+- Limited resources could make the development slower.
+- The app could have bugs if it's not tested well.
+- The app could be hard to extend if it's not done properly.
+
+**Resources Needed:**
+- IDX.
+- Google Gemini API.
+
+## Project Overview and Goals
+
+
+**Vision:** This project aims to develop a web application that facilitates constructive discussions between individuals experiencing relationship conflict. We are not just building an MVP, we are going to build an exceptional app.
+
+**Core Functionality:** The app will allow users to input their perspectives on a shared issue, engage in a structured conversation, and leverage AI (Google Gemini API) to provide insights and summaries.
+
+**Goals:**
+
+*   **Constructive Communication:** Enable users to communicate effectively and respectfully, even when in conflict.
+*   **AI-Powered Insights:** Leverage AI to provide meaningful summaries, highlight key points, and guide users towards resolution.
+*   **User-Friendly:** Create an intuitive and easy-to-use interface.
+*   **High Quality Code:** Build a robust, maintainable, and extensible codebase.
+* **Value-First Development**: Prioritize the development of features that deliver the most value to users.
+* **Limitations**: Create a project that is simple, easy to mantain, and easy to extend.
+* **Resources**: Use only the needed resources, and avoid doing anything that is not needed.
+
+## How to Get User Feedback
+
+To ensure the app meets user needs, we will:
+
+- **Early and Frequent Feedback**: Seek user feedback throughout the development process.
+- **Testing**: Get users to test the app, to see if there are any problems.
+- **Surveys**: Ask users for their feedback in surveys.
+* **User feedback**: Get user feedback early, and adapt the app based on that feedback.
+
+**World-Class Plan:** We are committed to building this application using a "World-Class" development approach. This means we will strive for:
+
+*   **Exceptional Code Quality:** Writing clean, well-structured, and maintainable code.
+*   **Advanced Testing:** Implementing comprehensive testing (unit, integration, end-to-end).
+*   **Future-Proofing:** Designing for extensibility and future growth.
+*   **Modularity**: The code will be organized into well-defined, independent modules or components.
+*   **CI for Testing:** We will use Continuous Integration to automate our testing process, ensuring code quality and preventing bugs.
+* **Value-First Development**: Prioritize the development of features that deliver the most value to users.
+* **User feedback**: Get user feedback early, and adapt the app based on that feedback.
+
+## Visual Aids
+
+### Modularity
+
+![Modularity Diagram](https://i.imgur.com/uRj21Tq.png)
+
+## Glossary of Terms
+
+* **MVP:** Minimum Viable Product.
+* **CI**: Continuous Integration.
+* **CD**: Continuous Deployment.
+* **SRP**: Single Responsibility Principle.
+* **DRY**: Don't Repeat Yourself.
 
 ## Key Decisions & Architecture
 
 *   **Frontend:** React (single component initially, with consideration for future modularity)
 *   **Backend:** Node.js/Express (single API endpoint initially: `/api/ai-summarize`, with consideration for future endpoints)
-*   **"Database":** `localStorage` (TEMPORARY - for rapid prototyping ONLY)
+*   **"Database":** `localStorage` (TEMPORARY - for rapid prototyping ONLY, will use Supabase)
 *   **AI:** Google Gemini API (using the `generativelanguage` client and `gemini-2.0-flash` model)
 *   **Authentication:** None for this MVP (a simple, shared, generated code will be used for accessing a discussion)
 *   **Interaction:** Turn-based (not real-time)
 
-## Project Guidelines & Best Practices
+## Development Principles & Best Practices
 
 These guidelines combine project requirements with explanations of how software development best practices apply:
 
@@ -23,14 +95,15 @@ These guidelines combine project requirements with explanations of how software 
 2.  **Temporary `localStorage` (KISS, YAGNI):** We will use `localStorage` for data persistence during the MVP phase. This is temporary, and we will consider a more robust solution later.
 3.  **No Authentication (for MVP):** We will not implement user authentication for the MVP to keep it simple.
 4. **API Keys:** You will need to set up API keys for gemini. this is done in the .env file.
+4. **CI for testing**: We will use Continuous Integration to automate our testing process.
 
 **Code Quality & Maintainability:**
 
 1.  **Single Responsibility Principle (SRP):** Each module, component, or function should have a single, well-defined responsibility.
 2.  **Don't Repeat Yourself (DRY):** Avoid duplicating code. Extract common logic into reusable functions or modules.
 3.  **Keep It Simple, Stupid (KISS):** Favor simplicity in design and implementation.
-4.  **Modularity:** Organize code into well-defined, independent modules or components.
-5.  **Separation of Concerns:** Clearly separate different responsibilities, such as UI, logic, and data handling.
+4.  **Modularity**: Organize code into well-defined, independent modules or components.
+5.  **Separation of Concerns**: Clearly separate different responsibilities, such as UI, logic, and data handling.
 6.  **Readability:** Write clean, easy-to-understand code.
     *   **Clear Naming:** Use descriptive and meaningful names for variables, functions, and modules. Comments are encouraged for very important variable names, or method names.
     *   **Consistent Indentation:** Maintain consistent indentation throughout the codebase.
@@ -42,6 +115,81 @@ These guidelines combine project requirements with explanations of how software 
 2. **Basic Error Handling:** Display error messages if API calls fail, or local storage is full.
 3. **Input Validation:** Ensure the proper input of the user before doing any logic.
 4. **DRY (Don't Repeat Yourself):** Avoid duplicated code.
+5. **Contracts**: Every module will have a contract, that will define what it does, what it expects, and what it guarantees.
+6. **Value-First Development**: Prioritize refactoring and testing areas that deliver the most immediate value to users.
+7. **User Feedback**: Actively seek user feedback during development.
+8. **Advanced Data Structures**: Use advanced data structures.
+9. **Automated Code Analysis**: Use tools to check the code.
+10. **Robust error handling**: Implement robust error handling.
+11. **Performance optimization**: Optimize the performance of the code.
+
+## Phases
+
+### Phase 3: General Review and Cleanup / Tests in Progress
+
+**Goals:**
+* Start cleaning up the codebase.
+* Start adding tests.
+* Start preparing for modularity.
+* Prioritize key features.
+
+**Key Tasks:**
+
+*   **Prioritize key features**:
+    *   Identify the most important features (steel-manning, locked statements).
+    * Refactor them.
+    * Add tests.
+*   **DRY (Don't Repeat Yourself)**:
+    *   Analyze the codebase for code duplication.
+    *   Refactor duplicated code into reusable functions.
+    * Add tests.
+*   **KISS (Keep It Simple, Stupid)**:
+    *   Identify complex code sections.
+    *   Simplify complex code sections.
+    * Add tests.
+*   **Modularity**:
+    *   Identify code that can be split into modules.
+    * Split the code into modules.
+    * Add tests to all the modules.
+*   **Readability**:
+    * Improve the readability of the code.
+    * Add tests.
+*   **Comments**:
+    * Add comments where needed.
+    * Add tests.
+*   **SRP**:
+    * Identify code that needs to follow the SRP.
+    * Refactor the code to follow the SRP.
+    * Add tests.
+* **Implement CI for tests**:
+    * Choose a CI service (e.g., GitHub Actions).
+    * Configure the CI service to run tests on every push.
+
+### Phase 4: Extensibility and Advanced Refactoring
+
+**Goals:**
+* Prepare the codebase for extensibility.
+* Implement advanced refactoring techniques.
+* Implement a data access layer.
+* Implement Supabase.
+
+**Key Tasks:**
+
+*   **Create a data access layer**:
+    * Add tests.
+*   **Design Data structures**:
+    * Make sure they are being used correctly.
+*   **Contract-driven development**:
+    * Make sure all the code follows a contract.
+    * Add tests.
+*   **Advanced Data structures**:
+    * Make sure the data structures are designed in the best way.
+    * Add tests.
+*   **Implement Supabase**:
+    * Add tests.
+* **Modular development**:
+    * Make the app modular.
+    * Add tests.
 
 ## Prompts for IDX AI Coding Agent
 
@@ -49,7 +197,7 @@ These guidelines combine project requirements with explanations of how software 
 
 ---
 
-**Prompt 1: Project Setup**
+### Prompt 1: Project Setup
 
 List the available templates that support nodeJS and React. Create a new workspace using a template that includes a general JavaScript setup. Ensure a clear separation of the frontend and backend code in the project structure by creating `frontend/` and `backend/` folders. Also, explain how to configure API keys for the Gemini API in IDX.
 
@@ -137,11 +285,20 @@ Are there any functions or code blocks that are longer than necessary? Can they 
 This should be the complete set of prompts, incorporating all our discussions and the use of `gemini-2.0-flash`
 w
 
+
 # Codebase Audit Summary
 
 ## Status
 
 This project is in the middle stages of development. A good amount of code has been produced and a good portion of the required features have been implemented. There is still a large portion of work to be done, but the project is well on its way.
+
+## Version History
+
+| Version | Date       | Changes                                                                      | Author |
+| :------ | :--------- | :--------------------------------------------------------------------------- | :----- |
+| 1.0     | 2024-03-11 | Initial Document Creation                                         | AI     |
+| 1.1     | 2024-03-12 | Added Executive Summary, Target Audience, Visual Aids, Glossary, etc | AI     |
+| 1.2     | 2024-03-12 | Added Project Limitations, Risks, and Resources Needed and how to get user feedback. | AI     |
 
 ## Key Areas for Improvement
 
@@ -191,7 +348,7 @@ This project is in the middle stages of development. A good amount of code has b
 -   [ ] Error Handling (HTTP status, messages)
 -   [ ] Gemini Prompt Review/Customization
 -   [ ] Input Validation
-
+    
 ### Frontend
 
 -   [x] Basic UI Structure
@@ -222,7 +379,7 @@ This project is in the middle stages of development. A good amount of code has b
 - [ ] Testing
 - [ ] Refactoring
 
-## Next Steps
+### Next Steps
 
 1.  Address Pending Items: Start working through the checklist.
 2.  Focus on Error handling, and Input Validation: these items are key for preventing bugs.

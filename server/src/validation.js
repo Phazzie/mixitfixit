@@ -1,5 +1,4 @@
 /**
- * @module Validation
  * @description This module provides functions for validating user input, including
  * text input and the structure of JSON objects.
  */
@@ -14,10 +13,16 @@
  * validateInput(""); // Returns false
  * validateInput("   "); // Returns false
  * validateInput(null); // Returns false
- * validateInput(undefined); // Returns false
+ * validateInput(undefined); // Returns false.
+ * @precondition text is a string.
+ * @postcondition returns true if the string is non-empty, after trimming whitespace, false otherwise.
  */
 function validateInput(text) {
-  // Handle null or undefined inputs: Return false if the input is null or undefined.
+  /**
+   * Handle null or undefined inputs: Return false if the input is null or undefined.
+   * @param {string} text - The text to check.
+   * @returns {boolean} true if the string is non-empty, after trimming whitespace, false otherwise.
+   */
   if (text === null || text === undefined) return false;
   // Trim whitespace from both ends of the string and check if the length is greater than 0.
   return text.trim().length > 0;
@@ -35,12 +40,20 @@ function validateInput(text) {
  * validateJsonStructure(data, structure); // Returns true
  * const structure2 = ["name", "address"];
  * validateJsonStructure(data, structure2); // Returns false
- * validateJsonStructure(null, structure); // Returns false
- * validateJsonStructure({}, structure); // Returns false
+ * validateJsonStructure(null, structure); // Returns false.
+ * validateJsonStructure({}, structure); // Returns false.
+ * @precondition data is a non-null object, and structure is a non-null array.
+ * @postcondition returns true if the object contains all the given keys, and false otherwise.
  */
 function validateJsonStructure(data, structure) {
-  // Handle invalid inputs: Return false if data or structure is null, undefined, or of the wrong type.
+  /**
+   * Handle invalid inputs: Return false if data or structure is null, undefined, or of the wrong type.
+   * @param {object} data - The data to check.
+   * @param {string[]} structure - The array of keys to check.
+   * @returns {boolean} true if the object contains all the given keys, and false otherwise.
+   */
   if (data === null || data === undefined || typeof data !== 'object' || structure === null || structure === undefined || !Array.isArray(structure)) return false
+  
   // Iterate over each required key in the structure.
   for (const key of structure) {
     // If the data object does not have the current key, return false.

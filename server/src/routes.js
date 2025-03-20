@@ -1,40 +1,60 @@
-// routes.js  
-// This file defines the API routes for the server.  
-// It handles requests to summarize user statements using the Gemini API and  
-// defines how the server interacts with the Gemini API to generate responses.  
-const { validateInput, validateJsonStructure } = require('./validation');  
-// Import the express module to create routes.  
-const express = require('express');  
+// routes.js
+// This file defines the API routes for the server.
+// It handles requests to summarize user statements using the Gemini API and
+// defines how the server interacts with the Gemini API to generate responses.
+const { validateInput, validateJsonStructure } = require('./validation');
+// Import the express module to create routes.
+const express = require('express');
 
+/**
+ * @function setupRoutes
+ * @description Sets up the API routes for the Express app.
+ * This function configures the /api/ai-summarize route, which handles POST requests for summarizing user statements.
+ * It also initializes the Gemini generative model instance.
+ * @param {object} app - The Express app instance.
+ * @param {object} geminiClient - The Gemini API client instance.
+ * @returns {void}
+ * @preconditions The app must be a valid express app. The geminiClient must be a valid gemini client.
+ * @postconditions The app will have the route configured.
+ */
+function setupRoutes(app, geminiClient) {
+  /**
+   * @type {import("@google-ai/generativelanguage").GenerativeModel}
+   * @description Get the Gemini generative model instance from the client.
+   * We are using the gemini-2.0-flash model for this project.
+   * It is defined here because we need the gemini client to define it.
+   */
+  const model = geminiClient.getGenerativeModel({ model: "gemini-2.0-flash" });
 
-/**  
- * @function setupRoutes  
- * @description Sets up the API routes for the Express app.  
- * This function configures the /api/ai-summarize route, which handles POST requests for summarizing user statements.  
- * It also initializes the Gemini generative model instance.  
- * @param {object} app - The Express app instance.  
- * @param {object} geminiClient - The Gemini API client instance.  
- */  
-function setupRoutes(app, geminiClient) {  
-  // Get the Gemini generative model instance from the client.  
-  // We are using the gemini-2.0-flash model for this project.  
-  // It is defined here because we need the gemini client to define it.  
-  const model = geminiClient.getGenerativeModel({ model: "gemini-2.0-flash" });  
+  /**
+   * @type {express.Router}
+   * @description Create a new router object to define the API routes.
+   */
+  const router = express.Router();
 
-  // Create a new router object to define the API routes.  
-  const router = express.Router();  
-
-  /**  
-   * @function /api/ai-summarize  
-   * @description Handles POST requests to the /api/ai-summarize endpoint.  
-   * This route is responsible for receiving two user statements, validating them, sending them to the Gemini API for analysis,  
-   * and returning the AI-generated response to the client.  
-   */  
-  router.post('/api/ai-summarize', async (req, res) => {  
-    // Extract the user's statements from the request body.  
-    // user1Statement and user2Statement will contain the user's text inputs.  
-    const { user1Statement, user2Statement } = req.body;  
-    const expectedJsonStructure = ['user1Statement', 'user2Statement'];  
+  /**
+   * @function /api/ai-summarize
+   * @description Handles POST requests to the /api/ai-summarize endpoint.
+   * This route is responsible for receiving two user statements, validating them, sending them to the Gemini API for analysis,
+   * and returning the AI-generated response to the client.
+   * @async
+   * @param {express.Request} req - The Express request object.
+   * @param {express.Response} res - The Express response object.
+   * @returns {Promise<void>}
+   * @throws {Error} If there is an error summarizing statements.
+   * @preconditions The request body must contain 'user1Statement' and 'user2Statement'.
+   * @postconditions If successful, the response body will contain the aiResponse. If not successful, the response body will contain an error message.
+   */
+  router.post('/api/ai-summarize', async (req, res) => {
+    /**
+     * @type {object}
+     * @property {string} user1Statement - The user 1 statement.
+     * @property {string} user2Statement - The user 2 statement.
+     * @description Extract the user's statements from the request body.
+     * user1Statement and user2Statement will contain the user's text inputs.
+     */
+    const { user1Statement, user2Statement } = req.body;
+    const expectedJsonStructure = ['user1Statement', 'user2Statement'];
 
     // Check if the required fields are present.
     if (!user1Statement || !user2Statement) {
@@ -43,29 +63,30 @@ function setupRoutes(app, geminiClient) {
         errorMessage: "Both user1Statement and user2Statement are required.",
       });
     }
+    // Validate that the data has the correct structure.
+    if (!validateJsonStructure(req.body, expectedJsonStructure)) {
+      return res.status(400).json({
+        error: "Invalid request body.",
+        errorMessage: `The request body must be a JSON object with 'user1Statement' and 'user2Statement' properties.`,
+      });
+    }
 
-     // Validate that the data has the correct structure.  
-     if (!validateJsonStructure(req.body, expectedJsonStructure)) {  
-        return res.status(400).json({  
-          error: "Invalid request body.",  
-          errorMessage: `The request body must be a JSON object with 'user1Statement' and 'user2Statement' properties.`  
-        });  
-      }  
-  
-      // Validate input.  
-      // Check if the user1Statement is valid (not empty).  
-      if (!validateInput(user1Statement)) {  
-        return res.status(400).json({ error: "Participant 1's statement cannot be empty." });  
-      }  
-  
-      // Check if the user2Statement is valid (not empty).  
-      if (!validateInput(user2Statement)) {  
-        return res.status(400).json({ error: "Participant 2's statement cannot be empty." });  
-      }  
+    // Validate input.
+    // Check if the user1Statement is valid (not empty).
+    if (!validateInput(user1Statement)) {
+      return res.status(400).json({ error: "Participant 1's statement cannot be empty." });
+    }
 
-    // Construct the prompt for the Gemini API.  
-    // This prompt instructs the API to analyze the two statements for logical fallacies.  
-    const prompt = `Analyze these two statements for logical fallacies: Statement 1: ${user1Statement}, Statement 2: ${user2Statement}. If there are any logical fallacies, describe them and explain why they are fallacies.`;  
+    // Check if the user2Statement is valid (not empty).
+    if (!validateInput(user2Statement)) {
+      return res.status(400).json({ error: "Participant 2's statement cannot be empty." });
+    }
+    /**
+     * @type {string}
+     * @description Construct the prompt for the Gemini API.
+     * This prompt instructs the API to analyze the two statements for logical fallacies.
+     */
+    const prompt = `Analyze these two statements for logical fallacies: Statement 1: ${user1Statement}, Statement 2: ${user2Statement}. If there are any logical fallacies, describe them and explain why they are fallacies.`;
 
     // Use a try-catch block to handle potential errors during the Gemini API interaction.  
     try {  
@@ -96,12 +117,12 @@ function setupRoutes(app, geminiClient) {
         // Handle different types of Gemini API errors.
         if (error.details && error.details.length > 0 && error.details[0].metadata && error.details[0].metadata.includes('HarmBlockThreshold')) {
              return res.status(400).json({ error: "The AI rejected one of the statements.", errorMessage: "The AI determined that one of the statements violates the acceptable content policy." });
-
         }
         if (error.message && error.message.includes('Permission denied')) {
                 return res.status(403).json({ error: "Permission denied.", errorMessage: "The API key does not have permission to access the Gemini API. Please check your API key." });
 
         }
+
 
       // Respond to the client with a 500 Internal Server Error status code and an error message.  
       // The errorMessage field provides more details about the error.  

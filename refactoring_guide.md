@@ -10,7 +10,40 @@
 
 
 ## Introduction
+
+## Error Handling Improvements
+
+### `useErrorHandler` Hook
+
+*   **Improved:** The `useErrorHandler` hook now includes input validation. It will only accept string or null values. If a non-string value is passed to the `setError` function, it will log a warning to the console and set a default error message ("Invalid error type received").
+
+### `useStatementsManager` Hook
+
+*   **Improved:** The `addStatement` function now requires non-empty string values for `code`, `user`, and `text`. Invalid input will result in a warning being logged and the function returning early. Additionally, `getStatements` now takes an `setError` function as a parameter to handle potential errors during statement retrieval.
+
+### `useSummarizeStatements` Hook
+* **Improved**: The hook now validates the `getMostRecentStatement` parameter, ensuring it is a function, and checks if `code` is a non-empty string. The `handleSummarizeClick` function now checks if `setIsSummarizing` is a function and will throw an error if it's not. The `handleSummarizeClick` function will now catch errors inside it and update the `apiError` state.
+
+## Code Comment Improvements
+
+
+### `useErrorHandler` Hook
+
+*   **Improved:** The `useErrorHandler` hook now includes input validation. It will only accept string or null values. If a non-string value is passed to the `setError` function, it will log a warning to the console and set a default error message ("Invalid error type received").
+
+### `useStatementsManager` Hook
+
+* **Improved**: The module level `@returns` tag was updated to specify that the hook returns an object with `getStatements` and `addStatement` functions. The `getStatements` description was updated to clarify that the `setError` function is used for error handling. The `addStatement` description was updated to state that `setError` is used for error handling and that the function returns early on error.
+
+### `useSummarizeStatements` Hook
+* **Improved**: The module level `@returns` tag was updated to specify that the hook returns an object with `aiResponse`, `apiError` and `handleSummarizeClick` properties. The `handleSummarizeClick` description was updated to clarify that it throws an error if `setIsSummarizing` is not a function. The `useSummarizeStatements` description was updated to specify that it throws an error if `getMostRecentStatement` is not a function or if `code` is not a non-empty string.
+
+
 We have already implemented the basic features of the app, so now it's time to refactor.
+
+
+
+
 This guide outlines the comprehensive plan for the refactoring and development of the Relationship Resolver project, following the World-Class Plan. Our goal is to build an exceptional application that helps resolve relationship conflicts effectively and intuitively. This guide details our current state, the principles guiding our refactoring efforts, our objectives, and a detailed plan with specific actions to enhance the codebase. We will also focus on value-first development, user feedback, and CI for testing.
 
 ## Guiding Principles

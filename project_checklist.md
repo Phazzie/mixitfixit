@@ -45,10 +45,16 @@
         - [ ] Implement UI elements.
         - [ ] Implement logic for handling Accept, Modify, Reject actions.
         - [ ] Implement logic to lock the resolution.
+        -   [ ] verify that the code is commented.
+        -   [ ] commit changes        
+         -  [ ] Verify that the code is commented.
+         -  [ ] Verify the changes were commited.
+         -  [ ] Verify all the tests are passing.
     - [ ] **Implement Basic Summary Phase**. (Estimated time: 4 hours, Priority: High)
-        - [ ] Implement the UI for the summary.
-        - [ ] Implement the logic to show the required data.
-    -   [ ] **Create the basic Data Access Layer**. (Estimated time: 4 hours, Priority: High)
+        - [x] Implement the UI for the summary.
+        - [x] Implement the logic to show the required data.
+        -   [ ] verify that the code is commented.
+        -   [ ] commit changes
         -   [ ] Create a new module for data access.
         -   [ ] Move all storage-related code into this module.
          -  [ ] Verify that the code is commented.

@@ -10,10 +10,11 @@
         -   [x] Ensure discussion cannot start until an issue is agreed upon.
         -   [x] verify that the code is commented.
         -   [x] commit changes
-         -  - [ ] Verify that the code is commented.
-         -  - [ ] Verify the changes were commited.
-         -  - [ ] Verify all the tests are passing.
+         -  [ ] Verify that the code is commented.
+         -  [ ] Verify the changes were commited.
+         -  [ ] Verify all the tests are passing.
 
+         
     -   [ ] **Implement Basic Steel-Manning** (Estimated time: 4 hours, Priority: High)
         -   [x] Implement UI elements.
         -   [x] Implement logic for restating.
@@ -22,11 +23,17 @@
           - [ ] verify that the code is commented.
           - [ ] commit changes
          -  - [ ] Verify that the code is commented.
-         -  - [ ] Verify the changes were commited.
+         -  [ ] Verify the changes were commited.
          -  - [ ] Verify all the tests are passing.
     -   [ ] **Implement Basic Statement Locking** (Estimated time: 2 hours, Priority: High)
-        -   [ ] Modify UI to "lock" statements.
-        -   [ ] Implement code to prevent editing.
+        -   [x] Modify UI to "lock" statements.
+        -   [x] Implement code to prevent editing.
+        -   [ ] verify that the code is commented.
+        -   [ ] commit changes
+         -  [ ] Verify that the code is commented.
+         -  [ ] Verify the changes were commited.
+         -  [ ] Verify all the tests are passing.
+
     - [ ] **Implement Basic Discussion Phase**. (Estimated time: 4 hours, Priority: High)
         - [ ] Create basic UI for real-time back-and-forth typing.
     - [ ] **Implement Basic Resolution Phase**. (Estimated time: 4 hours, Priority: High)
@@ -40,12 +47,12 @@
         -   [ ] Create a new module for data access.
         -   [ ] Move all storage-related code into this module.
     -   [ ] **Create basic contracts for the Data Access Layer**. (Estimated time: 2 hours, Priority: High)
-        -   [ ] Create the corresponding interface files.
-        -   [ ] Create unit tests to validate contracts.
+        - [ ] Create the corresponding interface files.
+        - [ ] Create unit tests to validate contracts.
        - **Verification steps**:
-            - [ ] Verify that the code is commented.
+            - [ ] Verify that the code is commented. 
             - [ ] Verify the changes were commited.
-            - [ ] Verify all the new features are implemented.
+            - [ ] Verify all the new features are implemented. 
             - [ ] Check all the tests are passing.
 
 

@@ -27,15 +27,20 @@
          -  - [ ] Verify all the tests are passing.
     -   [ ] **Implement Basic Statement Locking** (Estimated time: 2 hours, Priority: High)
         -   [x] Modify UI to "lock" statements.
-        -   [x] Implement code to prevent editing.
-        -   [ ] verify that the code is commented.
-        -   [ ] commit changes
+        -   [x] Implement code to prevent editing.        
+        -   [ ] verify that the code is commented.        
+        -   [ ] commit changes        
          -  [ ] Verify that the code is commented.
          -  [ ] Verify the changes were commited.
          -  [ ] Verify all the tests are passing.
 
     - [ ] **Implement Basic Discussion Phase**. (Estimated time: 4 hours, Priority: High)
         - [ ] Create basic UI for real-time back-and-forth typing.
+        -   [ ] verify that the code is commented.
+        -   [ ] commit changes
+         -  [ ] Verify that the code is commented.
+         -  [ ] Verify the changes were commited.
+         -  [ ] Verify all the tests are passing.
     - [ ] **Implement Basic Resolution Phase**. (Estimated time: 4 hours, Priority: High)
         - [ ] Implement UI elements.
         - [ ] Implement logic for handling Accept, Modify, Reject actions.

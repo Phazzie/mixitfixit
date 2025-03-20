@@ -43,10 +43,12 @@
         -   [x] Improved component readability.
         - [x] Added a parameter to change the code length.
     -   [ ] Analyze `CodeEntry.js`: Confirmed it's well-structured and follows SRP. 
-    - [x] Analyze `StatementDisplay.js`: Identified opportunities to improve separation of concerns.
-    - [ ] Investigate `useSummarization.js` and `useSummarizeStatements.js`: identified that they could be merged.
+    -   [x] Analyze `StatementDisplay.js`: Identified opportunities to improve separation of concerns.
+    -   [x] Investigate `useSummarization.js` and `useSummarizeStatements.js`: identified that they could be merged.
+    -   [x] merge useSummarization and useSummarizeStatements.
+    -   [x] remove useSummarization.
     - [ ] Investigate `useStatementLoader.js` and `useStatements.js`: identified that they could be improved.
-    - **StatementDisplay Refactor:**
+    -   **StatementDisplay Refactor:**
         - [x] Create `StatementList.js` to display the list of statements.
         - [x] Create `AiResponse.js` to display the AI response.
         - [x] Create `LoadingMessage.js`, `ErrorMessage.js` and `NoValuesMessage.js` to display those messages.
@@ -60,7 +62,7 @@
 1.  **Create Smaller Components:**
     *   [ ] Create `StatementList.js` to display the list of statements.
     *   [ ] Create `AiResponse.js` to display the AI response. 
-    * [ ] Create `LoadingMessage.js`, `ErrorMessage.js` and `NoValuesMessage.js` to display those messages. 
+    *   [ ] Create `LoadingMessage.js`, `ErrorMessage.js` and `NoValuesMessage.js` to display those messages.
 2. **Extract Storage logic**:
     * [ ] Create a function to get the statements from local storage. 
 3.  **Update `StatementDisplay.js`:**
@@ -73,8 +75,7 @@
 
 1.  **Investigate `useSummarization.js` and `useSummarizeStatements.js`:**
     *   [ ] Read both files and identify differences.
-    *   [ ] Determine if they can be merged into a single hook.
-    * [ ] Refactor the files.
+    *   [ ] Determine if they can be merged into a single hook.  
 2.  **Review `useStatements.js` and `useStatementLoader.js`:**
     *   [ ] Read both files and identify how they are used.
     *   [ ] Determine if their responsibilities are clear.
@@ -106,3 +107,4 @@
 
 - [x] Update Checklist
   - [x] Update the checklist after each set of tasks.
+

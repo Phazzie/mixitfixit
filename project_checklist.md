@@ -9,13 +9,21 @@
         -   [x] Implement logic for handling Accept, Modify, Reject actions.
         -   [x] Ensure discussion cannot start until an issue is agreed upon.
         -   [x] verify that the code is commented.
-        -   [x] Commit changes
+        -   [x] commit changes
+         -  - [ ] Verify that the code is commented.
+         -  - [ ] Verify the changes were commited.
+         -  - [ ] Verify all the tests are passing.
+
     -   [ ] **Implement Basic Steel-Manning** (Estimated time: 4 hours, Priority: High)
-        -   [ ] Implement UI elements.
-        -   [ ] Implement logic for restating.
-        -   [ ] Implement logic for confirming understanding.
+        -   [x] Implement UI elements.
+        -   [x] Implement logic for restating.
+        -   [x] Implement logic for confirming understanding.
         - **Dependencies**: This must be done after implementing Issue Proposal and agreement.
-         -  [ ] verify that the code is commented.
+          - [ ] verify that the code is commented.
+          - [ ] commit changes
+         -  - [ ] Verify that the code is commented.
+         -  - [ ] Verify the changes were commited.
+         -  - [ ] Verify all the tests are passing.
     -   [ ] **Implement Basic Statement Locking** (Estimated time: 2 hours, Priority: High)
         -   [ ] Modify UI to "lock" statements.
         -   [ ] Implement code to prevent editing.

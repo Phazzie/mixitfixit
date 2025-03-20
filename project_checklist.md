@@ -37,10 +37,10 @@
     - [ ] **Implement Basic Discussion Phase**. (Estimated time: 4 hours, Priority: High)
         - [ ] Create basic UI for real-time back-and-forth typing.
         -   [ ] verify that the code is commented.
-        -   [ ] commit changes
-         -  [ ] Verify that the code is commented.
-         -  [ ] Verify the changes were commited.
-         -  [ ] Verify all the tests are passing.
+        -   [ ] commit changes        
+        -   [ ] Verify that the code is commented.        
+        -   [ ] Verify the changes were commited.        
+        -   [ ] Verify all the tests are passing.        
     - [ ] **Implement Basic Resolution Phase**. (Estimated time: 4 hours, Priority: High)
         - [ ] Implement UI elements.
         - [ ] Implement logic for handling Accept, Modify, Reject actions.
@@ -51,13 +51,16 @@
     -   [ ] **Create the basic Data Access Layer**. (Estimated time: 4 hours, Priority: High)
         -   [ ] Create a new module for data access.
         -   [ ] Move all storage-related code into this module.
+         -  [ ] Verify that the code is commented.
+         -  [ ] Verify the changes were commited.
+         -  [ ] Verify all the tests are passing.
     -   [ ] **Create basic contracts for the Data Access Layer**. (Estimated time: 2 hours, Priority: High)
         - [ ] Create the corresponding interface files.
         - [ ] Create unit tests to validate contracts.
-       - **Verification steps**:
-            - [ ] Verify that the code is commented. 
-            - [ ] Verify the changes were commited.
-            - [ ] Verify all the new features are implemented. 
+         -  [ ] Verify that the code is commented.
+         -  [ ] Verify the changes were commited.
+         -  [ ] Verify all the tests are passing.
+         - **Verification steps**:
             - [ ] Check all the tests are passing.
 
 

@@ -2,14 +2,10 @@
 
 [Link to Refactoring Guide](refactoring_guide.md)
 
-## Phase 3: Implement Missing Features (Estimated Time: 28 hours, Priority: High)
+## Phase 3: Refactoring and Core Features (Estimated Time: 28 hours, Priority: High)
 
-    -   [ ] **Implement Issue Proposal and Agreement** (Estimated time: 4 hours, Priority: High)
-        -   [x] Implement UI elements.
-        -   [x] Implement logic for handling Accept, Modify, Reject actions.
-        -   [x] Ensure discussion cannot start until an issue is agreed upon.
-        -   [x] verify that the code is commented.
-        -   [x] commit changes
+    -   [ ] **Implement Issue Proposal and Agreement** (Estimated time: 4 hours, Priority: High) 
+         - [ ] Implement UI elements.
          -  [ ] Verify that the code is commented.
          -  [ ] Verify the changes were commited.
          -  [ ] Verify all the tests are passing.
@@ -17,22 +13,18 @@
          
     -   [ ] **Implement Basic Steel-Manning** (Estimated time: 4 hours, Priority: High)
         -   [x] Implement UI elements.
-        -   [x] Implement logic for restating.
-        -   [x] Implement logic for confirming understanding.
+        -   [ ] Implement logic for restating.
+        -   [ ] Implement logic for confirming understanding.
         - **Dependencies**: This must be done after implementing Issue Proposal and agreement.
           - [ ] verify that the code is commented.
           - [ ] commit changes
-         -  - [ ] Verify that the code is commented.
-         -  [ ] Verify the changes were commited.
-         -  - [ ] Verify all the tests are passing.
-    -   [ ] **Implement Basic Statement Locking** (Estimated time: 2 hours, Priority: High)
-        -   [x] Modify UI to "lock" statements.
-        -   [x] Implement code to prevent editing.        
-        -   [ ] verify that the code is commented.        
-        -   [ ] commit changes        
          -  [ ] Verify that the code is commented.
          -  [ ] Verify the changes were commited.
          -  [ ] Verify all the tests are passing.
+    -   [ ] **Implement Basic Statement Locking** (Estimated time: 2 hours, Priority: High)
+        -   [ ] Modify UI to "lock" statements.
+        -   [ ] Implement code to prevent editing. 
+        - [ ] Add unit tests.      
 
     - [ ] **Implement Basic Discussion Phase**. (Estimated time: 4 hours, Priority: High)
         - [ ] Create basic UI for real-time back-and-forth typing.
@@ -46,16 +38,12 @@
         - [ ] Implement logic for handling Accept, Modify, Reject actions.
         - [ ] Implement logic to lock the resolution.
         -   [ ] verify that the code is commented.
-        -   [ ] commit changes        
-         -  [ ] Verify that the code is commented.
-         -  [ ] Verify the changes were commited.
-         -  [ ] Verify all the tests are passing.
+        -  [ ] Add unit tests.      
     - [ ] **Implement Basic Summary Phase**. (Estimated time: 4 hours, Priority: High)
-        - [x] Implement the UI for the summary.
-        - [x] Implement the logic to show the required data.
+        - [ ] Implement the UI for the summary.
+        - [ ] Implement the logic to show the required data.
         -   [ ] verify that the code is commented.
-        -   [ ] commit changes
-         -  [ ] Verify that the code is commented.
+        -   [ ] Add unit tests.      
          -  [ ] Verify the changes were commited.
          -  [ ] Verify all the tests are passing.
     -   [ ] **Create the basic Data Access Layer**. (Estimated time: 4 hours, Priority: High)
@@ -65,15 +53,13 @@
         -   [ ] commit changes
          -  [ ] Verify that the code is commented.
          -  [ ] Verify the changes were commited.
-         -  [ ] Verify all the tests are passing.
+         -  [ ] Verify all the tests are passing.     
     -   [ ] **Create basic contracts for the Data Access Layer**. (Estimated time: 2 hours, Priority: High)
         - [ ] Create the corresponding interface files.
         - [ ] Create unit tests to validate contracts.
-         -  [ ] Verify that the code is commented.
-         -  [ ] Verify the changes were commited.
-         -  [ ] Verify all the tests are passing.
+        - [ ] Add unit tests.      
          - **Verification steps**:
-            - [ ] Check all the tests are passing.
+            - [ ] Check all the tests are passing. 
 
 
 ## Phase 3: General Review and Cleanup / Tests in Progress
@@ -123,7 +109,7 @@
         -   [ ] Split the code into modules. (Estimated time: 2 hours, Priority: High)
          - **Dependencies**: This must be done after identifying the modules.
         -   [ ] Add tests to all the modules. (Estimated time: 1 hour, Priority: High)
-         - **Dependencies**: This must be done after splitting.
+         - **Dependencies**: This must be done after splitting. 
         - **Verification steps**:
             - [ ] Verify that the code is correctly split into modules.
             - [ ] Check that the code still works.
@@ -134,7 +120,7 @@
         - **Verification steps**:
             - [ ] Verify that the code follows consistent formatting.
             - [ ] Check all names are clear.
-            - [ ] Code reviewed by another person.
+            - [ ] Code reviewed by another person. 
 
     -   **[ ] SRP**: (Estimated time: 4 hours, Priority: Medium)
          -   [ ] Identify components or modules that have multiple responsibilities.
@@ -149,7 +135,6 @@
     - **[ ] Implement CI for tests:** (Estimated time: 2 hours, Priority: High)
          - [ ] Choose a CI service (e.g., GitHub Actions). (Estimated time: 1 hour, Priority: High)
          - [ ] Configure the CI service to run unit tests on every push. (Estimated time: 1 hour, Priority: High)
-
 
 ## Phase 4: Extensibility and advanced refactoring
 
@@ -233,7 +218,7 @@
             - [ ] Check the code is correctly separated into modules.
             - [ ] Verify the tests pass.
             - [ ] Code reviewed by another person.
-        
+
 ## Phase 5: Expanded Testing and quality check
 - **[ ] Prioritize key workflows**:
         - [ ] Identify the key workflows. (Estimated time: 1 hours, Priority: High)
@@ -350,6 +335,11 @@
     -   [x] Implement Frontend Input Validation: Use the `validateInput` function to prevent empty submissions.
 
 ## Refactoring Progress
+
+ - [ ] Update refactoring guide.
+  - [ ] Update the checklist.
+  - [ ] Update the testing guide.
+  - **Dependencies**: This must be done after each set of tasks.
 
  -   **Component Refactoring:**
         -   [x] Refactored `RandomCodeButton.js` to extract code generation logic.

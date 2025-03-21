@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/src/hooks/useSummarizeStatements.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/src/hooks/useSummarizeStatements.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState } from 'react';
+
+/**
+ * @module useSummarizeStatements.js
+ * @description This module provides the `useSummarizeStatements` hook, which manages the process of summarizing statements
+ * by sending them to the server's AI summarization API. It also manages the state of the summarization request,
+ * including the AI's response and any errors that occur during the process.
+ * @returns {{aiResponse: string|null, apiError: string|null, handleSummarizeClick: function, isSummarizing: boolean}} An object with the aiResponse, apiError, isSummarizing and handleSummarizeClick properties.
+ */
+
+/**
+ * @function useSummarizeStatements
+ * @description React hook for handling the summarization of statements. It sends the most recent statements to an AI summarization API and manages the state of the AI's response and any potential errors.
+ * @param {function} getMostRecentStatement - A function that retrieves the most recent statement for a given participant and code. This function is expected to accept two parameters: the code and the participant name.
+ * This function will also receive the setError function as a parameter.
+ * @param {function} post - The post function that will be used to make the api calls.
+ * @param {function} setError - The function to use to set an error.
+ * @returns {object} An object containing the AI's response, any API error, a boolean indicating if it is summarizing and a function to trigger the summarization process.
+ * @property {string|null} aiResponse - The AI's response to the summarized statements. Initially null. If the API call is successfull, this will have the response.
+ * @property {string|null} apiError - Any error message from the API request. Initially null.
+ * @property {function} handleSummarizeClick - An asynchronous function to initiate the summarization process.
+ * @property {boolean} isSummarizing - Indicates if it is currently summarizing.
+ * @precondition `getMostRecentStatement` must be a function.
+ * @precondition `post` must be a function.
+ * @precondition `setError` must be a function.
+ * @postcondition The returned object will have the properties aiResponse, apiError, isSummarizing and handleSummarizeClick.
+ */
+function useSummarizeStatements(getMostRecentStatement, post, setError) {
+  
+  // Check if setError is a function.
+  if (typeof setError !== 'function') {
+    throw new Error('setError must be a function');
+  }
+  // Check if post is a function.
+  if (typeof post !== 'function') {
+    throw new Error('post must be a function');
+  }
+  /**
+   * @state aiResponse
+   * @description Holds the AI's response to the summarized statements.
+   * @type {string|null}
+   * @default null
+   */
+  const [aiResponse, setAiResponse] = useState(null);
+  /**
+   * @state apiError
+   * @description Stores an error message if the API request fails.
+   * @type {string|null}
+   * @default null
+   */
+  const [apiError, setApiError] = useState(null);
+
+  /**
+   * @state isSummarizing
+   * @description Stores a boolean indicating if it is currently summarizing.
+   * @type {boolean}
+   * @default false
+   */
+  const [isSummarizing, setIsSummarizing] = useState(false);
+
+  /**
+   * @function handleSummarizeClick
+   * @description This asynchronous function initiates the summarization process. It clears previous AI response and API error.
+   * It retrieves the most recent statements for "Participant 1" and "Participant 2", then sends the statements to the server for summarization.
+   * If successful, it will set the `aiResponse`. If there was an error, it will set the `apiError`.
+   * @param {string} code - The code used to identify the statements to be summarized.
+   * @async
+   * @throws {Error} Will throw an error if something fails.
+   */
+  const handleSummarizeClick = async (code) => {
+
+    // Indicate that the summarization process is starting
+    setIsSummarizing(true);
+    // Clear any previous AI response.
+    setAiResponse(null);
+    // Clear any previous API error.
+    setApiError(null);
+    
+    try {
+      
+      // Get the most recent statements for "Participant 1" and "Participant 2".
+      let participant1Statements;
+      try{
+        participant1Statements = getMostRecentStatement(code, "Participant 1");
+      }catch(error){
+        throw new Error(error);
+      }
+      let participant2Statements;
+      try{
+        participant2Statements = getMostRecentStatement(code, "Participant 2");
+      }catch(error){
+        throw new Error(error);
+      }
+
+      // Create an object with the statements to be summarized.
+      
+      
+      const statementsToSummarize = { user1Statement: participant1Statements, user2Statement: participant2Statements };
+      
+      // Sends a POST request to the api to summarize the statements.
+      const response = await post('/api/ai-summarize', statementsToSummarize);
+
+      // If the response is not ok throw an error.
+      if (!response.ok) {
+        //parse the error message.
+        const data = await response.json().catch(() => ({ errorMessage: 'Failed to get an AI response' }));
+        // throw an error with the parsed error message or a default one.
+        throw new Error(data.errorMessage || 'Failed to get an AI response');
+      }
+      const data = await response.json();
+      // Store the AI response
+      setAiResponse(data.aiResponse);
+    } catch (error) {
+      throw new Error(error);
+    } finally {
+      // Indicate that the summarization process has finished.
+      setIsSummarizing(false);
+    }
+  };
+  /**
+   * @returns {object} - An object containing the current AI response, API error, and the handleSummarizeClick function.
+   * @property {string|null} aiResponse - The AI's response to the summarized statement.
+   * @property {string|null} apiError - The API error message.
+   * @property {function} handleSummarizeClick - The function to trigger the summarization process.
+   */
+  return { aiResponse, apiError, handleSummarizeClick, isSummarizing };
+}
+
+export default useSummarizeStatements;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-App.html">App</a></li><li><a href="module-CodeDisplay.html">CodeDisplay</a></li><li><a href="module-CodeEntry.html">CodeEntry</a></li><li><a href="module-ParticipantInput.html">ParticipantInput</a></li><li><a href="module-RandomCodeButton.html">RandomCodeButton</a></li><li><a href="module-StatementList.html">StatementList</a></li><li><a href="module-dataManager%2520Provides%2520data%2520access%2520functions%2520for%2520local%2520storage..html">dataManager Provides data access functions for local storage.</a></li><li><a href="module-gemini.html">gemini</a></li><li><a href="module-localStorage.html">localStorage</a></li><li><a href="module-localStorageManager.html">localStorageManager</a></li><li><a href="module-routes.html">routes</a></li><li><a href="module-useErrorHandler.html">useErrorHandler</a></li><li><a href="module-useStatementsManager.html">useStatementsManager</a></li><li><a href="module-validation.html">validation</a></li><li><a href="useSummarizeStatements.module_js.html">js</a></li></ul><h3>Externals</h3><ul><li><a href="external-GenerativeModel.html">GenerativeModel</a></li></ul><h3>Interfaces</h3><ul><li><a href="global.html#DataManagerContract">DataManagerContract</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AiResponse">AiResponse</a></li><li><a href="global.html#CodeInput">CodeInput</a></li><li><a href="global.html#ErrorMessage">ErrorMessage</a></li><li><a href="global.html#LoadingMessage">LoadingMessage</a></li><li><a href="global.html#NoValuesMessage">NoValuesMessage</a></li><li><a href="global.html#Resolution">Resolution</a></li><li><a href="global.html#StatementDisplay">StatementDisplay</a></li><li><a href="global.html#StatementManager">StatementManager</a></li><li><a href="global.html#UserSelection">UserSelection</a></li><li><a href="global.html#addStatementToState">addStatementToState</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#canSummarize">canSummarize</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#geminiAPI">geminiAPI</a></li><li><a href="global.html#geminiClient">geminiClient</a></li><li><a href="global.html#generateRandomCode">generateRandomCode</a></li><li><a href="global.html#getMostRecentStatement">getMostRecentStatement</a></li><li><a href="global.html#getMostRecentStatementFromLoader">getMostRecentStatementFromLoader</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#useCode">useCode</a></li><li><a href="global.html#useLocalStorage">useLocalStorage</a></li><li><a href="global.html#useStatementLoader">useStatementLoader</a></li><li><a href="global.html#useStatements">useStatements</a></li><li><a href="global.html#validateInput">validateInput</a></li><li><a href="global.html#validateJsonStructure">validateJsonStructure</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Mar 21 2025 09:43:12 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

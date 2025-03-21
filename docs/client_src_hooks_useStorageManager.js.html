@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/src/hooks/useStorageManager.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/src/hooks/useStorageManager.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module localStorage
+ * @description Module to manage interactions with localStorage.
+ */
+
+/**
+ * @typedef {Object} Statement
+ * @description Represents a statement made by a user.
+ * @property {string} user - The user associated with the statement.
+ * @property {string} text - The content of the statement.
+ */
+
+/**
+ * @function getFromLocalStorage
+ * @description Retrieves an item from localStorage.
+ * @param {string} key - The key of the item to retrieve.
+ * @param {string} code - The code of the discussion to use as the key to get the statements from the local storage.
+ * @param {string} user - The user for whom to retrieve the statement (e.g., "Participant 1").
+ * @returns {any|null} The item from localStorage or null if the item does not exist.
+ * @throws {Error} Throws an error if there's an issue retrieving data from local storage.
+ * @precondition The key parameter should be a non empty string.
+ * @postcondition Returns the item if it exists, or null otherwise.
+ * @example getFromLocalStorage("abc123xyz", "Participant 1")
+ */
+const getFromLocalStorage = (key, code, user) => {
+  try {
+    if (key === undefined) {
+      throw new Error("The key parameter is undefined");
+    }
+    if (code !== undefined &amp;&amp; user !== undefined) {
+      // Retrieve the data from localStorage using the code as the key.
+      // Returns null if no data is found.
+      const data = getFromLocalStorage(code);
+      // If no data is found for the given code, return null.
+      if (!data) return null;
+      // Filter the statements to only include the current user.
+      const userStatements = data.filter((item) => item.user === user);
+      // If no statements are found for the user, return null.
+      if (userStatements.length === 0) return null;
+      // Return the text of the most recent statement.
+      return userStatements.at(-1).text;
+    }
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : null;
+  } catch (error) {
+    console.error("Error getting from localStorage:", error);
+    throw error;
+  }
+};
+
+/**
+ * @function setInLocalStorage
+ * @description Sets an item in localStorage.
+ * @param {string} key - The key of the item to set.
+ * @param {any} value - The value to set.
+ * @returns {void}
+ * @throws {Error} Throws an error if there's an issue setting data to local storage.
+ * @precondition The key parameter should be a non empty string.
+ * @postcondition The item is stored in the local storage.
+ * @example setInLocalStorage("abc", "def")
+ */
+const setInLocalStorage = (key, value) => {
+  try {
+    if (key === undefined) {
+      throw new Error("The key parameter is undefined");
+    }
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.error("Error setting to localStorage:", error);
+    throw error;
+  }
+};
+
+/**
+ * @function removeFromLocalStorage
+ * @description Removes an item from localStorage.
+ * @param {string} key - The key of the item to remove.
+ * @returns {void}
+ * @throws {Error} Throws an error if there's an issue removing data from local storage.
+ * @precondition The key parameter should be a non empty string.
+ * @postcondition The item is removed from the local storage.
+ * @example removeFromLocalStorage("abc")
+ */
+const removeFromLocalStorage = (key) => {
+  try {
+    if (key === undefined) {
+      throw new Error("The key parameter is undefined");
+    }
+    localStorage.removeItem(key);
+  } catch (error) {
+    console.error("Error removing from localStorage:", error);
+    throw error;
+  }
+};
+
+export { getFromLocalStorage, setInLocalStorage };</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-App.html">App</a></li><li><a href="module-CodeDisplay.html">CodeDisplay</a></li><li><a href="module-CodeEntry.html">CodeEntry</a></li><li><a href="module-ParticipantInput.html">ParticipantInput</a></li><li><a href="module-RandomCodeButton.html">RandomCodeButton</a></li><li><a href="module-StatementList.html">StatementList</a></li><li><a href="module-dataManager%2520Provides%2520data%2520access%2520functions%2520for%2520local%2520storage..html">dataManager Provides data access functions for local storage.</a></li><li><a href="module-gemini.html">gemini</a></li><li><a href="module-localStorage.html">localStorage</a></li><li><a href="module-localStorageManager.html">localStorageManager</a></li><li><a href="module-routes.html">routes</a></li><li><a href="module-useErrorHandler.html">useErrorHandler</a></li><li><a href="module-useStatementsManager.html">useStatementsManager</a></li><li><a href="module-validation.html">validation</a></li><li><a href="useSummarizeStatements.module_js.html">js</a></li></ul><h3>Externals</h3><ul><li><a href="external-GenerativeModel.html">GenerativeModel</a></li></ul><h3>Interfaces</h3><ul><li><a href="global.html#DataManagerContract">DataManagerContract</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AiResponse">AiResponse</a></li><li><a href="global.html#CodeInput">CodeInput</a></li><li><a href="global.html#ErrorMessage">ErrorMessage</a></li><li><a href="global.html#LoadingMessage">LoadingMessage</a></li><li><a href="global.html#NoValuesMessage">NoValuesMessage</a></li><li><a href="global.html#Resolution">Resolution</a></li><li><a href="global.html#StatementDisplay">StatementDisplay</a></li><li><a href="global.html#StatementManager">StatementManager</a></li><li><a href="global.html#UserSelection">UserSelection</a></li><li><a href="global.html#addStatementToState">addStatementToState</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#canSummarize">canSummarize</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#geminiAPI">geminiAPI</a></li><li><a href="global.html#geminiClient">geminiClient</a></li><li><a href="global.html#generateRandomCode">generateRandomCode</a></li><li><a href="global.html#getMostRecentStatement">getMostRecentStatement</a></li><li><a href="global.html#getMostRecentStatementFromLoader">getMostRecentStatementFromLoader</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#useCode">useCode</a></li><li><a href="global.html#useLocalStorage">useLocalStorage</a></li><li><a href="global.html#useStatementLoader">useStatementLoader</a></li><li><a href="global.html#useStatements">useStatements</a></li><li><a href="global.html#validateInput">validateInput</a></li><li><a href="global.html#validateJsonStructure">validateJsonStructure</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Mar 21 2025 09:43:12 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

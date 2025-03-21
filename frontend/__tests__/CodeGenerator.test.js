@@ -1,21 +1,45 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import CodeGenerator from '../CodeGenerator';
+import { render, screen, fireEvent } from '@testing-library/react';
+import CodeGenerator from '../components/CodeGenerator';
+import { generateRandomCode } from '../utils/codeUtils';
+
+jest.mock('../components/CodeDisplay', () => ({ code }) => <div data-testid="mock-codedisplay">{code}</div>);
+jest.mock('../utils/codeUtils');
+
 /**
  * Test suite for the CodeGenerator component.
  */
+describe('CodeGenerator Component', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+  
+  it('renders correctly', () => {
+    render(<CodeGenerator />);
+    expect(screen.getByRole('button')).toBeInTheDocument();
+  });
+  
+  it('displays a button', () => {
+    render(<CodeGenerator />);
+    expect(screen.getByRole('button', { name: /Generate Code/i })).toBeInTheDocument();
+  });
+  
+  it('displays the code using the CodeDisplay component', () => {
+    render(<CodeGenerator />);
+    expect(screen.getByTestId('mock-codedisplay')).toBeInTheDocument();
+  });
+  
+  it('calls generateRandomCode and setCode when the button is clicked', () => {
+    const mockGeneratedCode = 'ABC1234';
+    generateRandomCode.mockReturnValue(mockGeneratedCode);
+    
+    const { container } = render(<CodeGenerator />);
+    const button = screen.getByRole('button', { name: /Generate Code/i });
+    fireEvent.click(button);
 
-/**
- * Test case to verify that the CodeGenerator component generates a 6-character alphanumeric code.
- *
- * Preconditions:
- * - The CodeGenerator component is rendered.
- *
- * Postconditions:
- * - A 6-character alphanumeric code is displayed in the document.
- */
-test('generates a 6-character alphanumeric code', () => { 
-  render(<CodeGenerator />);
-  const codeElement = screen.getByText(/^[a-zA-Z0-9]{6}$/); // Use getByText to find the code
-  expect(codeElement).toBeInTheDocument(); // Check if the element is in the document
+    expect(generateRandomCode).toHaveBeenCalled();
+
+    const codeDisplay = container.querySelector('[data-testid="mock-codedisplay"]');
+    expect(codeDisplay).toHaveTextContent(mockGeneratedCode);
+  });
 });

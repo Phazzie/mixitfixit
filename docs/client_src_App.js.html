@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/src/App.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/src/App.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState, useEffect, useCallback } from 'react';
+import './App.css';
+import RandomCodeButton from './components/RandomCodeButton';
+import ParticipantInput from './components/ParticipantInput';
+import { useStatements } from './hooks/useStatements';
+import useStatementLoader from './hooks/useStatementLoader';
+import * as dataManager from './data/dataManager';
+import IssueProposal from './components/IssueProposal';
+import useSummarizeStatements from './hooks/useSummarizeStatements';
+import StatementList from './components/StatementList';
+import SteelManning from './components/SteelManning';
+import Discussion from './components/Discussion';
+import Resolution from './components/Resolution';
+import Summary from './components/Summary';
+import UserSelector from './components/UserSelector';
+
+/**
+ * @typedef {Object} Statement
+ * @property {string} id - The unique ID of the statement.
+ * @property {string} user - The user who made the statement.
+ * @property {string} text - The text of the statement.
+ */
+
+/**
+ * @typedef {Object} SummarizationHook
+ * @property {string} aiResponse - The AI response.
+ * @property {string} apiError - The API error.
+ * @property {function} handleSummarizeClick - Function to handle the click on the summarize button.
+ */
+
+/**
+ * @module App
+ * @function App
+ * @description The main application component.
+ * @returns {JSX.Element} The App component.
+ */
+function App() {
+  // State variables
+  const [isSummarizing, setIsSummarizing] = useState(false);
+  const [statements, setStatements] = useState([]);
+  const [lockedStatements, setLockedStatements] = useState([]);
+  const [resolution, setResolution] = useState({ text: "", status: "pending" });
+  const [isResolutionAgreed, setIsResolutionAgreed] = useState(false);
+  const [isIssueAgreed, setIsIssueAgreed] = useState(false);
+  const [isSteelManningDone, setIsSteelManningDone] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isUserSelected, setIsUserSelected] = useState(false);
+  const [enteredCode, setEnteredCode] = useState('');
+
+  // Custom hooks
+  const { code, setCode, canSummarize } = useStatements();
+  const { loadStatements, error, loading } = useStatementLoader(code);
+  const { apiError, handleSummarizeClick } = useSummarizeStatements(code, setIsSummarizing);
+
+  useEffect(() => {
+    if (code) {
+      loadStatements(setStatements);
+    }
+  }, [code, loadStatements]);
+
+
+  /**
+   * @function handleUserSelection
+   * @description Handles the selection of a user.
+   * @param {string} user - The selected user.
+   * @returns {void}
+   */
+  const handleUserSelection = useCallback((user) => {
+    setCurrentUser(user);
+    setIsUserSelected(true);
+  }, []);
+
+  /**
+   * @function handleIssueAgreement
+   * @description Handles the issue agreement.
+   * @param {boolean} agreed - Whether the issue is agreed to.
+   * @returns {void}
+   */
+  const handleIssueAgreement = (agreed) => {
+    setIsIssueAgreed(agreed);
+  };
+
+  /**
+   * @function handleSteelManningDone
+   * @description Handles the steel manning process completion.
+   * @param {boolean} done - Indicates whether the steel manning is done.
+   * @returns {void}
+   */
+  const handleSteelManningDone = useCallback((done) => {
+    setIsSteelManningDone(done);
+  }, []);
+
+  /**
+   * @async
+   * @function lockStatement
+   * @description Locks a statement and saves it to local storage.
+   * @param {string} statementId - The ID of the statement to lock.
+   * @returns {Promise&lt;void>}
+   */
+  const lockStatement = async (statementId) => {
+    try {
+      const statementToLock = statements.find((statement) => statement.id === statementId);
+      if (statementToLock) {
+        await dataManager.saveLockedStatement(statementToLock);
+        setLockedStatements((prevLockedStatements) => [...prevLockedStatements, statementToLock]);
+        setStatements((prevStatements) => prevStatements.filter((statement) => statement.id !== statementId));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  /**
+   * @function handleResolutionAgreement
+   * @description Handles the resolution agreement.
+   * @param {boolean} agreed - Indicates whether the resolution is agreed upon.
+   * @returns {void}
+   */
+  const handleResolutionAgreement = useCallback((agreed) => {
+    setIsResolutionAgreed(agreed);
+  }, []);
+
+  if (error) {
+    return &lt;div style={{ color: "red" }}>{error}&lt;/div>;
+  }
+
+  if (!isUserSelected) {
+    return (
+      &lt;div className="App">
+        &lt;UserSelector onUserSelect={handleUserSelection} />
+        &lt;h1>Relationship Resolver&lt;/h1>
+        &lt;div>
+          &lt;button onClick={() => handleUserSelection("Participant 1")}>Log in as Participant 1&lt;/button>
+          &lt;button onClick={() => handleUserSelection("Participant 2")}>Log in as Participant 2&lt;/button>
+        &lt;/div>
+      &lt;/div>
+    );
+  }
+
+  if (!isIssueAgreed) {
+    return (
+      &lt;div className="App">
+        &lt;IssueProposal currentUser={currentUser} onIssueAgreed={handleIssueAgreement} />
+      &lt;/div>
+    );
+  }
+
+  if (!isSteelManningDone) {
+    return (
+      &lt;div className="App">
+        &lt;h1>Relationship Resolver&lt;/h1>
+        &lt;SteelManning currentUser={currentUser} onSteelManningDone={handleSteelManningDone} />
+      &lt;/div>
+    );
+  }
+
+  if (isSteelManningDone &amp;&amp; !isResolutionAgreed) {
+    return (
+      &lt;div className="App">
+        &lt;h1>Relationship Resolver&lt;/h1>
+        &lt;Resolution
+          currentUser={currentUser}
+          resolution={resolution}
+          setResolution={setResolution}
+          onResolutionAgreed={handleResolutionAgreement}
+        />
+      &lt;/div>
+    );
+  }
+
+  if (isSteelManningDone &amp;&amp; isResolutionAgreed) {
+    return (
+      &lt;div className="App">
+        &lt;h1>Relationship Resolver&lt;/h1>
+        &lt;Summary
+          currentUser={currentUser}
+          lockedStatements={lockedStatements}
+          statements={statements}
+          resolution={resolution}
+        />
+      &lt;/div>
+    );
+  }
+
+  return (
+    &lt;div className="App">
+      &lt;h1>Relationship Resolver&lt;/h1>
+      &lt;Discussion currentUser={currentUser} />
+      &lt;div>
+        &lt;h2>Locked Statements&lt;/h2>
+        &lt;StatementList statements={lockedStatements} onLockStatement={lockStatement}/>
+      &lt;/div>
+      &lt;div>
+        &lt;h2>Statements&lt;/h2>
+        &lt;StatementList statements={statements} onLockStatement={lockStatement} />
+      &lt;/div>
+      &lt;input
+        type="text"
+        value={enteredCode}
+        onChange={(e) => setEnteredCode(e.target.value)}
+        placeholder="Enter code"
+      />
+      &lt;button onClick={() => setCode(enteredCode)}>Use code&lt;/button>
+      &lt;RandomCodeButton setCode={setCode} code={enteredCode} />
+      {loading &amp;&amp; &lt;div style={{ color: 'blue' }}>Loading Statements...&lt;/div>}
+      {apiError &amp;&amp; &lt;div style={{ color: "red" }}>{apiError}&lt;/div>}
+      &lt;ParticipantInput code={code} user={currentUser} buttonText={`Submit ${currentUser}`} />
+      &lt;button disabled={!canSummarize || isSummarizing} onClick={handleSummarizeClick}>Summarize with AI&lt;/button>
+    &lt;/div>
+  );
+}
+
+export default App;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-App.html">App</a></li><li><a href="module-CodeDisplay.html">CodeDisplay</a></li><li><a href="module-CodeEntry.html">CodeEntry</a></li><li><a href="module-ParticipantInput.html">ParticipantInput</a></li><li><a href="module-RandomCodeButton.html">RandomCodeButton</a></li><li><a href="module-StatementList.html">StatementList</a></li><li><a href="module-dataManager%2520Provides%2520data%2520access%2520functions%2520for%2520local%2520storage..html">dataManager Provides data access functions for local storage.</a></li><li><a href="module-gemini.html">gemini</a></li><li><a href="module-localStorage.html">localStorage</a></li><li><a href="module-localStorageManager.html">localStorageManager</a></li><li><a href="module-routes.html">routes</a></li><li><a href="module-useErrorHandler.html">useErrorHandler</a></li><li><a href="module-useStatementsManager.html">useStatementsManager</a></li><li><a href="module-validation.html">validation</a></li><li><a href="useSummarizeStatements.module_js.html">js</a></li></ul><h3>Externals</h3><ul><li><a href="external-GenerativeModel.html">GenerativeModel</a></li></ul><h3>Interfaces</h3><ul><li><a href="global.html#DataManagerContract">DataManagerContract</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AiResponse">AiResponse</a></li><li><a href="global.html#App">App</a></li><li><a href="global.html#ErrorMessage">ErrorMessage</a></li><li><a href="global.html#LoadingMessage">LoadingMessage</a></li><li><a href="global.html#NoValuesMessage">NoValuesMessage</a></li><li><a href="global.html#StatementDisplay">StatementDisplay</a></li><li><a href="global.html#addStatementToState">addStatementToState</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#canSummarize">canSummarize</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#geminiAPI">geminiAPI</a></li><li><a href="global.html#geminiClient">geminiClient</a></li><li><a href="global.html#generateRandomCode">generateRandomCode</a></li><li><a href="global.html#getMostRecentStatement">getMostRecentStatement</a></li><li><a href="global.html#getMostRecentStatementFromLoader">getMostRecentStatementFromLoader</a></li><li><a href="global.html#handleIssueAgreement">handleIssueAgreement</a></li><li><a href="global.html#handleResolutionAgreement">handleResolutionAgreement</a></li><li><a href="global.html#handleSteelManningDone">handleSteelManningDone</a></li><li><a href="global.html#handleUserSelection">handleUserSelection</a></li><li><a href="global.html#lockStatement">lockStatement</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#useCode">useCode</a></li><li><a href="global.html#useLocalStorage">useLocalStorage</a></li><li><a href="global.html#useStatementLoader">useStatementLoader</a></li><li><a href="global.html#useStatements">useStatements</a></li><li><a href="global.html#validateInput">validateInput</a></li><li><a href="global.html#validateJsonStructure">validateJsonStructure</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Mar 21 2025 05:29:18 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

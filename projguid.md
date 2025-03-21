@@ -157,6 +157,25 @@ To ensure the app meets user needs, we will:
     
 ## World-Class Plan
 
+### How to create a Pull Request
+
+#### 1. Create a New Branch
+*   Before making any changes, create a new branch from the `main` branch.
+*   Name the branch descriptively, indicating the feature or bug fix you are working on (e.g., `feature/add-user-authentication`, `fix/login-bug`).
+*   This keeps your changes isolated from the main codebase.
+
+#### 2. Write the Code
+*   Implement the necessary code changes for your feature or bug fix.
+*   Make sure to follow all the project guidelines.
+
+#### 3. Test the Code
+*   Write unit tests to make sure your code works as expected.
+*   Make sure all the current tests pass.
+
+#### 4. Add Comments to the Code
+*   Add clear and concise comments throughout your code to explain complex logic or non-obvious decisions.
+
+
 *   **Exceptional Code Quality:** Writing clean, well-structured, and maintainable code.
 *   **Advanced Testing:** Implementing comprehensive testing (unit, integration, end-to-end).
 *   **Future-Proofing:** Designing for extensibility and future growth.
@@ -485,6 +504,7 @@ This project is in the middle stages of development. A good amount of code has b
 -   [ ] Readability
 -   [ ] Extensibility
 - [ ] Comments
+- [ ] Pull request in place.
 
 ### Overall
 - [x] Rapid Development
@@ -501,3 +521,4 @@ This project is in the middle stages of development. A good amount of code has b
 3. Deep Refactor: Go through every file and do a deep refactor.
 4. Testing: start implementing tests.
 5. Comprehensive Code Review: Do a final, thorough code review.
+6. **Pull Request:** Create a pull request with your changes.

@@ -11,6 +11,7 @@
 
 ## Introduction
 
+We will use phased refactoring to refactor the code, to reduce the risk, and make it more manageable.
 ## Error Handling Improvements
 
 ### `useErrorHandler` Hook
@@ -40,12 +41,13 @@
 
 
 We have already implemented the basic features of the app, so now it's time to refactor.
+This guide outlines the comprehensive plan for the refactoring and development of the Relationship Resolver project.
+Our goal is to build an exceptional application that helps resolve relationship conflicts effectively and intuitively. This guide details our current state, the principles guiding our refactoring efforts, our objectives, and a detailed plan with specific actions to enhance the codebase.
+We will also focus on value-first development, user feedback, and CI for testing.
+We will start with a deep refactor, to make sure the code is ready.
+Then we will focus on implementing the remaining features.
 
-
-
-
-This guide outlines the comprehensive plan for the refactoring and development of the Relationship Resolver project, following the World-Class Plan. Our goal is to build an exceptional application that helps resolve relationship conflicts effectively and intuitively. This guide details our current state, the principles guiding our refactoring efforts, our objectives, and a detailed plan with specific actions to enhance the codebase. We will also focus on value-first development, user feedback, and CI for testing.
-
+## Plans
 ## Guiding Principles
 ## Why Refactor?
 
@@ -59,7 +61,7 @@ Refactoring is a crucial step in the evolution of any software project. For the 
 * **Extensibility**: Refactoring allows us to make the code more extensible, so it's easier to add new features.
 * **Testability**: Refactoring allows us to make the code more testable, so it's easier to test it.
 
-## Examples
+### Examples
 This guide will use several examples to illustrate the concepts.
 Here are some examples to illustrate the concepts:
 
@@ -73,7 +75,7 @@ Here are some examples to illustrate the concepts:
 
 
 
-We will follow the World-Class Plan and its principles:
+We will follow these principles:
 
 * **Contract-Driven Development**: We will use contracts to define the behavior of each module.
 * **Prioritized Incremental Refactoring**: We will break down the code into logical modules, define contracts for those modules, and then refactor them one by one.
@@ -89,11 +91,12 @@ We will follow the World-Class Plan and its principles:
 * **Performance Optimization**: We will try to optimize performance.
 
 ## 1. Current State Analysis
- 
-The Relationship Resolver project has implemented the core features of the app, all of them are in a basic state, and will need to be refactored.
-The next step is to refactor the code.
 
-We will refactor the code in phases, starting by cleaning the existing code, adding error handling, improving the UI, and making sure the code is testable.
+The Relationship Resolver project has implemented the core features of the app, all of them are in a basic state, and will need to be refactored.
+The next step is to refactor the code, and prepare it for the implementation of the remaining features.
+
+We will start with a deep refactor, that will improve the code quality.
+
 **Key Components & Features:**
 
 *   **Implemented Features:**
@@ -106,8 +109,8 @@ We will refactor the code in phases, starting by cleaning the existing code, add
     *   **[Basic Data Access Layer](client/src/data/dataManager.js):** The data access layer has been created, and it now manages all of the storage related actions.
     * **[Basic Contracts](client/src/data/dataContracts.js)**: The basic contracts have been created.
         * The contracts provide a definition of the functions in the data access layer.
-    * **[Tests](client/src/data/dataManager.test.js)**: Tests have been created.
-*   **Basic Implementation:** All of the features have been implemented in a basic way. All of them need a refactor.
+    * **[Tests](client/src/data/dataManager.test.js)**: basic tests have been created.
+*   **Basic Implementation:** All of the features have been implemented in a basic way. All of them need to be refactored.
 
 
 
@@ -140,7 +143,6 @@ We will refactor the code in phases, starting by cleaning the existing code, add
     * Unsure extensibility.
 
 We will use phased refactoring to refactor the code, to reduce the risk, and make it more manageable.
-
 ## 2. Rationale for Deep Refactor
 
 A deep refactor is essential to transition the project from a rapidly developed prototype to a robust, maintainable application.
@@ -163,6 +165,7 @@ A deep refactor is essential to transition the project from a rapidly developed 
 * **Data Access Layer**: To make sure we are following the correct practices.
 * **Contract-Driven Development**: To make sure we are following the correct practices.
 ## 3. Refactoring Objectives
+
 These are the main objectives for the refactor.
 
 Our primary goals are to:
@@ -171,8 +174,6 @@ Our primary goals are to:
 *   **Minimize Bugs:** Strengthen error handling and input validation to preemptively manage errors.
 *   **Maximize Maintainability:** Craft code that is clear, concise, and easy to update or expand.
 *   **Future-Proof the Application:** Set up the codebase for effortless integration of future features and enhancements.
-
-
 
 ### Component Breakdown
 
@@ -197,7 +198,7 @@ Our primary goals are to:
             1. create `frontend/components/InputError.js`.
             2. move error message rendering code to `frontend/components/InputError.js`
             3. import and render `frontend/components/InputError.js` in `frontend/App.js`.
-            4. pass the necessary props to `frontend/components/InputError.js`
+            4. pass the necessary props to `frontend/components/InputError.js`.
 * **Action**: Create a component for displaying the summary.
     * **Original Location**: Summary is currently displayed in `frontend/App.js`.
     * **New Location**: Create `frontend/components/SummaryDisplay.js`.
@@ -236,7 +237,7 @@ Our primary goals are to:
     * **Broken References**: `backend/server.js` will no longer be doing validation logic.
     * **Relinking Steps:**
         1. Create `backend/validation.js`.
-        2. move validation logic to `backend/validation.js`.
+        2. Move validation logic to `backend/validation.js`.
         3. import and use `backend/validation.js` in `backend/server.js`
 
 ### Function Decomposition
@@ -314,7 +315,7 @@ Our primary goals are to:
 
 ### Extensibility
 
-* **Action**: Ensure the code is structured in a way that is easy to modify and extend.
+* **Action**: Ensure the code is structured in a way that is easy to modify, and extend.
 * **Implementation**:
     *   Use good separation of concerns.
     * use components and modules.
@@ -345,7 +346,7 @@ Our primary goals are to:
         *   **Example:** Test the interaction between the front end and the backend when posting data and receiving a summary.
 *   **Checks**:
     * Make sure the application works the same as before the refactor.
-    * **Run the tests**: Make sure to run the tests.
+    * **Run the tests**: Make sure to run the tests, before committing your code.
     * Check the browser console for any errors.
     * Check the backend console for any errors.
 * **Creating tests**: Before refactoring any piece of code, you need to create or update the tests.
@@ -385,6 +386,7 @@ We will be using test-driven development:
 ### Bug Fixes
 Fixing bugs effectively is critical for creating high-quality software. Here are some guidelines for bug fixes:
 
+
 * **Understand the Bug:** Before attempting a fix, make sure you fully understand the bug. Try to reproduce it reliably.
 * **Isolate the Problem:** Pinpoint the exact code section causing the issue.
 * **Write a Test:** If possible, write a failing test that reproduces the bug. This will help ensure that the bug is truly fixed and won't reappear later.
@@ -409,15 +411,15 @@ This guide provides a robust framework for refactoring the Relationship Resolver
 
 We will refactor the code in phases. This is to reduce the risk and make it more manageable.
 ### Phase 3: General Review and Cleanup / Tests in Progress
-
-**Goals**(now out of scope, we will implement the code first):
+**Goals**:
     We will work on this phase, once we implement all the features.
 *   **Improve Code Quality**: Make sure the code is more readable, maintainable, and modular.
 *   **Implement CI for Testing**: Start using CI to run tests.
 * **Prioritize key features**: Refactor the most important features.
 
 **Tasks:**
-
+    *Make sure to follow the testing and development guidelines in this guide.
+    *
 *   **Prioritize key features**:
     *   Identify the most important features (steel-manning, locked statements).
     *   Refactor the steel-manning feature.
@@ -452,7 +454,7 @@ We will refactor the code in phases. This is to reduce the risk and make it more
 ### Phase 4: Extensibility and advanced refactoring
 
 **Goals**(now out of scope, we will implement the code first):
-    We will work on this phase, once we implement all the features.
+We will work on this phase, once we implement all the features.
 
 *   **Extensibility:** Set up the data structures to be very extensible.
 *   **Data Access Layer:** Set up the data access layer.
@@ -481,7 +483,7 @@ We will refactor the code in phases. This is to reduce the risk and make it more
 ### Phase 5: Expanded Testing and quality check
 
 **Goals**(now out of scope, we will implement the code first):
-    We will work on this phase, once we implement all the features.
+We will work on this phase, once we implement all the features and refactor the code.
 
 *   **Comprehensive Testing**: Implement unit, integration, and end-to-end tests.
 * **Quality**: Ensure the quality of the code.
@@ -505,7 +507,7 @@ We will refactor the code in phases. This is to reduce the risk and make it more
 ### Phase 6: Database
 
 **Goals**(now out of scope, we will implement the code first):
-    We will work on this phase, once we implement all the features.
+We will work on this phase, once we implement all the features and refactor the code.
 
 *   **Database:** Migrate all data to the database.
 
@@ -517,7 +519,7 @@ We will refactor the code in phases. This is to reduce the risk and make it more
 ### Phase 7: Further Considerations (Post-MVP)
 
 **Goals**(now out of scope, we will implement the code first):
-    We will work on this phase, once we implement all the features.
+We will work on this phase, once we implement all the features and refactor the code.
 
 *   **Deep Refactor:** Refactor parts of the code that are still bad.
 * **New Features**: Implement new features.

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/src/data/dataManager.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/src/data/dataManager.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module dataManager Provides data access functions for local storage.
+ */
+
+/**
+ * @typedef {Object} DataManagerError
+ * @property {string} message - The error message.
+ * @property {string} [code] - An optional error code.
+ */
+
+const throwDataManagerError = (message, code) => {
+  const error = new Error(message);
+  error.code = code;
+  throw error;
+};
+
+/**
+ * Saves data to local storage.
+ * @function save
+ * @memberof module:dataManager
+ * @param {string} key - The key to store the data under.
+ * @param {any} data - The data to store.
+ * @returns {boolean} True if successful, false otherwise.
+ */
+const save = (key, data) => {
+  try {
+    const serializedData = JSON.stringify(data);
+    localStorage.setItem(key, serializedData);
+    return true;
+  } catch (error) {
+    console.error(`Error saving data to local storage: ${error}`);
+    return false;
+  }
+};
+
+/**
+ * Retrieves data from local storage.
+ * @function get
+ * @memberof module:dataManager
+ * @param {string} key - The key to retrieve the data from.
+ * @returns {any|null} The retrieved data, or null if the key does not exist.
+ */
+const get = (key) => {
+  try {
+    const serializedData = localStorage.getItem(key);
+    return serializedData === null ? null : JSON.parse(serializedData);
+  } catch (error) {
+    console.error(`Error getting data from local storage: ${error}`);
+    return null;
+  }
+};
+
+/**
+ * Updates data in local storage.
+ * @function update
+ * @memberof module:dataManager
+ * @param {string} key - The key of the data to update.
+ * @param {any} newData - The new data to replace the old data.
+ * @returns {boolean} True if successful, false otherwise.
+ */
+const update = (key, newData) => {
+  try {
+    if (localStorage.getItem(key) === null) {
+      throwDataManagerError(`Key "${key}" not found in local storage.`, "KEY_NOT_FOUND");
+    }
+    return save(key, newData);
+  } catch (error) {
+    console.error(`Error updating data in local storage: ${error}`);
+    return false;
+  }
+};
+
+/**
+ * Removes data from local storage.
+ * @function remove
+ * @memberof module:dataManager
+ * @param {string} key - The key of the data to remove.
+ * @returns {boolean} True if successful, false otherwise.
+ */
+const remove = (key) => {
+  try {
+    localStorage.removeItem(key);
+    return true;
+  } catch (error) {
+    console.error(`Error removing data from local storage: ${error}`);
+    return false;
+  }
+};
+
+export { save, get, update, remove };
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-App.html">App</a></li><li><a href="module-CodeDisplay.html">CodeDisplay</a></li><li><a href="module-CodeEntry.html">CodeEntry</a></li><li><a href="module-ParticipantInput.html">ParticipantInput</a></li><li><a href="module-RandomCodeButton.html">RandomCodeButton</a></li><li><a href="module-StatementList.html">StatementList</a></li><li><a href="module-dataManager%2520Provides%2520data%2520access%2520functions%2520for%2520local%2520storage..html">dataManager Provides data access functions for local storage.</a></li><li><a href="module-gemini.html">gemini</a></li><li><a href="module-localStorage.html">localStorage</a></li><li><a href="module-localStorageManager.html">localStorageManager</a></li><li><a href="module-routes.html">routes</a></li><li><a href="module-useErrorHandler.html">useErrorHandler</a></li><li><a href="module-useStatementsManager.html">useStatementsManager</a></li><li><a href="module-validation.html">validation</a></li><li><a href="useSummarizeStatements.module_js.html">js</a></li></ul><h3>Externals</h3><ul><li><a href="external-GenerativeModel.html">GenerativeModel</a></li></ul><h3>Interfaces</h3><ul><li><a href="global.html#DataManagerContract">DataManagerContract</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AiResponse">AiResponse</a></li><li><a href="global.html#CodeInput">CodeInput</a></li><li><a href="global.html#ErrorMessage">ErrorMessage</a></li><li><a href="global.html#LoadingMessage">LoadingMessage</a></li><li><a href="global.html#NoValuesMessage">NoValuesMessage</a></li><li><a href="global.html#Resolution">Resolution</a></li><li><a href="global.html#StatementDisplay">StatementDisplay</a></li><li><a href="global.html#StatementManager">StatementManager</a></li><li><a href="global.html#UserSelection">UserSelection</a></li><li><a href="global.html#addStatementToState">addStatementToState</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#canSummarize">canSummarize</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#geminiAPI">geminiAPI</a></li><li><a href="global.html#geminiClient">geminiClient</a></li><li><a href="global.html#generateRandomCode">generateRandomCode</a></li><li><a href="global.html#getMostRecentStatement">getMostRecentStatement</a></li><li><a href="global.html#getMostRecentStatementFromLoader">getMostRecentStatementFromLoader</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#useCode">useCode</a></li><li><a href="global.html#useLocalStorage">useLocalStorage</a></li><li><a href="global.html#useStatementLoader">useStatementLoader</a></li><li><a href="global.html#useStatements">useStatements</a></li><li><a href="global.html#validateInput">validateInput</a></li><li><a href="global.html#validateJsonStructure">validateJsonStructure</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Mar 21 2025 09:43:12 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

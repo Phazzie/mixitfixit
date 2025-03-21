@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: server/src/gemini.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: server/src/gemini.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// Import the GoogleGenerativeAI class from the @google/generative-ai package.
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
+// Load environment variables
+const express = require('express')
+require('dotenv').config();
+
+/**
+ * @module gemini
+ * @description This module provides functions to interact with the Google Gemini API.
+ */
+
+/**
+ * Creates and exports the Gemini API client.
+ * This function initializes the Gemini API client with the API key from the environment variables.
+ * @function createGeminiAPIClient
+ * @returns {GoogleGenerativeAI} The initialized Gemini API client.
+ */
+function createGeminiAPIClient() {
+  // Get the API Key from the environment variables.
+  const apiKey = process.env.GEMINI_API_KEY;
+  // Check if the API key is set, if not log an error and return null.
+  if (!apiKey) {
+    // Updated this function to handle missing or invalid API keys more gracefully.
+    // Instead of throwing an error, we log the error and return null.
+    console.error("Error: GEMINI_API_KEY environment variable not set.");
+    return null;
+  }
+  // Check if the API key is invalid.
+  if (apiKey.trim() === "") {
+    // Updated this function to handle missing or invalid API keys more gracefully.
+    // Instead of throwing an error, we log the error and return null.
+    console.error("Error: GEMINI_API_KEY environment variable is invalid.");
+    return null;
+  }
+  
+  // Initialize the Gemini API client with the key and return it.
+  return new GoogleGenerativeAI(apiKey);
+}
+
+/**
+ * @constant {express.Router} router
+ * @description An Express router instance for handling API routes.
+ */
+const router = express.Router()
+
+/**
+ * @function
+ * @name logCodeRoute
+ * @memberof module:gemini
+ * @description Defines the route handler to log the code.
+ * @param {express.Request} req - The Express request object.
+ * @param {express.Response} res - The Express response object.
+ * @param {string} req.body.code - The code to be logged.
+ * @returns {void}
+ * @precondition The request body must contain a 'code' property.
+ * @postcondition The code received is logged to the console, and a 200 status response is sent.
+ */
+router.post('/logcode', (req, res) => {
+  /**
+   * @type {string}
+   * @description The code received in the request body.
+   */
+  const code = req.body.code;
+  console.log(code);
+  res.status(200).send('Code received and logged.');
+});
+
+// Export the createGeminiAPIClient function and the router.
+module.exports = { createGeminiAPIClient, router };</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-App.html">App</a></li><li><a href="module-CodeDisplay.html">CodeDisplay</a></li><li><a href="module-CodeEntry.html">CodeEntry</a></li><li><a href="module-ParticipantInput.html">ParticipantInput</a></li><li><a href="module-RandomCodeButton.html">RandomCodeButton</a></li><li><a href="module-StatementList.html">StatementList</a></li><li><a href="module-dataManager%2520Provides%2520data%2520access%2520functions%2520for%2520local%2520storage..html">dataManager Provides data access functions for local storage.</a></li><li><a href="module-gemini.html">gemini</a></li><li><a href="module-localStorage.html">localStorage</a></li><li><a href="module-localStorageManager.html">localStorageManager</a></li><li><a href="module-routes.html">routes</a></li><li><a href="module-useErrorHandler.html">useErrorHandler</a></li><li><a href="module-useStatementsManager.html">useStatementsManager</a></li><li><a href="module-validation.html">validation</a></li><li><a href="useSummarizeStatements.module_js.html">js</a></li></ul><h3>Externals</h3><ul><li><a href="external-GenerativeModel.html">GenerativeModel</a></li></ul><h3>Interfaces</h3><ul><li><a href="global.html#DataManagerContract">DataManagerContract</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AiResponse">AiResponse</a></li><li><a href="global.html#CodeInput">CodeInput</a></li><li><a href="global.html#ErrorMessage">ErrorMessage</a></li><li><a href="global.html#LoadingMessage">LoadingMessage</a></li><li><a href="global.html#NoValuesMessage">NoValuesMessage</a></li><li><a href="global.html#Resolution">Resolution</a></li><li><a href="global.html#StatementDisplay">StatementDisplay</a></li><li><a href="global.html#StatementManager">StatementManager</a></li><li><a href="global.html#UserSelection">UserSelection</a></li><li><a href="global.html#addStatementToState">addStatementToState</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#canSummarize">canSummarize</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#geminiAPI">geminiAPI</a></li><li><a href="global.html#geminiClient">geminiClient</a></li><li><a href="global.html#generateRandomCode">generateRandomCode</a></li><li><a href="global.html#getMostRecentStatement">getMostRecentStatement</a></li><li><a href="global.html#getMostRecentStatementFromLoader">getMostRecentStatementFromLoader</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#useCode">useCode</a></li><li><a href="global.html#useLocalStorage">useLocalStorage</a></li><li><a href="global.html#useStatementLoader">useStatementLoader</a></li><li><a href="global.html#useStatements">useStatements</a></li><li><a href="global.html#validateInput">validateInput</a></li><li><a href="global.html#validateJsonStructure">validateJsonStructure</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Mar 21 2025 09:43:12 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

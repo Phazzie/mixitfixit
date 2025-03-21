@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/src/hooks/useLocalStorage.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/src/hooks/useLocalStorage.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState, useEffect } from 'react';
+
+/**
+ * @module useLocalStorage
+ * @description Custom hook to manage state that is synchronized with localStorage. This hook encapsulates localStorage interaction, improving code reuse, maintainability, and consistency in how localStorage is accessed across the application.
+ * @function useLocalStorage
+ * @param {string} key - The localStorage key to be used for storage.
+ * @returns {array} An array containing the current value and a function to update the value (setValue).
+ * @example
+ * const [myValue, setMyValue] = useLocalStorage('myKey', 'default');
+ * setMyValue('newValue');
+ * const [myObject, setMyObject] = useLocalStorage('myObject', {});
+ * setMyObject({ name: 'John', age: 30 });
+ */
+export function useLocalStorage(key) {
+  /**
+   * Initializes the state with a value from localStorage or null if not found.
+   * @param {string} key - The localStorage key to retrieve the value.
+   * @returns {any} The initial state value, retrieved from localStorage or null if not found.
+   * @throws {Error} Throws an error if localStorage is unavailable or if there is an issue accessing it.
+   * @precondition key must be a non-empty string.
+   * @postcondition The state is initialized with a value from local storage, or null if not found.
+   */
+  const [value, setValue] = useState(() => {
+    try {
+      const item = localStorage.getItem(key);
+
+      return item ? JSON.parse(item) : null;
+    } catch (error) {
+      console.error("Error getting from localStorage:", error);
+      throw error;
+    }
+  });
+  /**
+   * Effect hook to synchronize state changes with localStorage.
+   * Stores the current value in localStorage whenever it changes.
+   * Runs whenever the key or value changes.
+   * @param {string} key - The localStorage key to store the value.
+   * @param {any} value - The value to store.
+   * @throws {Error} Throws an error if localStorage is unavailable or if there is an issue accessing it.
+   * @precondition key must be a non-empty string.
+   * @precondition value must be serializable to JSON.
+   * @postcondition The value is stored in localStorage under the given key.
+   */
+  useEffect(() => {
+    try {
+      // Attempt to set the value to localStorage as a JSON string.
+      localStorage.setItem(key, JSON.stringify(value));
+    } catch (error) {
+      // If an error occurs (e.g., localStorage is full), log it.
+          console.error("Error setting to localStorage:", error);
+      throw error;
+    }
+  }, [key, value]);
+
+  /**
+   * @description Returns the current value and a function to update it.
+   * @returns {Array} An array containing the current value and the setValue function to update it.
+   */
+  return [value, setValue];
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-App.html">App</a></li><li><a href="module-CodeDisplay.html">CodeDisplay</a></li><li><a href="module-CodeEntry.html">CodeEntry</a></li><li><a href="module-ParticipantInput.html">ParticipantInput</a></li><li><a href="module-RandomCodeButton.html">RandomCodeButton</a></li><li><a href="module-StatementList.html">StatementList</a></li><li><a href="module-dataManager%2520Provides%2520data%2520access%2520functions%2520for%2520local%2520storage..html">dataManager Provides data access functions for local storage.</a></li><li><a href="module-gemini.html">gemini</a></li><li><a href="module-localStorage.html">localStorage</a></li><li><a href="module-localStorageManager.html">localStorageManager</a></li><li><a href="module-routes.html">routes</a></li><li><a href="module-useErrorHandler.html">useErrorHandler</a></li><li><a href="module-useStatementsManager.html">useStatementsManager</a></li><li><a href="module-validation.html">validation</a></li><li><a href="useSummarizeStatements.module_js.html">js</a></li></ul><h3>Externals</h3><ul><li><a href="external-GenerativeModel.html">GenerativeModel</a></li></ul><h3>Interfaces</h3><ul><li><a href="global.html#DataManagerContract">DataManagerContract</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AiResponse">AiResponse</a></li><li><a href="global.html#CodeInput">CodeInput</a></li><li><a href="global.html#ErrorMessage">ErrorMessage</a></li><li><a href="global.html#LoadingMessage">LoadingMessage</a></li><li><a href="global.html#NoValuesMessage">NoValuesMessage</a></li><li><a href="global.html#Resolution">Resolution</a></li><li><a href="global.html#StatementDisplay">StatementDisplay</a></li><li><a href="global.html#StatementManager">StatementManager</a></li><li><a href="global.html#UserSelection">UserSelection</a></li><li><a href="global.html#addStatementToState">addStatementToState</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#canSummarize">canSummarize</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#geminiAPI">geminiAPI</a></li><li><a href="global.html#geminiClient">geminiClient</a></li><li><a href="global.html#generateRandomCode">generateRandomCode</a></li><li><a href="global.html#getMostRecentStatement">getMostRecentStatement</a></li><li><a href="global.html#getMostRecentStatementFromLoader">getMostRecentStatementFromLoader</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#useCode">useCode</a></li><li><a href="global.html#useLocalStorage">useLocalStorage</a></li><li><a href="global.html#useStatementLoader">useStatementLoader</a></li><li><a href="global.html#useStatements">useStatements</a></li><li><a href="global.html#validateInput">validateInput</a></li><li><a href="global.html#validateJsonStructure">validateJsonStructure</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Mar 21 2025 09:43:12 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

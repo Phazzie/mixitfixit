@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/src/components/ParticipantInput.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/src/components/ParticipantInput.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import React, { useState } from 'react';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+import { validateInput } from '../validation';
+
+/**
+ * @module ParticipantInput
+ * @description This module provides the ParticipantInput component, which allows users to input and submit their statements.
+ * It handles input validation, local storage interactions, and error messages.
+ */
+
+/**
+ * @function ParticipantInput
+ * @description ParticipantInput component: Allows users to input and submit their statements.
+ * @param {object} props - The component props.
+ * @param {string} props.label - The label for the input field.
+ * @param {string} props.buttonLabel - The label for the submit button.
+ * @param {string} props.code - The code associated with the current discussion.
+ * @preconditions label, buttonLabel and code must be strings.
+ * @returns {JSX.Element} The ParticipantInput component.
+ * @postconditions The component will render an input field, a submit button, and an error message area.
+ * @throws {TypeError} If label, buttonLabel or code are not strings.
+ */
+function ParticipantInput({ label, buttonLabel, code }) {
+  if (typeof label !== 'string' || typeof buttonLabel !== 'string' || typeof code !== 'string') {
+    throw new TypeError('label, buttonLabel and code must be strings');
+  }
+  // inputText: State to store the current input text in the textarea.
+  const [inputText, setInputText] = useState('');
+  // errorMessage: State to store and display error messages. This is displayed below the textarea.
+  const [errorMessage, setErrorMessage] = useState('');
+
+  /**
+   * @function handleChange
+   * @description Updates the inputText state as the user types.
+   * @param {object} event - The change event.
+   */
+  /**
+   * @param {Event} event - The change event.
+   * @preconditions The event must be a valid change event.
+   */
+  const handleChange = (event) => {
+    // Set the input text to the current value of the input
+    setInputText(event.target.value);
+  };
+
+  /**
+   * @function handleAddStatement
+   * @description Adds a new statement to the localStorage for the given code.
+   * @param {string} currentCode - The current code associated with the discussion.
+   * @param {object} newStatement - The new statement to add.
+   * @param {string} newStatement.user - The user of the statement.
+   * @param {string} newStatement.text - The text of the statement.
+   * @preconditions currentCode must be a string.
+   * @postconditions The new statement will be added to the localStorage.
+   */
+  const handleAddStatement = (currentCode, newStatement) => {
+    // Retrieve existing statements from localStorage, or initialize an empty array.
+    const storedData = localStorage.getItem(currentCode);
+    let dataArray = [];
+    if (storedData) {
+      // Parse the existing statements from JSON.
+      dataArray = JSON.parse(storedData);
+    }
+    // Add the new statement to the array.
+    dataArray.push(newStatement);
+    // Store the updated array back to localStorage.
+    localStorage.setItem(currentCode, JSON.stringify(dataArray));
+  };
+
+  /**
+   * @function handleSubmit
+   * @description Handles the submission of the user's statement.
+   * Validates the input, attempts to add the statement to local storage, and handles error messages.
+   * @preconditions The input text should not be empty.
+   * @postconditions The statement will be stored in local storage, or an error message will be shown.
+   * @returns {void}
+   */
+  const handleSubmit = () => {
+    // Check if the input text is valid using the validateInput function.
+    if (!validateInput(inputText)) {
+      // Set an error message if the input is invalid.
+      setErrorMessage('Please enter a statement before submitting.');
+      return;
+    }
+
+    try {
+      // Attempt to add the new statement to localStorage.
+      handleAddStatement(code, {
+        // User label for the statement.
+        user: label,
+        // This stores the label of the user, so we know which user added the statement.
+        // eg Participant 1 or Participant 2.
+        
+        // Text content of the statement.
+        text: inputText,
+      });
+      // Clear the input field after successful submission.
+      setInputText('');
+    } catch (error) {
+      // Handle any errors that occur during localStorage interaction.
+      setErrorMessage('Error interacting with local storage: ' + error.message);
+      console.error('Local storage error:', error);
+      // Clear the input field if there's an error.
+      setInputText('');
+    } finally {
+      // Clear the error message after 5 seconds, this occurs no matter if there was an error or not.
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 5000);
+    }
+
+  };
+
+  return (
+    &lt;div>
+      {/* Label for the input field, dynamically generated based on the label prop. */}
+      &lt;label htmlFor={`participantInput-${label}`}>{label}&lt;/label>
+      {/* Textarea for user input. */}
+      &lt;textarea
+        id={`participantInput-${label}`}
+        value={inputText}
+        onChange={handleChange}
+      />
+      {/* Button to submit the user's statement. */}
+      &lt;button onClick={handleSubmit}>{buttonLabel}&lt;/button>
+      {/* Error message display. Only shown if errorMessage is set. */}
+      {errorMessage &amp;&amp; &lt;div style={{ color: 'red' }}>{errorMessage}&lt;/div>}
+    &lt;/div>
+  );
+}
+
+export default ParticipantInput;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-App.html">App</a></li><li><a href="module-CodeDisplay.html">CodeDisplay</a></li><li><a href="module-CodeEntry.html">CodeEntry</a></li><li><a href="module-ParticipantInput.html">ParticipantInput</a></li><li><a href="module-RandomCodeButton.html">RandomCodeButton</a></li><li><a href="module-StatementList.html">StatementList</a></li><li><a href="module-dataManager%2520Provides%2520data%2520access%2520functions%2520for%2520local%2520storage..html">dataManager Provides data access functions for local storage.</a></li><li><a href="module-gemini.html">gemini</a></li><li><a href="module-localStorage.html">localStorage</a></li><li><a href="module-localStorageManager.html">localStorageManager</a></li><li><a href="module-routes.html">routes</a></li><li><a href="module-useErrorHandler.html">useErrorHandler</a></li><li><a href="module-useStatementsManager.html">useStatementsManager</a></li><li><a href="module-validation.html">validation</a></li><li><a href="useSummarizeStatements.module_js.html">js</a></li></ul><h3>Externals</h3><ul><li><a href="external-GenerativeModel.html">GenerativeModel</a></li></ul><h3>Interfaces</h3><ul><li><a href="global.html#DataManagerContract">DataManagerContract</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AiResponse">AiResponse</a></li><li><a href="global.html#CodeInput">CodeInput</a></li><li><a href="global.html#ErrorMessage">ErrorMessage</a></li><li><a href="global.html#LoadingMessage">LoadingMessage</a></li><li><a href="global.html#NoValuesMessage">NoValuesMessage</a></li><li><a href="global.html#Resolution">Resolution</a></li><li><a href="global.html#StatementDisplay">StatementDisplay</a></li><li><a href="global.html#StatementManager">StatementManager</a></li><li><a href="global.html#UserSelection">UserSelection</a></li><li><a href="global.html#addStatementToState">addStatementToState</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#canSummarize">canSummarize</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#geminiAPI">geminiAPI</a></li><li><a href="global.html#geminiClient">geminiClient</a></li><li><a href="global.html#generateRandomCode">generateRandomCode</a></li><li><a href="global.html#getMostRecentStatement">getMostRecentStatement</a></li><li><a href="global.html#getMostRecentStatementFromLoader">getMostRecentStatementFromLoader</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#useCode">useCode</a></li><li><a href="global.html#useLocalStorage">useLocalStorage</a></li><li><a href="global.html#useStatementLoader">useStatementLoader</a></li><li><a href="global.html#useStatements">useStatements</a></li><li><a href="global.html#validateInput">validateInput</a></li><li><a href="global.html#validateJsonStructure">validateJsonStructure</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Mar 21 2025 09:43:12 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

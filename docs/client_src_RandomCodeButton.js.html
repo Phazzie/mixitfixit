@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/src/RandomCodeButton.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/src/RandomCodeButton.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * @module App
+ * @description Main application component.
+ */
+
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import RandomCodeButton from "./components/RandomCodeButton";
+import CodeDisplay from "./components/CodeDisplay";
+import StatementDisplay from "./components/StatementDisplay";
+import { getStatements, saveToLocalStorage } from "./data/dataManager";
+import { useStatements } from "./hooks/useStatements";
+import { useCode } from "./hooks/useCode";
+import { getCode } from "./data/dataManager";
+
+/**
+ * @function App
+ * @description The main component of the application.
+ * @returns {JSX.Element} The rendered App component.
+ */
+function App() {
+  const [statements] = useState(getStatements());
+  const { addStatement, removeStatement } = useStatements();
+  const { addCode, removeCode } = useCode();
+  const [generatedCode, setGeneratedCode] = useState(null);
+
+  /**
+   * @function handleGenerateCode
+   * @description Handles the code generation process.
+   */
+  const handleGenerateCode = () => {
+    const newCode = getCode();
+    setGeneratedCode(newCode);
+    addCode(newCode);
+  };
+
+  /**
+   * @function handleAddStatement
+   * @description Handles adding a statement to the statements list.
+   * @param {string} newStatement - The new statement to add.
+   */
+  const handleAddStatement = (newStatement) => {
+    addStatement(newStatement);
+  };
+
+  /**
+   * @function handleRemoveStatement
+   * @description Handles removing a statement from the statements list.
+   * @param {string} statementToRemove - The statement to remove.
+   */
+  const handleRemoveStatement = (statementToRemove) => {
+    removeStatement(statementToRemove);
+  };
+
+  /**
+   * @function handleRemoveCode
+   * @description Handles removing a code from the codes list.
+   * @param {string} codeToRemove - The code to remove.
+   */
+  const handleRemoveCode = (codeToRemove) => {
+    removeCode(codeToRemove);
+  };
+
+  useEffect(() => {
+    saveToLocalStorage("statements", statements);
+  }, [statements]);
+
+  return (
+    &lt;div className="App">
+      &lt;h1>Mix-It-Fix-It&lt;/h1>
+
+      &lt;RandomCodeButton onGenerateCode={handleGenerateCode} />
+
+      &lt;CodeDisplay
+        generatedCode={generatedCode}
+        onRemoveCode={handleRemoveCode}
+      />
+
+      &lt;StatementDisplay
+        statements={statements}
+        onAddStatement={handleAddStatement}
+        onRemoveStatement={handleRemoveStatement}
+      />
+    &lt;/div>
+  );
+}
+
+export default App;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-App.html">App</a></li><li><a href="module-CodeDisplay.html">CodeDisplay</a></li><li><a href="module-CodeEntry.html">CodeEntry</a></li><li><a href="module-ParticipantInput.html">ParticipantInput</a></li><li><a href="module-RandomCodeButton.html">RandomCodeButton</a></li><li><a href="module-StatementList.html">StatementList</a></li><li><a href="module-dataManager%2520Provides%2520data%2520access%2520functions%2520for%2520local%2520storage..html">dataManager Provides data access functions for local storage.</a></li><li><a href="module-gemini.html">gemini</a></li><li><a href="module-localStorage.html">localStorage</a></li><li><a href="module-localStorageManager.html">localStorageManager</a></li><li><a href="module-routes.html">routes</a></li><li><a href="module-useErrorHandler.html">useErrorHandler</a></li><li><a href="module-useStatementsManager.html">useStatementsManager</a></li><li><a href="module-validation.html">validation</a></li><li><a href="useSummarizeStatements.module_js.html">js</a></li></ul><h3>Externals</h3><ul><li><a href="external-GenerativeModel.html">GenerativeModel</a></li></ul><h3>Interfaces</h3><ul><li><a href="global.html#DataManagerContract">DataManagerContract</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AiResponse">AiResponse</a></li><li><a href="global.html#CodeInput">CodeInput</a></li><li><a href="global.html#ErrorMessage">ErrorMessage</a></li><li><a href="global.html#LoadingMessage">LoadingMessage</a></li><li><a href="global.html#NoValuesMessage">NoValuesMessage</a></li><li><a href="global.html#Resolution">Resolution</a></li><li><a href="global.html#StatementDisplay">StatementDisplay</a></li><li><a href="global.html#StatementManager">StatementManager</a></li><li><a href="global.html#UserSelection">UserSelection</a></li><li><a href="global.html#addStatementToState">addStatementToState</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#canSummarize">canSummarize</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#geminiAPI">geminiAPI</a></li><li><a href="global.html#geminiClient">geminiClient</a></li><li><a href="global.html#generateRandomCode">generateRandomCode</a></li><li><a href="global.html#getMostRecentStatement">getMostRecentStatement</a></li><li><a href="global.html#getMostRecentStatementFromLoader">getMostRecentStatementFromLoader</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#useCode">useCode</a></li><li><a href="global.html#useLocalStorage">useLocalStorage</a></li><li><a href="global.html#useStatementLoader">useStatementLoader</a></li><li><a href="global.html#useStatements">useStatements</a></li><li><a href="global.html#validateInput">validateInput</a></li><li><a href="global.html#validateJsonStructure">validateJsonStructure</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Mar 21 2025 09:43:12 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

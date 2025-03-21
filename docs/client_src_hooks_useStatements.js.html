@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: client/src/hooks/useStatements.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: client/src/hooks/useStatements.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useStorageManager } from './useStorageManager';
+import { useStatementsManager } from './useStatementsManager';
+import { findMostRecentStatement } from '../utils/utils';
+
+/**
+ * @namespace Statement
+ * @typedef {object} Statement
+ * @property {string} user The name of the user who made the statement.
+ * @property {string} text The text of the statement.
+ * @property {string} code The code associated with the statement.
+ */
+
+/**
+ * @function useStatements
+ * @description Custom hook for managing user statements. Encapsulates the logic for managing user statements, including discussion code management,
+ * retrieving the most recent statement, and determining if the AI summarization button should be enabled.
+ * @returns {{code: string, setCode: function, canSummarize: boolean, getMostRecentStatement: function, addStatement: function, statements: Statement[]}} An object containing:
+ * @property {string} code - The current discussion code.
+ * @property {function} setCode - A function to update the discussion code.
+ * @property {boolean} canSummarize - Indicates if the AI summarization button should be enabled.
+ * @property {function} getMostRecentStatement - A function to get the most recent statement for a given user.
+ * @property {function} addStatement - A function to add a new statement.
+ * @property {Statement[]} statements - An array of all the statements.
+ **/
+const useStatements = () => {
+  const { getStatements, addStatement } = useStatementsManager();
+  const { getFromLocalStorage, setInLocalStorage } = useStorageManager();
+  const codeFromStorage = getFromLocalStorage('generatedCode');
+  /**
+   * @type {{string: Function}}
+   * @description The current discussion code and the function to update it. 
+   */ 
+  const [code, setCode] = useState(codeFromStorage);
+  /** 
+   * @type {Statement[]}
+   * @description All the current statements.
+   */ 
+  const statements = useMemo(() => getStatements(code), [code, getStatements]);
+
+  /**
+   * @function getMostRecentStatementFromLoader
+   * @description gets the most recent statement from the loader
+   **/
+  /**
+   * @function getMostRecentStatementFromLoader
+   * @param {string} user The user to get the statement for.
+   * @returns {Statement|null} The most recent statement for the user.
+   **/
+  const getMostRecentStatementFromLoader = useCallback((user) => {
+    if (!code || !user) {
+      console.warn("User is undefined in getMostRecentStatementFromLoader");
+      return null;
+    }
+    if (!statements) return null;
+    const statement = findMostRecentStatement(statements, user);
+    return statement;
+  }, [code, statements]);
+
+  /**
+   * @name canSummarize
+   * @type {boolean}
+   * @description manages whether the summarization button can be used.
+  */
+  const [canSummarize, setCanSummarize] = useState(false);
+  /**
+   * @function addStatementToState
+   * @description adds a statement to the state
+   * @param {string} code - The code associated with the statement.
+   * @param {string} user - The user who made the statement.
+   * @param {string} text - The text of the statement.
+   **/
+  const addStatementToState = (code, user, text) => {
+    addStatement(code, user, text);
+  };
+
+  /**
+   * @function getMostRecentStatement
+   * @description gets the most recent statement
+   * @param {string} user the user to get the statement for.
+   * @returns {Statement | null} the most recent statement
+   **/
+  const getMostRecentStatement = useCallback((user) => getMostRecentStatementFromLoader(user), [getMostRecentStatementFromLoader]);
+
+  /**
+   * @description Effect to update canSummarize whenever the code changes.
+   * Checks if both users have submitted a statement and updates canSummarize.
+   * @listens code
+   **/
+  useEffect(() => {
+    if (!statements) return;
+
+    const user1Statement = getMostRecentStatement("Participant 1");
+    const user2Statement = getMostRecentStatement("Participant 2");
+
+    setCanSummarize(!!user1Statement &amp;&amp; !!user2Statement);
+  }, [code, getMostRecentStatement, statements]);
+
+  /**
+  * @description Effect to set the generated code in the local storage
+  */
+  useEffect(()=> {
+    setInLocalStorage('generatedCode', code);
+  }, [code, setInLocalStorage]);
+
+  return { code, setCode, canSummarize, getMostRecentStatement, addStatement: addStatementToState, statements };
+};
+
+export default useStatements;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-App.html">App</a></li><li><a href="module-CodeDisplay.html">CodeDisplay</a></li><li><a href="module-CodeEntry.html">CodeEntry</a></li><li><a href="module-ParticipantInput.html">ParticipantInput</a></li><li><a href="module-RandomCodeButton.html">RandomCodeButton</a></li><li><a href="module-StatementList.html">StatementList</a></li><li><a href="module-dataManager%2520Provides%2520data%2520access%2520functions%2520for%2520local%2520storage..html">dataManager Provides data access functions for local storage.</a></li><li><a href="module-gemini.html">gemini</a></li><li><a href="module-localStorage.html">localStorage</a></li><li><a href="module-localStorageManager.html">localStorageManager</a></li><li><a href="module-routes.html">routes</a></li><li><a href="module-useErrorHandler.html">useErrorHandler</a></li><li><a href="module-useStatementsManager.html">useStatementsManager</a></li><li><a href="module-validation.html">validation</a></li><li><a href="useSummarizeStatements.module_js.html">js</a></li></ul><h3>Externals</h3><ul><li><a href="external-GenerativeModel.html">GenerativeModel</a></li></ul><h3>Interfaces</h3><ul><li><a href="global.html#DataManagerContract">DataManagerContract</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AiResponse">AiResponse</a></li><li><a href="global.html#CodeInput">CodeInput</a></li><li><a href="global.html#ErrorMessage">ErrorMessage</a></li><li><a href="global.html#LoadingMessage">LoadingMessage</a></li><li><a href="global.html#NoValuesMessage">NoValuesMessage</a></li><li><a href="global.html#Resolution">Resolution</a></li><li><a href="global.html#StatementDisplay">StatementDisplay</a></li><li><a href="global.html#StatementManager">StatementManager</a></li><li><a href="global.html#UserSelection">UserSelection</a></li><li><a href="global.html#addStatementToState">addStatementToState</a></li><li><a href="global.html#app">app</a></li><li><a href="global.html#canSummarize">canSummarize</a></li><li><a href="global.html#express">express</a></li><li><a href="global.html#geminiAPI">geminiAPI</a></li><li><a href="global.html#geminiClient">geminiClient</a></li><li><a href="global.html#generateRandomCode">generateRandomCode</a></li><li><a href="global.html#getMostRecentStatement">getMostRecentStatement</a></li><li><a href="global.html#getMostRecentStatementFromLoader">getMostRecentStatementFromLoader</a></li><li><a href="global.html#port">port</a></li><li><a href="global.html#post">post</a></li><li><a href="global.html#routes">routes</a></li><li><a href="global.html#useCode">useCode</a></li><li><a href="global.html#useLocalStorage">useLocalStorage</a></li><li><a href="global.html#useStatementLoader">useStatementLoader</a></li><li><a href="global.html#useStatements">useStatements</a></li><li><a href="global.html#validateInput">validateInput</a></li><li><a href="global.html#validateJsonStructure">validateJsonStructure</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Fri Mar 21 2025 09:43:12 GMT+0000 (Coordinated Universal Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

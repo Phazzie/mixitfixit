@@ -492,7 +492,7 @@ This project is in the middle stages of development. A good amount of code has b
 -   [x] Display Statements
 -   [ ] "Summarize with AI" Button
 -   [ ] Error Messages
-- [ ] Input Validation
+-   [x] Input Validation
 
 ### Code Quality
 
@@ -506,6 +506,19 @@ This project is in the middle stages of development. A good amount of code has b
 - [ ] Comments
 - [ ] Pull request in place.
 
+### Contexts and Hooks
+
+-   [x] `src/contexts/StatementsContext.js` creation
+-   [x] `StatementsProvider` creation.
+-   [x] Initial state in `StatementsContext`.
+-   [x] `useStatements` hook.
+-   [x] `statementsReducer`.
+- [x] `addStatement` function.
+- [x] `src/hooks/useStatementsManager.js` creation
+- [x] `getStatements()` function.
+- [x] `addStatement()` function.
+- [ ] Pull request in place.
+
 ### Overall
 - [x] Rapid Development
 - [ ] Complete Feature Implementation
@@ -513,6 +526,9 @@ This project is in the middle stages of development. A good amount of code has b
 - [ ] Error Handling
 - [ ] Testing
 - [ ] Refactoring
+- [x] `StatementsDisplay` component creation.
+- [ ] All the components using the contexts and hooks.
+- [ ] All the contexts and hooks are well tested.
 
 ### Next Steps
 

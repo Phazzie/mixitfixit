@@ -1,59 +1,36 @@
-# Refactoring Guide: Relationship Resolver Project
+## Refactoring Guide
 
-**[Relationship Resolver App: Full Process Overview](projguid.md#relationship-resolver-app-full-process-overview)**
-
-**[Link to Project Checklist](project_checklist.md)**
-
-**[Link to Glossary](#glossary)**
-
-
-
+[Link to the project checklist](project_checklist.md)
+[Link to the project guide](projguid.md)
 
 ## Introduction
-
+This guide outlines the comprehensive plan for the refactoring and development of the Relationship Resolver project. [You can check more about the project in the project guide](projguid.md).
+Our goal is to build an exceptional application that helps resolve relationship conflicts effectively and intuitively. This guide details our current state, the principles guiding our refactoring efforts, our objectives, and a detailed plan with specific actions to enhance the codebase.
 We will use phased refactoring to refactor the code, to reduce the risk, and make it more manageable.
-## Error Handling Improvements
 
-### `useErrorHandler` Hook
-
-*   **Improved:** The `useErrorHandler` hook now includes input validation. It will only accept string or null values. If a non-string value is passed to the `setError` function, it will log a warning to the console and set a default error message ("Invalid error type received").
-
-### `useStatementsManager` Hook
-
-*   **Improved:** The `addStatement` function now requires non-empty string values for `code`, `user`, and `text`. Invalid input will result in a warning being logged and the function returning early. Additionally, `getStatements` now takes an `setError` function as a parameter to handle potential errors during statement retrieval.
-
-### `useSummarizeStatements` Hook
-* **Improved**: The hook now validates the `getMostRecentStatement` parameter, ensuring it is a function, and checks if `code` is a non-empty string. The `handleSummarizeClick` function now checks if `setIsSummarizing` is a function and will throw an error if it's not. The `handleSummarizeClick` function will now catch errors inside it and update the `apiError` state.
-
-## Code Comment Improvements
-
-
-### `useErrorHandler` Hook
-
-*   **Improved:** The `useErrorHandler` hook now includes input validation. It will only accept string or null values. If a non-string value is passed to the `setError` function, it will log a warning to the console and set a default error message ("Invalid error type received").
-
-### `useStatementsManager` Hook
-
-* **Improved**: The module level `@returns` tag was updated to specify that the hook returns an object with `getStatements` and `addStatement` functions. The `getStatements` description was updated to clarify that the `setError` function is used for error handling. The `addStatement` description was updated to state that `setError` is used for error handling and that the function returns early on error.
-
-### `useSummarizeStatements` Hook
-* **Improved**: The module level `@returns` tag was updated to specify that the hook returns an object with `aiResponse`, `apiError` and `handleSummarizeClick` properties. The `handleSummarizeClick` description was updated to clarify that it throws an error if `setIsSummarizing` is not a function. The `useSummarizeStatements` description was updated to specify that it throws an error if `getMostRecentStatement` is not a function or if `code` is not a non-empty string.
-
-
+## Hooks
 We have already implemented the basic features of the app, so now it's time to refactor.
 This guide outlines the comprehensive plan for the refactoring and development of the Relationship Resolver project.
 Our goal is to build an exceptional application that helps resolve relationship conflicts effectively and intuitively. This guide details our current state, the principles guiding our refactoring efforts, our objectives, and a detailed plan with specific actions to enhance the codebase.
 We will also focus on value-first development, user feedback, and CI for testing.
-We will start with a deep refactor, to make sure the code is ready.
-Then we will focus on implementing the remaining features.
+
+
+## Plan B
+
+Plan B is the strategy we're employing for this refactor, and you can find a detailed breakdown in the [Plan B refactor guide](side_refactor.md).
+
+We are implementing a refactor, using contexts and hooks. This is detailed in the [Plan B refactor guide](side_refactor.md)
 
 ## Plans
 ## Guiding Principles
 ## Why Refactor?
-
 Refactoring is a crucial step in the evolution of any software project. For the Relationship Resolver, refactoring is not just about improving the existing code, but about laying a solid foundation for future growth and innovation. Here are the primary reasons why we're embarking on this refactoring journey:
 
-*   **Improve Code Quality:** Refactoring allows us to apply best practices to our codebase, resulting in code that is more readable, maintainable, and less error-prone.
+*   **Improve Code Quality:** Refactoring allows us to apply best practices to our codebase, resulting in code that is more readable, maintainable, and less error-prone. We are aiming for this principles:
+    * Single Responsibility Principle (SRP)
+    * [Testing](testing_guide.md)
+    * Don't Repeat Yourself (DRY)
+    * Keep It Simple, Stupid (KISS)
 *   **Enhance Maintainability:** By organizing our code into clear modules and following principles like SRP, DRY, and KISS, we'll make it much easier to modify and update the codebase in the future.
 *   **Boost Performance:** Refactoring can help us identify and address performance bottlenecks, leading to a faster and more responsive application.
 *   **Enable Future Feature Development:** A well-structured codebase makes it significantly easier to add new features and functionalities down the line.
@@ -65,6 +42,7 @@ Refactoring is a crucial step in the evolution of any software project. For the 
 This guide will use several examples to illustrate the concepts.
 Here are some examples to illustrate the concepts:
 
+
 *   **Single Responsibility Principle (SRP):** Instead of having a function that does multiple tasks, like saving to local storage and updating the UI, we break it into two functions.
     * We will create a test for each of the new functions.
 *   **Don't Repeat Yourself (DRY):** If we find duplicate code, like validation logic in the frontend and backend, we create a shared module.
@@ -73,7 +51,7 @@ Here are some examples to illustrate the concepts:
 * **Testing**: Instead of just hoping the code works, we create tests that check that the code works correctly.
 * **Code review**: Instead of just hoping the code is correct, we review the code, to find errors, and improve quality.
 
-
+## Refactoring principles
 
 We will follow these principles:
 
@@ -91,6 +69,34 @@ We will follow these principles:
 * **Performance Optimization**: We will try to optimize performance.
 
 ## 1. Current State Analysis
+### Hooks
+
+You can find more details about the project in the [Project guide](projguid.md).
+
+*   **`useErrorHandler`**: This hook provides a way to manage and handle errors within the application.
+    * **Improved**: The hook now validates the input, making sure it is a `string` or `null`.
+    *   **Function:**
+        * **setError**: This function is used to set an error. It receives the error as a parameter, and makes sure it is a `string` or `null`.
+            * **Validation**: The hook now includes input validation. It will only accept string or null values. If a non-string value is passed to the `setError` function, it will log a warning to the console and set a default error message ("Invalid error type received").
+    *   **Variable:**
+        * **error**: This variable holds the error message.
+*   **`useStatementsManager`**: This hook is responsible for managing statements.
+    * **Improved:**
+        *   **addStatement**: The `addStatement` function now requires non-empty string values for `code`, `user`, and `text`. Invalid input will result in a warning being logged and the function returning early.
+        * **getStatements**:  `getStatements` now takes an `setError` function as a parameter to handle potential errors during statement retrieval.
+        * **Returns:** This hook returns an object with the `getStatements` and `addStatement` functions.
+*   **`useSummarizeStatements`**: This hook is responsible for managing the AI summarization of the statements.
+    * **Improved**:
+        * The hook now validates the `getMostRecentStatement` parameter, ensuring it is a function, and checks if `code` is a non-empty string.
+        * The `handleSummarizeClick` function now checks if `setIsSummarizing` is a function and will throw an error if it's not.
+        * The `handleSummarizeClick` function will now catch errors inside it and update the `apiError` state.
+        * **Returns**: This hook returns an object with the `aiResponse`, `apiError` and `handleSummarizeClick` properties.
+        * **handleSummarizeClick**: This function takes a function called `setIsSummarizing` as a parameter. This function will be used to set the `isSummarizing` state variable, and it will throw an error if it is not a function.
+
+
+
+
+
 
 The Relationship Resolver project has implemented the core features of the app, all of them are in a basic state, and will need to be refactored.
 The next step is to refactor the code, and prepare it for the implementation of the remaining features.
@@ -166,7 +172,6 @@ A deep refactor is essential to transition the project from a rapidly developed 
 * **Contract-Driven Development**: To make sure we are following the correct practices.
 ## 3. Refactoring Objectives
 
-These are the main objectives for the refactor.
 
 Our primary goals are to:
 
@@ -334,36 +339,8 @@ Our primary goals are to:
 
 ### Testing and Verification
 
-*   **Action:** Implement tests to confirm the refactoring is correct and that the application functions as expected.
-*   **Types of Tests:**
-    *   **Unit Tests:** Test individual functions and components in isolation.
-        *   **Example:** Test the `generateRandomCode()` function to ensure it generates codes of the correct length and format.
-        * **Contract**: Make sure to test the function against the contract.
-        *   **Example:** Test the `validateStatement()` function to ensure it correctly detects invalid input.
-        * **Contract**: Make sure to test the function against the contract.
-    *   **Integration Tests:** Test how components or modules work together.
-        *   **Example:** Test the interaction between the `InputArea` component and the `localStorage` storage.
-        *   **Example:** Test the interaction between the front end and the backend when posting data and receiving a summary.
-*   **Checks**:
-    * Make sure the application works the same as before the refactor.
-    * **Run the tests**: Make sure to run the tests, before committing your code.
-    * Check the browser console for any errors.
-    * Check the backend console for any errors.
-* **Creating tests**: Before refactoring any piece of code, you need to create or update the tests.
-    * **New functions**: For each new function you create, make sure to create a test for it.
-    * **Updated functions**: If you change any existing function, make sure to update its tests.
-    * **Failed tests**: If there is any failing test, you need to fix it before moving to the next refactor.
+We will use the guide in [testing guide](testing_guide.md) to implement all the tests.
 
-### Running Tests
-
-Regularly running tests is crucial to ensure the ongoing quality and reliability of our codebase. Here are some guidelines for running tests effectively:
-
-1.  **Run Tests Frequently**: Make it a habit to run tests frequently, such as after making a set of related changes or before committing your code.
-2.  **Run All Tests**: When running tests, make sure you run the complete test suite to catch any unintended side effects of your changes.
-3.  **Fix Failing Tests**: If any tests fail, you must fix them before proceeding. Failing tests indicate that your changes have broken existing functionality or introduced new bugs.
-4. **CI**: We will use CI to make sure the tests are running.
-5. **Unit tests**: We will use unit tests to test individual functions and modules.
-6. **Integration tests**: We will use integration tests to make sure that the modules work well together.
 
 
 ### Test Driven Development
@@ -374,36 +351,7 @@ We will be using test-driven development:
 2. **Write the code**: We will write the code to pass the test.
 3. **Refactor**: We will refactor the code, making sure it passes all the tests.
 4. **Repeat**: We will repeat the process for each new feature or fix.
-
-### Code Review
-
-* **Have someone else review your code**: Have another person review your code, this person should check for:
-    * Correctness.
-    * Readability.
-    * Comments.
-
-
-### Bug Fixes
-Fixing bugs effectively is critical for creating high-quality software. Here are some guidelines for bug fixes:
-
-
-* **Understand the Bug:** Before attempting a fix, make sure you fully understand the bug. Try to reproduce it reliably.
-* **Isolate the Problem:** Pinpoint the exact code section causing the issue.
-* **Write a Test:** If possible, write a failing test that reproduces the bug. This will help ensure that the bug is truly fixed and won't reappear later.
-* **Fix the Bug:** Make the necessary code changes to resolve the issue.
-* **Run the Test:** Run the test you wrote (or an existing test) to confirm that the bug is fixed.
-* **Test Thoroughly:** Don't rely solely on the test you wrote. Test the surrounding code and related features to ensure that the bug fix didn't create any new problems.
-* **Document the Fix:** Add comments to the code explaining the bug and the fix. This will help others (and your future self) understand the history of the code.
-* **Code Review:** Have another developer review your bug fix to ensure its correctness and quality.
 ### 5. Next Steps
-
-After completing the deep refactor:
-
-1.  **Comprehensive Code Review:** Conduct a thorough review of the entire codebase to catch any remaining issues.
-2.  **Implement More Tests:** Expand the test suite to cover more cases.
-3.  **Refine:** Go back and improve parts of the code that are still weak, or can be improved.
-4.  **Address the remaining project checklist:** begin working on the checklist and adding the remaining features.
-5.  **Monitor and Maintain:** Regularly review and update the code to prevent code quality issues from accumulating.
 
 This guide provides a robust framework for refactoring the Relationship Resolver project. By following these steps, we can significantly improve the quality, maintainability, and extensibility of the codebase.
 

@@ -96,29 +96,31 @@ This is a step-by-step explanation of how the "Relationship Resolver" app will w
         *   ⭐ **Mutual Agreement:**
             *   No discussion begins until the issue is agreed upon.
             *   No resolution is final unless both parties accept it.
-    *   🚀 **Summary**
-        *   The app creates a structured space where two people can work through conflicts.
-        *   Steel-manning ensures both sides feel heard and understood.
-        *   Locked statements prevent misunderstanding or shifting narratives.
-        *   AI guidance helps keep the conversation clear and respectful.
-        *   The app generates a structured resolution that both people agree on.
-        *   The process ends with a clear summary for future reference.
+        *   🚀 **Summary**
+            *   The app creates a structured space where two people can work through conflicts.
+            *   Steel-manning ensures both sides feel heard and understood.
+            *   Locked statements prevent misunderstanding or shifting narratives.
+            *   AI guidance helps keep the conversation clear and respectful.
+            *   The app generates a structured resolution that both people agree on.
+            *   The process ends with a clear summary for future reference.
 
-**[Link to Project Checklist](project_checklist.md)**
+    [Link to Project Checklist](project_checklist.md)
 
 ## Executive Summary
-
-This document serves as the comprehensive guide for the Relationship Resolver project, a web application designed to facilitate constructive discussions between individuals in conflict. By leveraging AI (Google Gemini API) and a structured conversation format, the app helps users communicate more effectively and reach resolutions. This project employs a "World-Class" development approach, emphasizing exceptional code quality, advanced testing, and future-proofing. It also focuses on modularity, value-first development, user feedback, contracts, advanced data structures, automated code analysis, robust error handling, and performance optimization. The project is being developed by a small team and prioritizes simplicity, rapid development, and maintainability.
+This document serves as the comprehensive guide for the Relationship Resolver project, a web application designed to facilitate constructive discussions between individuals in conflict. The name of the app is 'Relationship Resolver'. By leveraging AI (Google Gemini API) and a structured conversation format, the app helps users communicate more effectively and reach resolutions. This project employs a "World-Class" development approach, emphasizing exceptional code quality, advanced testing, and future-proofing. It also focuses on modularity, value-first development, user feedback, contracts, advanced data structures, automated code analysis, robust error handling, and performance optimization. The project is being developed by a small team and prioritizes simplicity, rapid development, and maintainability.
 
 **Target Audience:** This document is intended for developers, testers, and project stakeholders involved in the development and maintenance of the Relationship Resolver application.
     
-## Project Limitations, Risks, and Resources Needed
+## Project Limitations, Risks, and Resources Needed <a name="limitations"></a>
 
 **Limitations:**
 - Current team size is limited to two people.
 - The project is currently using `localStorage`.
 - The app is not using real time.
-- The current app is an MVP, and doesn't have all the features.
+-  The current project is in a refactoring process.
+
+Here you can see the [Refactoring Guide](refactoring_guide.md) and the [Plan B](side_refactor.md) for more information about the refactoring.
+
 
 **Risks:**
 - Limited resources could make the development slower.
@@ -142,7 +144,7 @@ This document serves as the comprehensive guide for the Relationship Resolver pr
 *   **AI-Powered Insights:** Leverage AI to provide meaningful summaries, highlight key points, and guide users towards resolution.
 *   **User-Friendly:** Create an intuitive and easy-to-use interface.
 *   **High Quality Code:** Build a robust, maintainable, and extensible codebase.
-*   **Value-First Development**: Prioritize the development of features that deliver the most value to users.
+*   **Value-First Development**: Prioritize the development of features that deliver the most value to users. <a name="value-first"></a>
 *   **Limitations**: Create a project that is simple, easy to mantain, and easy to extend.
 *   **Resources**: Use only the needed resources, and avoid doing anything that is not needed.
 
@@ -259,6 +261,8 @@ These guidelines combine project requirements with explanations of how software 
 
 ## Phases
 
+Here you can see the [Refactoring Guide](refactoring_guide.md) and the [checklist](project_checklist.md) for more information about the phases.
+
 ### Phase 3: General Review and Cleanup / Tests in Progress
 
 **Goals:**
@@ -329,12 +333,14 @@ These guidelines combine project requirements with explanations of how software 
 
 **Instructions:** Use these prompts *sequentially* with the IDX AI. Paste each prompt *one at a time* into the IDX AI chat. *Review the generated code carefully* after each step. Be prepared to *iterate* and refine the prompts based on the AI's responses.
 
+You can see the details of the refactor in the [Plan B](side_refactor.md).
+
 ---
+
 
 ### Prompt 1: Project Setup
 
 List the available templates that support nodeJS and React. Create a new workspace using a template that includes a general JavaScript setup. Ensure a clear separation of the frontend and backend code in the project structure by creating `frontend/` and `backend/` folders. Also, explain how to configure API keys for the Gemini API in IDX.
-
 ---
 
 **Prompt 2: Backend (API Endpoint & Gemini Integration)**
@@ -433,8 +439,9 @@ This project is in the middle stages of development. A good amount of code has b
 | 1.0     | 2024-03-11 | Initial Document Creation                                         | AI     |
 | 1.1     | 2024-03-12 | Added Executive Summary, Target Audience, Visual Aids, Glossary, etc | AI     |
 | 1.2     | 2024-03-12 | Added Project Limitations, Risks, and Resources Needed and how to get user feedback. | AI     |
+| 1.3     | 2024-03-21 | Added the name of the app, and updated the status of the backend, frontend, code quality, and contexts and hooks. Implemented Plan B refactor. | AI |
 
-## Key Areas for Improvement
+## Key Areas for Improvement <a name="key-areas"></a>
 
 ### 1. Error handling
 
@@ -466,6 +473,11 @@ This project is in the middle stages of development. A good amount of code has b
 
 - do a deep refactor of all of the code. Look at every component, function, and module.
 
+### Key Areas for Improvement <a name="key-areas"></a>
+Here you can see the [Refactoring Guide](refactoring_guide.md) for more information.
+
+Here you can see the [Testing Guide](testing_guide.md) for more information about testing.
+
 ## Checklist
 
 ### Project Setup
@@ -479,9 +491,9 @@ This project is in the middle stages of development. A good amount of code has b
 -   [x] `/api/ai-summarize` Endpoint
 -   [x] POST Request (`user1`, `user2`)
 -   [x] Gemini Integration
--   [ ] Error Handling (HTTP status, messages)
+-   [x] Error Handling (HTTP status, messages)
 -   [ ] Gemini Prompt Review/Customization
--   [ ] Input Validation
+-   [x] Input Validation
     
 ### Frontend
 
@@ -490,17 +502,17 @@ This project is in the middle stages of development. A good amount of code has b
 -   [x] Text Areas & Submission
 -   [x] `localStorage` Integration
 -   [x] Display Statements
--   [ ] "Summarize with AI" Button
--   [ ] Error Messages
+-   [x] "Summarize with AI" Button
+-   [x] Error Messages
 -   [x] Input Validation
 
 ### Code Quality
 
 -   [x] Modularity
 -   [x] Separation of Concerns
--   [ ] SRP
--   [ ] DRY
--   [ ] KISS
+-   [x] SRP
+-   [x] DRY
+-   [x] KISS
 -   [ ] Readability
 -   [ ] Extensibility
 - [ ] Comments
@@ -515,6 +527,7 @@ This project is in the middle stages of development. A good amount of code has b
 -   [x] `statementsReducer`.
 - [x] `addStatement` function.
 - [x] `src/hooks/useStatementsManager.js` creation
+- [x] The tests for the hook.
 - [x] `getStatements()` function.
 - [x] `addStatement()` function.
 - [ ] Pull request in place.
@@ -525,7 +538,7 @@ This project is in the middle stages of development. A good amount of code has b
 - [ ] Comprehensive Code Review
 - [ ] Error Handling
 - [ ] Testing
-- [ ] Refactoring
+- [x] Refactoring
 - [x] `StatementsDisplay` component creation.
 - [ ] All the components using the contexts and hooks.
 - [ ] All the contexts and hooks are well tested.

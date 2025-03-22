@@ -1,10 +1,73 @@
-# Testing Guide: Relationship Resolver Project
+# Testing Guide
 
-## 1. Introduction to Testing
+## Introduction
 
-Testing is a critical part of the software development process that ensures the quality, reliability, and correctness of an application. It involves executing the application with various inputs and scenarios to verify that it behaves as expected and meets its requirements. Thorough testing helps identify bugs early, improve code quality, reduce the risk of application failure, and facilitate code refactoring. In the Relationship Resolver project, testing will be used to improve the quality of the application.
+This guide outlines the testing strategy for the Relationship Resolver project. Effective testing ensures the application's quality, reliability, and correctness.
 
-## 2. Types of Tests
+## Importance of Testing
+
+*   **Early Bug Detection:** Testing helps identify bugs and issues early in the development cycle, reducing the cost and effort of fixing them later.
+*   **Improved Code Quality:** Writing tests encourages writing modular and testable code, leading to better code design.
+*   **Reduced Risk:** Comprehensive testing reduces the risk of application failure in production.
+*   **Facilitates Refactoring:** Tests act as a safety net when refactoring code, ensuring that changes do not introduce new bugs.
+
+## Testing and Verification
+
+### Test-Driven Development (TDD)
+
+*   **Concept:** TDD is a development approach where tests are written before the code.
+*   **Process:**
+    1.  Write a test that defines a specific functionality.
+    2.  Run the test (it should fail).
+    3.  Write the code that makes the test pass.
+    4.  Refactor the code and run the tests again.
+*   **Benefits:**
+    *   Ensures that all code is testable.
+    *   Results in more modular and robust code.
+    *   Serves as living documentation of how the code should behave.
+
+### Bug Fixes
+
+*   **Process:**
+    1.  When a bug is discovered, write a test that reproduces the bug.
+    2.  Run the test (it should fail).
+    3.  Fix the code to make the test pass.
+    4.  Ensure that all tests pass after fixing the bug.
+*   **Benefits:**
+    *   Prevents regressions (bugs that reappear after being fixed).
+    *   Ensures that the fix addresses the root cause of the bug.
+
+## Running Tests
+
+### How to Run
+
+*   **Command:** `npm test` (frontend and server).
+*   **Process:**
+    1.  Navigate to the `client` directory in your terminal.
+    2.  Run `npm test`.
+    3.  Navigate to the `server` directory in your terminal.
+    4.  Run `npm test`.
+    5. Check that all the tests are passing.
+
+## How to Create Tests
+
+### General structure
+
+* **test() or it()**: Create the test using one of these two functions.
+* **describe()**: Create a group of tests using this function.
+* **expect()**: Use this function to check if the code is working as expected.
+* **toBe(), toEqual()**: Use these functions inside the expect function to make a test.
+*   **Arrange, Act, Assert**: Make sure each test follows these steps:
+    *   **Arrange**: Set up the necessary context and data for the test.
+    *   **Act**: Perform the action or method being tested.
+    *   **Assert**: Verify that the result of the action matches the expected outcome.
+* **Mocking:** When testing code that relies on external dependencies (like APIs, databases, or third-party libraries), use mocking to simulate those dependencies. This ensures that the tests remain isolated and don't depend on the availability or behavior of external systems.
+* **Test data:** Test using different inputs and scenarios, to make sure everything is working as expected.
+* **Edge Cases**: Always test the edge cases.
+
+### Example
+
+
 
 ### Unit Tests
 

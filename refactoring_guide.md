@@ -1,22 +1,28 @@
 ## Refactoring Guide
 
+<!-- Link to the project checklist -->
 [Link to the project checklist](project_checklist.md)
+<!-- Link to the project guide -->
 [Link to the project guide](projguid.md)
 
 ## Introduction
+<!-- Introduction to the Refactoring Guide -->
 This guide outlines the comprehensive plan for the refactoring and development of the Relationship Resolver project. [You can check more about the project in the project guide](projguid.md).
 Our goal is to build an exceptional application that helps resolve relationship conflicts effectively and intuitively. This guide details our current state, the principles guiding our refactoring efforts, our objectives, and a detailed plan with specific actions to enhance the codebase.
+<!-- Explanation of Phased Refactoring -->
 We will use phased refactoring to refactor the code, to reduce the risk, and make it more manageable.
 
 ## Hooks
+<!-- Section about Hooks -->
 We have already implemented the basic features of the app, so now it's time to refactor.
 This guide outlines the comprehensive plan for the refactoring and development of the Relationship Resolver project.
 Our goal is to build an exceptional application that helps resolve relationship conflicts effectively and intuitively. This guide details our current state, the principles guiding our refactoring efforts, our objectives, and a detailed plan with specific actions to enhance the codebase.
+<!-- Mention of Value-First Development, User Feedback, and CI -->
 We will also focus on value-first development, user feedback, and CI for testing.
 
 
 ## Plan B
-
+<!-- Section about Plan B -->
 Plan B is the strategy we're employing for this refactor, and you can find a detailed breakdown in the [Plan B refactor guide](side_refactor.md).
 
 We are implementing a refactor, using contexts and hooks. This is detailed in the [Plan B refactor guide](side_refactor.md)
@@ -24,6 +30,7 @@ We are implementing a refactor, using contexts and hooks. This is detailed in th
 ## Plans
 ## Guiding Principles
 ## Why Refactor?
+<!-- Section explaining why refactoring is necessary -->
 Refactoring is a crucial step in the evolution of any software project. For the Relationship Resolver, refactoring is not just about improving the existing code, but about laying a solid foundation for future growth and innovation. Here are the primary reasons why we're embarking on this refactoring journey:
 
 *   **Improve Code Quality:** Refactoring allows us to apply best practices to our codebase, resulting in code that is more readable, maintainable, and less error-prone. We are aiming for this principles:
@@ -39,6 +46,7 @@ Refactoring is a crucial step in the evolution of any software project. For the 
 * **Testability**: Refactoring allows us to make the code more testable, so it's easier to test it.
 
 ### Examples
+<!-- Examples of refactoring concepts -->
 This guide will use several examples to illustrate the concepts.
 Here are some examples to illustrate the concepts:
 
@@ -53,6 +61,7 @@ Here are some examples to illustrate the concepts:
 
 ## Refactoring principles
 
+<!-- Refactoring principles -->
 We will follow these principles:
 
 * **Contract-Driven Development**: We will use contracts to define the behavior of each module.
@@ -70,8 +79,10 @@ We will follow these principles:
 
 ## 1. Current State Analysis
 ### Hooks
-
+<!-- Section about the Current State Analysis -->
+<!-- Link to the Project Guide -->
 You can find more details about the project in the [Project guide](projguid.md).
+<!-- Analysis of useErrorHandler Hook -->
 
 *   **`useErrorHandler`**: This hook provides a way to manage and handle errors within the application.
     * **Improved**: The hook now validates the input, making sure it is a `string` or `null`.
@@ -81,12 +92,14 @@ You can find more details about the project in the [Project guide](projguid.md).
     *   **Variable:**
         * **error**: This variable holds the error message.
 *   **`useStatementsManager`**: This hook is responsible for managing statements.
+<!-- Analysis of useStatementsManager Hook -->
     * **Improved:**
         *   **addStatement**: The `addStatement` function now requires non-empty string values for `code`, `user`, and `text`. Invalid input will result in a warning being logged and the function returning early.
         * **getStatements**:  `getStatements` now takes an `setError` function as a parameter to handle potential errors during statement retrieval.
         * **Returns:** This hook returns an object with the `getStatements` and `addStatement` functions.
 *   **`useSummarizeStatements`**: This hook is responsible for managing the AI summarization of the statements.
     * **Improved**:
+<!-- Analysis of useSummarizeStatements Hook -->
         * The hook now validates the `getMostRecentStatement` parameter, ensuring it is a function, and checks if `code` is a non-empty string.
         * The `handleSummarizeClick` function now checks if `setIsSummarizing` is a function and will throw an error if it's not.
         * The `handleSummarizeClick` function will now catch errors inside it and update the `apiError` state.
@@ -97,6 +110,7 @@ You can find more details about the project in the [Project guide](projguid.md).
 
 
 
+<!-- Current State of the Project -->
 
 The Relationship Resolver project has implemented the core features of the app, all of them are in a basic state, and will need to be refactored.
 The next step is to refactor the code, and prepare it for the implementation of the remaining features.
@@ -105,6 +119,7 @@ We will start with a deep refactor, that will improve the code quality.
 
 **Key Components & Features:**
 
+<!-- Implemented Features -->
 *   **Implemented Features:**
     *   **[Issue Proposal and Agreement](client/src/App.js):** Users can propose an issue, and the other user can accept, modify or reject it.
     *   **[Steel-Manning](client/src/App.js):** Users can restate the other users issue, and the other user can agree if it is correct.
@@ -120,6 +135,7 @@ We will start with a deep refactor, that will improve the code quality.
 
 
 
+<!-- Backend Details -->
 
 
 
@@ -138,6 +154,7 @@ We will start with a deep refactor, that will improve the code quality.
     *   Temporary `localStorage` for data persistence.
 *   **Development:** Google IDX
 
+<!-- Areas Needing Improvement -->
 **Areas Needing Improvement and Implementation:**
 
 *   **Error Handling:** Incomplete; needs proper HTTP status codes, detailed error messages, and user-friendly feedback.
@@ -149,8 +166,10 @@ We will start with a deep refactor, that will improve the code quality.
     * Unsure extensibility.
 
 We will use phased refactoring to refactor the code, to reduce the risk, and make it more manageable.
+<!-- Rationale for Deep Refactor -->
 ## 2. Rationale for Deep Refactor
 
+<!-- Reasons for a Deep Refactor -->
 A deep refactor is essential to transition the project from a rapidly developed prototype to a robust, maintainable application.
 
 **Key Reasons:**
@@ -173,6 +192,7 @@ A deep refactor is essential to transition the project from a rapidly developed 
 ## 3. Refactoring Objectives
 
 
+<!-- Refactoring Objectives -->
 Our primary goals are to:
 
 *   **Elevate Code Quality:** Ensure we are using SRP, DRY, KISS, Modularity, Separation of Concerns, Readability, Extensibility, and contracts.
@@ -182,6 +202,7 @@ Our primary goals are to:
 
 ### Component Breakdown
 
+<!-- Frontend Component Refactoring -->
 #### Frontend (React)
 
 *   **Action:** Review each component. Break down components that manage multiple UI elements or data processes into smaller, single-purpose components.
@@ -223,6 +244,7 @@ Our primary goals are to:
         3. import and render `frontend/components/StatementDisplay.js` in `frontend/App.js`.
         4. pass the necessary props to `frontend/components/StatementDisplay.js`.
 
+<!-- Backend Component Refactoring -->
 #### Backend (Node.js/Express)
 
 *   **Action:** Review the backend code. Identify areas that can be grouped together, such as API related code, or database related code.
@@ -246,6 +268,7 @@ Our primary goals are to:
         3. import and use `backend/validation.js` in `backend/server.js`
 
 ### Function Decomposition
+<!-- Function Decomposition Section -->
 
 *   **Action:** Identify functions that are long or perform multiple tasks. Break them down into smaller functions, each with a single, well-defined responsibility (SRP).
 *   **Example:**
@@ -269,6 +292,7 @@ Our primary goals are to:
         1. create the new function.
         2. move the request logic to the new function.
         3. update the original function to call the new function, and use the output.
+<!-- Code Duplication Section -->
 
 ### Code Duplication
 
@@ -284,6 +308,7 @@ Our primary goals are to:
         3.  Import and use these functions where necessary, frontend and backend.
 
 ### Readability
+<!-- Readability Section -->
 
 *   **Action:** Apply consistent formatting, naming conventions, and commenting to improve code clarity.
 *   **Naming:**
@@ -298,6 +323,7 @@ Our primary goals are to:
     *   Avoid redundant comments that simply state what the code is doing.
 
 ### Error Handling
+<!-- Error Handling Section -->
 
 *   **Action:** Implement robust error handling throughout the project.
 *   **Backend:**
@@ -311,6 +337,7 @@ Our primary goals are to:
     * Create a component that is responsible for handling and displaying all errors.
 
 ### Input Validation
+<!-- Input Validation Section -->
 
 *   **Action:** Create a centralized input validation module and integrate it throughout the project.
 *   **Implementation:**
@@ -319,6 +346,7 @@ Our primary goals are to:
     *   Use these validation functions in appropriate places.
 
 ### Extensibility
+<!-- Extensibility Section -->
 
 * **Action**: Ensure the code is structured in a way that is easy to modify, and extend.
 * **Implementation**:
@@ -329,6 +357,7 @@ Our primary goals are to:
     * break down code into single purposed functions.
 
 ### Modularity
+<!-- Modularity Section -->
 
 * **Action**: Ensure the code is organized in modules, and that the modules are used.
 * **Implementation**:
@@ -339,12 +368,14 @@ Our primary goals are to:
 
 ### Testing and Verification
 
+<!-- Testing Section -->
 We will use the guide in [testing guide](testing_guide.md) to implement all the tests.
 
 
 
 ### Test Driven Development
 
+<!-- Test Driven Development Section -->
 We will be using test-driven development:
 
 1. **Write a failing test**: We will write a failing test for each new feature or fix.
@@ -353,10 +384,12 @@ We will be using test-driven development:
 4. **Repeat**: We will repeat the process for each new feature or fix.
 ### 5. Next Steps
 
+<!-- Next Steps Section -->
 This guide provides a robust framework for refactoring the Relationship Resolver project. By following these steps, we can significantly improve the quality, maintainability, and extensibility of the codebase.
 
 ## Phases
 
+<!-- Phases Section -->
 We will refactor the code in phases. This is to reduce the risk and make it more manageable.
 ### Phase 3: General Review and Cleanup / Tests in Progress
 **Goals**:
@@ -401,6 +434,7 @@ We will refactor the code in phases. This is to reduce the risk and make it more
 
 ### Phase 4: Extensibility and advanced refactoring
 
+<!-- Phase 4 Section -->
 **Goals**(now out of scope, we will implement the code first):
 We will work on this phase, once we implement all the features.
 
@@ -430,6 +464,7 @@ We will work on this phase, once we implement all the features.
 
 ### Phase 5: Expanded Testing and quality check
 
+<!-- Phase 5 Section -->
 **Goals**(now out of scope, we will implement the code first):
 We will work on this phase, once we implement all the features and refactor the code.
 
@@ -454,6 +489,7 @@ We will work on this phase, once we implement all the features and refactor the 
 
 ### Phase 6: Database
 
+<!-- Phase 6 Section -->
 **Goals**(now out of scope, we will implement the code first):
 We will work on this phase, once we implement all the features and refactor the code.
 
@@ -466,6 +502,7 @@ We will work on this phase, once we implement all the features and refactor the 
 
 ### Phase 7: Further Considerations (Post-MVP)
 
+<!-- Phase 7 Section -->
 **Goals**(now out of scope, we will implement the code first):
 We will work on this phase, once we implement all the features and refactor the code.
 
@@ -490,6 +527,7 @@ We will work on this phase, once we implement all the features and refactor the 
 ## User feedback
 
 * We will get user feedback as soon as possible.
+<!-- User feedback Section -->
 * We will use user feedback to make changes to the app.
 * We will focus on the user needs.
 
@@ -497,4 +535,5 @@ We will work on this phase, once we implement all the features and refactor the 
 
 * We will focus on value first, by implementing the features that will give more value to the users.
 * We will add the features that are most needed first.
+<!-- Value first Section -->
 * We will try to deliver value as soon as possible.

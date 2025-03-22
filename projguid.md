@@ -1,5 +1,5 @@
 # Project Guide: Relationship Resolver - World-Class Plan
-
+This is the project guide for the 'Relationship Resolver' project.
 
 ## Relationship Resolver App: Full Process Overview
 This is a step-by-step explanation of how the "Relationship Resolver" app will work from start to finish. This focuses purely on the user experience without technical details.
@@ -109,17 +109,22 @@ This is a step-by-step explanation of how the "Relationship Resolver" app will w
 ## Executive Summary
 This document serves as the comprehensive guide for the Relationship Resolver project, a web application designed to facilitate constructive discussions between individuals in conflict. The name of the app is 'Relationship Resolver'. By leveraging AI (Google Gemini API) and a structured conversation format, the app helps users communicate more effectively and reach resolutions. This project employs a "World-Class" development approach, emphasizing exceptional code quality, advanced testing, and future-proofing. It also focuses on modularity, value-first development, user feedback, contracts, advanced data structures, automated code analysis, robust error handling, and performance optimization. The project is being developed by a small team and prioritizes simplicity, rapid development, and maintainability.
 
-**Target Audience:** This document is intended for developers, testers, and project stakeholders involved in the development and maintenance of the Relationship Resolver application.
+**Target Audience:** This document is intended for developers, testers, and project stakeholders involved in the development and maintenance of the Relationship Resolver application. It provides guidelines, checklists, and architectural information to ensure the project's success.
     
 ## Project Limitations, Risks, and Resources Needed <a name="limitations"></a>
 
 **Limitations:**
-- Current team size is limited to two people.
-- The project is currently using `localStorage`.
-- The app is not using real time.
--  The current project is in a refactoring process.
+- Current team size is limited to two people, which may slow down the development pace.
+- The project is currently using `localStorage` for data persistence. This is temporary and will be replaced by a more robust solution (Supabase).
+- The app is not using real time communication.
+- The current project is in a refactoring process. This includes improving code quality, modularity, and testability.
 
 Here you can see the [Refactoring Guide](refactoring_guide.md) and the [Plan B](side_refactor.md) for more information about the refactoring.
+
+**What to do after uploading to github:**
+- Run the tests (`npm test`) and fix any failing test.
+- Do a manual core flow check.
+- Implement Error handling.
 
 
 **Risks:**
@@ -129,8 +134,8 @@ Here you can see the [Refactoring Guide](refactoring_guide.md) and the [Plan B](
 
 **Resources Needed:**
 - IDX.
-- Google Gemini API.
-
+- Google Gemini API. Make sure to setup the API key.
+### Project Overview and Goals
 ## Project Overview and Goals
 
 
@@ -148,6 +153,7 @@ Here you can see the [Refactoring Guide](refactoring_guide.md) and the [Plan B](
 *   **Limitations**: Create a project that is simple, easy to mantain, and easy to extend.
 *   **Resources**: Use only the needed resources, and avoid doing anything that is not needed.
 
+### User Feedback
 ## User Feedback
 
 To ensure the app meets user needs, we will:
@@ -157,6 +163,7 @@ To ensure the app meets user needs, we will:
 - **Surveys**: Ask users for their feedback in surveys.
 * **User feedback**: Get user feedback early, and adapt the app based on that feedback.
     
+### World-Class Plan
 ## World-Class Plan
 
 ### How to create a Pull Request
@@ -177,7 +184,6 @@ To ensure the app meets user needs, we will:
 #### 4. Add Comments to the Code
 *   Add clear and concise comments throughout your code to explain complex logic or non-obvious decisions.
 
-
 *   **Exceptional Code Quality:** Writing clean, well-structured, and maintainable code.
 *   **Advanced Testing:** Implementing comprehensive testing (unit, integration, end-to-end).
 *   **Future-Proofing:** Designing for extensibility and future growth.
@@ -189,7 +195,7 @@ To ensure the app meets user needs, we will:
 ## Visual Aids (Modularity)
 
 ![Modularity Diagram](https://i.imgur.com/uRj21Tq.png)
-
+### Glossary of Terms
 ## Glossary of Terms
 
 *   **MVP:** Minimum Viable Product.
@@ -208,7 +214,7 @@ To ensure the app meets user needs, we will:
 *   **Value-First Development**: Value-first development prioritizes features and changes that deliver the most tangible value to the end user, ensuring that the most important problems are addressed before less critical enhancements.
 
 
-
+### Key Decisions & Architecture
 
 
 
@@ -221,6 +227,7 @@ To ensure the app meets user needs, we will:
 *   **Authentication:** None for this MVP (a simple, shared, generated code will be used for accessing a discussion)
 *   **Interaction:** Turn-based (not real-time)
 
+### Development Principles & Best Practices
 ## Development Principles & Best Practices
 
 These guidelines combine project requirements with explanations of how software development best practices apply:
@@ -260,7 +267,8 @@ These guidelines combine project requirements with explanations of how software 
 11. **Performance optimization**: Optimize the performance of the code.
 
 ## Phases
-
+### Project phases
+This project is divided into multiple phases.
 Here you can see the [Refactoring Guide](refactoring_guide.md) and the [checklist](project_checklist.md) for more information about the phases.
 
 ### Phase 3: General Review and Cleanup / Tests in Progress
@@ -327,6 +335,7 @@ Here you can see the [Refactoring Guide](refactoring_guide.md) and the [checklis
     * Add tests.
 * **Modular development**:
     * Make the app modular.
+    * Add tests.
     * Add tests.
 
 ## Prompts for IDX AI Coding Agent
@@ -410,7 +419,7 @@ Display the exact prompt being sent to the Gemini API in the backend code. Expla
 
 **Prompt 5: Code Review and Best Practices**
 
-Review all of the code that has been created. Suggest any improvements based on:
+Review all of the code that has been created. Suggest any improvements based on: Make sure to implement the following principles.
 
 *   Single Responsibility Principle
 *   Don't Repeat Yourself principles
@@ -428,7 +437,7 @@ w
 
 # Codebase Audit Summary
 
-## Status
+### Status
 
 This project is in the middle stages of development. A good amount of code has been produced and a good portion of the required features have been implemented. There is still a large portion of work to be done, but the project is well on its way.
 
@@ -441,7 +450,7 @@ This project is in the middle stages of development. A good amount of code has b
 | 1.2     | 2024-03-12 | Added Project Limitations, Risks, and Resources Needed and how to get user feedback. | AI     |
 | 1.3     | 2024-03-21 | Added the name of the app, and updated the status of the backend, frontend, code quality, and contexts and hooks. Implemented Plan B refactor. | AI |
 
-## Key Areas for Improvement <a name="key-areas"></a>
+### Key Areas for Improvement <a name="key-areas"></a>
 
 ### 1. Error handling
 
@@ -454,6 +463,7 @@ This project is in the middle stages of development. A good amount of code has b
 -   **Backend:** Implement data validation to ensure input data conforms to the expected format and requirements.
 -   **Frontend:** Validate user input in the text areas and other fields to prevent empty or incorrect submissions.
 - **Overall**: create a central module for input validation, and use it through out the project
+
 
 ### 3. Code Quality and Best Practices
 
@@ -476,7 +486,6 @@ This project is in the middle stages of development. A good amount of code has b
 ### Key Areas for Improvement <a name="key-areas"></a>
 Here you can see the [Refactoring Guide](refactoring_guide.md) for more information.
 
-Here you can see the [Testing Guide](testing_guide.md) for more information about testing.
 
 ## Checklist
 
@@ -485,7 +494,7 @@ Here you can see the [Testing Guide](testing_guide.md) for more information abou
 -   [x] Google IDX
 -   [x] Frontend/Backend Separation
 -   [ ] API Keys
-
+### Backend
 ### Backend
 
 -   [x] `/api/ai-summarize` Endpoint
@@ -495,7 +504,7 @@ Here you can see the [Testing Guide](testing_guide.md) for more information abou
 -   [ ] Gemini Prompt Review/Customization
 -   [x] Input Validation
     
-### Frontend
+### Frontend  
 
 -   [x] Basic UI Structure
 -   [x] Random Code Generation
@@ -506,7 +515,7 @@ Here you can see the [Testing Guide](testing_guide.md) for more information abou
 -   [x] Error Messages
 -   [x] Input Validation
 
-### Code Quality
+### Code Quality  
 
 -   [x] Modularity
 -   [x] Separation of Concerns
@@ -518,7 +527,7 @@ Here you can see the [Testing Guide](testing_guide.md) for more information abou
 - [ ] Comments
 - [ ] Pull request in place.
 
-### Contexts and Hooks
+### Contexts and Hooks  
 
 -   [x] `src/contexts/StatementsContext.js` creation
 -   [x] `StatementsProvider` creation.
@@ -531,7 +540,7 @@ Here you can see the [Testing Guide](testing_guide.md) for more information abou
 - [x] `getStatements()` function.
 - [x] `addStatement()` function.
 - [ ] Pull request in place.
-
+### Overall
 ### Overall
 - [x] Rapid Development
 - [ ] Complete Feature Implementation
@@ -543,6 +552,7 @@ Here you can see the [Testing Guide](testing_guide.md) for more information abou
 - [ ] All the components using the contexts and hooks.
 - [ ] All the contexts and hooks are well tested.
 
+### Next Steps
 ### Next Steps
 
 1.  Address Pending Items: Start working through the checklist.

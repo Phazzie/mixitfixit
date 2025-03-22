@@ -4,8 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "docs": "jsdoc -c jsdoc.json"
+    // Configure npm test to use the jest that is installed locally.
+    "test": "npx jest",
+    // Configure npm run docs to generate the documentation using jsdoc
+    "docs": "jsdoc -c jsdoc.json" 
   },
   "keywords": [],
   "author": "",

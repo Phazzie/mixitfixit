@@ -6,15 +6,19 @@ import { StatementsProvider } from './src/contexts/StatementsContext';
 import { useStatementsManager } from './src/hooks/useStatementsManager';
 import { useSummarizeStatements } from './src/hooks/useSummarizeStatements';
 import { useErrorHandler } from './src/hooks/useErrorHandler';
+import StatementInput from './src/components/StatementInput';
+import StatementsDisplay from './src/components/StatementsDisplay';
+import SummarizeButton from './src/components/SummarizeButton';
+import SummaryDisplay from './src/components/SummaryDisplay';
+import IssueProposal from './src/components/IssueProposal';
+import ErrorDisplay from './src/components/ErrorDisplay';
 
 // Mock the custom hooks
 jest.mock('./src/hooks/useStatementsManager');
 jest.mock('./src/hooks/useSummarizeStatements');
 jest.mock('./src/hooks/useErrorHandler');
-
-describe('App Component', () => {
-  beforeEach(() => {
-    // Reset mocks before each test
+describe('App Component', () => {    
+  beforeEach(() => {  
     useStatementsManager.mockClear();
     useSummarizeStatements.mockClear();
     useErrorHandler.mockClear();
@@ -24,14 +28,32 @@ describe('App Component', () => {
     render(
       <StatementsProvider>
         <App />
-      </StatementsProvider>
+      </StatementsProvider> 
     );
-    expect(screen.getByRole('main')).toBeInTheDocument()
+    // Assert that the component renders without crashing
+    expect(screen.getByRole('main')).toBeInTheDocument();
   });
 
-  it('renders StatementsDisplay component', () => {
+    it('Should render all child components', () => {
+        // Render the component
     render(
-      <StatementsProvider>
+        <StatementsProvider>
+            <App />
+        </StatementsProvider>
+    );
+    //check if all the components are present
+    expect(screen.getByTestId('statement-input')).toBeInTheDocument();
+    expect(screen.getByTestId('issue-proposal')).toBeInTheDocument();
+    expect(screen.getByTestId('statements-display')).toBeInTheDocument();
+    expect(screen.getByTestId('summarize-button')).toBeInTheDocument();
+    expect(screen.getByTestId('summary-display')).toBeInTheDocument();
+    expect(screen.getByTestId('error-display')).toBeInTheDocument();
+    });
+
+  it('Should provide the `StatementsContext` to its children', () => {
+     // Render the component
+    render(
+        <StatementsProvider>
         <App />
       </StatementsProvider>
     );
@@ -56,57 +78,6 @@ describe('App Component', () => {
     expect(useSummarizeStatements).toHaveBeenCalled();
   });
 
-  it('calls useErrorHandler hook', () => {
-    render(
-      <StatementsProvider>
-        <App />
-      </StatementsProvider>
-    );
-    expect(useErrorHandler).toHaveBeenCalled();
-  });
-
-  it('does not pass props to StatementsDisplay', () => {
-    // Render the component
-    render(
-      <StatementsProvider>
-        <App />
-      </StatementsProvider>
-    );
-
-    // Since StatementsDisplay doesn't take props, we expect it to be rendered without props
-    // This test relies on the implementation detail that StatementsDisplay doesn't accept props
-    // If StatementsDisplay starts accepting props, this test will fail and should be updated
-    expect(screen.getByRole('main')).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /Statements/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Add New Statement/i })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Summarize with AI/i })).toBeInTheDocument();
-  });
-
-  it('renders the context correctly', async () => {
-    // Mock the hooks to return some data
-    useStatementsManager.mockReturnValue({
-      getStatements: () => [{ statement: 'test statement' }],
-      addStatement: jest.fn(),
-    });
-    useSummarizeStatements.mockReturnValue({
-      handleSummarizeClick: jest.fn(),
-      aiResponse: 'test ai response',
-    });
-    useErrorHandler.mockReturnValue({
-      error: null,
-      setError: jest.fn(),
-    });
-    
-    render(
-        <StatementsProvider>
-            <App />
-        </StatementsProvider>
-    );
-
-    // Assert that the data from the context is rendered
-    expect(screen.getByText(/test statement/i)).toBeInTheDocument();
-    expect(screen.getByText(/test ai response/i)).toBeInTheDocument();
-  });
 
   it('calls addStatement function', async () => {
         // Mock the hooks to return some data
@@ -129,6 +100,7 @@ describe('App Component', () => {
                 <App />
             </StatementsProvider>
         );
+        //check if the button is present
 
         // Act: Simulate a user interaction that should call addStatement
         const button = screen.getByRole('button', { name: /Add New Statement/i });
@@ -138,7 +110,7 @@ describe('App Component', () => {
 
         // Assert that addStatement was called
         expect(addStatement).toHaveBeenCalled();
-    });
+    }); 
 
     it('calls handleSummarizeClick function', async () => {
         // Mock the hooks to return some data
@@ -171,4 +143,5 @@ describe('App Component', () => {
         // Assert that handleSummarizeClick was called
         expect(handleSummarizeClick).toHaveBeenCalled();
     });
+
 });

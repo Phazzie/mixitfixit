@@ -10,14 +10,19 @@ import { useSummarizeStatements } from "../hooks/useSummarizeStatements";
  * @returns {JSX.Element} The StatementsDisplay component.
  */
 
-const StatementsDisplay = () => { // Add the function
-  const { getStatements, addStatement } = useStatementsManager();
-  const { error} = useErrorHandler();
+const StatementsDisplay = () => {
+  // Get the getStatements function and the statements array from the useStatementsManager hook
+  const { getStatements } = useStatementsManager();
+  // Get the error from the useErrorHandler hook
+  const { error } = useErrorHandler();
 
+  // Get the statements from the getStatements function
   const statements = getStatements();
 
-    /**
-     * @function handleNewStatementClick
+  /**
+     * @function handleNewStatementClick 
+     * @description This function generates a random string and add it as a new statement
+     * @function handleNewStatementClick 
      * @description Handles the click event to add a new statement.
      */
     const handleNewStatementClick = () => {
@@ -25,11 +30,16 @@ const StatementsDisplay = () => { // Add the function
         addStatement({ statement: randomStatement });
     };
 
-    const { handleSummarizeClick, aiResponse } = useSummarizeStatements();
+  // Get the handleSummarizeClick function and the aiResponse from the useSummarizeStatements hook
+  const { handleSummarizeClick, aiResponse } = useSummarizeStatements();
 
   return (
-    <div>      
+    <div>
+      {/* If there is any error, show it */}
       {error && <div>Error: {error}</div>}
+
+      {/* Button to add a new statement */}
+
       <button onClick={handleNewStatementClick}>Add New Statement</button>
       <button onClick={handleSummarizeClick}>Summarize with AI</button>
        {aiResponse && (
@@ -38,6 +48,8 @@ const StatementsDisplay = () => { // Add the function
             <p>{aiResponse}</p>
           </div>
         )}
+
+        {/* If there are any statements, show them */}
       {statements && (
         <>
           <h2>Statements</h2>

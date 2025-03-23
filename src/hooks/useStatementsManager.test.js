@@ -194,5 +194,15 @@ describe('useStatementsManager', () => {
 
     // Assert: Check that the statement has been removed.
     expect(statements).toEqual([]);
+    // Act: Remove the statement by index.
+    act(() => {
+      removeStatement(0); // Simulate removing the statement at index 0.
+    });
+
+    // Get the statements.
+    const statements = getStatements();
+
+    // Assert: Check that the statement has been removed.
+    expect(statements).toEqual([]);
   });
 });

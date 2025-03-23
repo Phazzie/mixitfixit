@@ -62,7 +62,7 @@ describe('useStatementsManager', () => {
 
     // Act: Add a new statement using the addStatement function.
     act(() => {
-      addStatement({ user: 'user1', text: 'Test statement' }); // Simulate adding a new statement.
+      addStatement('Test statement'); // Simulate adding a new statement.
     });
 
     // Get the statements.
@@ -184,5 +184,15 @@ describe('useStatementsManager', () => {
       addStatement({ user: 'user1', text: 'Statement 1' });
     }); // Simulate adding a statement.
 
+    // Act: Remove the statement by index.
+    act(() => {
+      removeStatement(0); // Simulate removing the statement at index 0.
+    });
+
+    // Get the statements.
+    const statements = getStatements();
+
+    // Assert: Check that the statement has been removed.
+    expect(statements).toEqual([]);
   });
 });

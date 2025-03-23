@@ -2,35 +2,55 @@ import { useStatements } from '../contexts/StatementsContext';
 
 /**
  * @module useStatementsManager
- * @description Provides functions to manage statements.
- * @returns {object} - An object containing the functions: getStatements, addStatement.
+ * @description This hook provides functions to manage a list of statements.
+ * It utilizes the StatementsContext to access and modify the global state of statements.
+ * @returns {object} An object containing functions to interact with the statements:
+ *   - addStatement: Adds a new statement.
+ *   - removeStatement: Removes a statement by index.
  */
 
 const useStatementsManager = () => {
-    // Use the useStatements hook to access statements and dispatch
+    // Access the current list of statements and the dispatch function from the StatementsContext.
     const { statements, dispatch } = useStatements();
-
-    /**
-     * @function getStatements
-     * @description Retrieves the current list of statements.
-     * @returns {Array<object>} An array of statement objects.
-     */
-    const getStatements = () => statements;
 
     /**
      * @function addStatement
      * @description Adds a new statement to the list of statements.
-     * @param {object} statement - The statement object to add.
-     * @param {string} statement.text - The text content of the statement.
-     * @param {string} statement.author - The author of the statement.
+     * It dispatches an 'ADD_STATEMENT' action to the reducer.
+     * @param {string} text - The text content of the statement.
+     * @throws {Error} If the statement text is empty.
      * @example
-     * addStatement({ text: 'This is a statement.', author: 'John Doe' });
+     * addStatement("This is a new statement.");
      */
-    const addStatement = (statement) => {
-        // Dispatch an action to add the new statement
+    const addStatement = (text) => {
+        // Check if the statement text is empty.
+        if (!text) {
+            throw new Error('Statement text cannot be empty.');
+        }
+
+        // Create a new statement object with a unique id.
+        const newStatement = {
+            id: Date.now(), // Simple way to generate a unique ID
+            text: text,
+        };
+
+        // Dispatch an action to add the new statement to the global state.
         dispatch({
             type: 'ADD_STATEMENT',
-            payload: statement,
+            payload: newStatement,
+        });
+    };
+
+    /**
+    * @function removeStatement
+    * @description Removes a statement from the list of statements.
+    * @param {number} index - The index of the statement to remove.
+    */
+    const removeStatement = (index) => {
+        // Dispatch an action to remove the statement from the global state.
+        dispatch({
+            type: 'REMOVE_STATEMENT',
+            payload: index,
         });
     };
 
@@ -38,6 +58,8 @@ const useStatementsManager = () => {
         getStatements,
         addStatement,
     };
+
+
 };
 
 export default useStatementsManager;

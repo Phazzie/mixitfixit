@@ -5,11 +5,16 @@ import React, { createContext, useContext, useReducer } from 'react';
  * It includes a reducer for handling state updates, a provider component to make the state available, and a custom hook for accessing the state.
  */
 
-/** @constant {Array} initialState - The initial state for statements. */
-
+/**
+ * @constant {Array} initialState - The initial state for statements.
+ * @description This is an empty array, indicating that there are no statements initially.
+ */
 const initialState = [];
 
-// Create the StatementsContext.
+/**
+ * @constant {React.Context} StatementsContext - The context for managing the statements state.
+ * @description This context will hold the array of statements and a dispatch function to modify them.
+ */
 const StatementsContext = createContext();
 
 /**
@@ -25,15 +30,17 @@ export const useStatements = () => {
 };
 
 /**
- * @function statementsReducer
- * @description Reducer function to manage the statements state.
- * @param {Array} state - The current state of statements.
- * @param {object} action - The action object with a type and optional payload.
- * @param {string} action.type - The type of action to perform.
+ * @function statementsReducer - Reducer function to manage the statements state.
+ * @param {Array} state - The current state of statements (an array).
+ * @param {object} action - The action object.
+ * @param {string} action.type - The type of action to perform (e.g., 'ADD_STATEMENT').
  * @param {any} action.payload - The data associated with the action.
- * @returns {Array} The new state of the statements array.
+ * @returns {Array} The new state of the statements array after applying the action.
  */
 const statementsReducer = (state, action) => {
+  /**
+   * @switch action.type - This switch statement handles different action types.
+   */
   switch (action.type) {
     /**
      * @case ADD_STATEMENT
@@ -49,20 +56,22 @@ const statementsReducer = (state, action) => {
           statement: action.payload.statement,
         },
       ];
+    /**
+     * @default - If the action type is not recognized, return the current state.
+     */
     default:
       return state;
   }
 };
 
 /**
- * StatementsProvider component.
- * Provides the statements state and dispatch function to its children.
- * @param {object} props - The component props.
- * @param {React.ReactNode} props.children - The children to be rendered.
- * @returns {JSX.Element} The StatementsContext provider.
+ * @component StatementsProvider - Provides the statements state and dispatch function to its children.
+ * @param {object} props - The component's props.
+ * @param {React.ReactNode} props.children - The children components that will receive the context.
+ * @returns {JSX.Element} A StatementsContext.Provider component that wraps its children.
  */
 export const StatementsProvider = ({ children }) => {
-  // Use useReducer to manage the state and dispatch actions.
+  /** Use useReducer to manage the state and dispatch actions. */
   const [statements, dispatch] = useReducer(statementsReducer, initialState);
 
   return (

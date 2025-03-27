@@ -1,0 +1,6 @@
+{
+  "watch": ["src"],
+  "ext": ".ts,.tsx",
+  "ignore": [".git", "node_modules/**/node_modules", "**/*.test.ts"],
+  "exec": "npm run validate:structure"
+}

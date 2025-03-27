@@ -1,0 +1,36 @@
+{
+    "structure": {
+        "maxFunctionLines": 20,
+        "maxInterfaceMethods": 3,
+        "maxClassesPerFile": 1,
+        "requiredFolderStructure": {
+            "src": {
+                "interfaces": true,
+                "implementations": true,
+                "types": true,
+                "utils": true
+            }
+        },
+        "naming": {
+            "interface": "^I[A-Z][a-zA-Z]+$",
+            "class": "^[A-Z][a-zA-Z]+$",
+            "function": "^[a-z][a-zA-Z]+$",
+            "constant": "^[A-Z][A-Z_]+$"
+        }
+    },
+    "quality": {
+        "complexity": {
+            "maxCyclomaticComplexity": 10,
+            "maxCognitiveComplexity": 15
+        },
+        "testing": {
+            "requiredCoverage": 80,
+            "requiredTestsPerClass": 1,
+            "requiredTestsPerMethod": 1
+        },
+        "documentation": {
+            "requiredJsDoc": true,
+            "requiredReadme": true
+        }
+    }
+}

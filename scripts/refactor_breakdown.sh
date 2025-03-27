@@ -8,3 +8,4 @@ touch src/logging/interfaces/ILogger.ts
 touch src/cache/interfaces/ICacheManager.ts
 touch src/api/interfaces/IApiClient.ts
 touch src/auth/interfaces/IAuthManager.ts
+

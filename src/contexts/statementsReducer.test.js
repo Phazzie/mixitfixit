@@ -8,4 +8,9 @@ describe('statementsReducer', () => {
         const newState = statementsReducer(initialState, action);
         expect(newState).toEqual([newStatement]);
     });
-});
+
+    it('should remove a statement', () => {
+        const statement1 = { user: '1', text: 'Statement 1' };
+        const statement2 = { user: '2', text: 'Statement 2' };
+        const initialState = [statement1, statement2];
+        const action = { type: 'REMOVE_STATEMENT', payload: 0 };

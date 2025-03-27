@@ -16,17 +16,16 @@ const express = require('express');
  * @returns {void}
  */
 function setupRoutes(app, geminiClient) {
-  /**
-   * @constant
-   * @type {external:GenerativeModel} 
-   */
   const model = geminiClient.getGenerativeModel({ model: "gemini-2.0-flash" });
-
-  /**
-   * @type {express.Router}
-   */
   const router = express.Router(); 
-  
+
+  // This file handles:
+  // 1. Route setup
+  // 2. Model initialization
+  // 3. Request handling
+  // 4. Error handling
+  // 5. Response formatting
+  // 6. Prompt generation
   /**
    * Handles POST requests to /api/ai-summarize.
    * Takes user submitted statements and returns an AI generated summary.

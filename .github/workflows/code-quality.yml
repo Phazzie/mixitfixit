@@ -1,0 +1,43 @@
+name: Code Quality
+
+on: [push, pull_request]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Validate SOLID Principles
+        run: npm run validate:solid
+
+      - name: Check SRP
+        run: |
+          # Ensure no file has more than one class
+          find src -type f -name "*.ts" -exec sh -c '
+            if [ $(grep -c "class" "$1") -gt 1 ]; then
+              echo "Multiple classes in $1 - violates SRP"
+              exit 1
+            fi
+          ' sh {} \;
+
+      - name: Check Interface Segregation
+        run: |
+          # Ensure interfaces are small and focused
+          find src -type f -name "I*.ts" -exec sh -c '
+            if [ $(grep -c ";" "$1") -gt 3 ]; then
+              echo "Interface in $1 has too many methods - violates ISP"
+              exit 1
+            fi
+          ' sh {} \;
+
+      - name: Run Tests
+        run: npm test

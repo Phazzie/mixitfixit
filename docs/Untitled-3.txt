@@ -1,0 +1,3 @@
+./create_component.sh phase PhaseValidator
+./create_component.sh phase PhaseStateManager
+# etc...

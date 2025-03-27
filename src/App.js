@@ -1,14 +1,24 @@
 import React from 'react';
-import Summary from './components/Summary';
+import StatementInput from './src/components/StatementInput'; // Import StatementInput component
+import StatementsDisplay from './src/components/StatementsDisplay'; // Import StatementsDisplay component
+import SummarizeButton from './src/components/SummarizeButton'; // Import SummarizeButton component
+import SummaryDisplay from './src/components/SummaryDisplay'; // Import SummaryDisplay component
+import IssueProposal from './src/components/IssueProposal'; // Import IssueProposal component
+import ErrorDisplay from './src/components/ErrorDisplay'; // Import ErrorDisplay component
 import { SummaryProvider } from './contexts/SummaryContext';
+import { useAppState } from './hooks/useAppState';
 
-const App = () => {
-  const { currentUser, isIssueAgreed, isSteelManningDone, isDiscussionDone } = useAppState();
+function App() {
+  const { currentUser, isIssueAgreed, isSteelManningDone, isDiscussionDone, error } = useAppState();
 
   return (
-    <main className="App" role="main">
+    <div className="App">
+      {/* Title */}
+      <h1>Relationship Resolver</h1>
+
+      {/* Display any error */}
       <ErrorDisplay error={error} />
-      
+
       <SummaryProvider>
         {!isIssueAgreed && (
           <IssueProposal 
@@ -35,9 +45,8 @@ const App = () => {
           <Summary />
         )}
       </SummaryProvider>
-    </main>
+    </div>
   );
-};
+}
 
 export default App;
-

@@ -15,6 +15,7 @@ class ConfigurationManager implements IConfigurationManager {
       const validationResult = this.validator.validate(configs);
       
       if (!validationResult.success) {
+        this.logger.error('Invalid configuration', validationResult.error);
         return failure(new ConfigurationError('Invalid configuration'));
       }
 
@@ -29,6 +30,7 @@ class ConfigurationManager implements IConfigurationManager {
   get<T>(key: string): Result<T> {
     const config = this.configurations.get(key);
     if (!config) {
+      this.logger.error(`Configuration not found: ${key}`);
       return failure(new ConfigurationError(`Configuration not found: ${key}`));
     }
     return success(config as T);

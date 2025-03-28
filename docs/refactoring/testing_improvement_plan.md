@@ -162,3 +162,16 @@
 - Move from: Various components making API calls
 - To: `client/src/utils/apiClient.js`
 - Content: Standardized request formatting, response handling, error management
+
+### New Tests for `server/src/config/loaders/ApiConfigLoader.ts`
+- [ ] Add tests for `load` method
+  - Test successful configuration loading
+  - Test error handling for missing configuration
+
+### New Tests for `server/src/data/repositories/AnalysisRepository.ts`
+- [ ] Add tests for `find` method
+  - Test successful data retrieval
+  - Test error handling for database errors
+- [ ] Add tests for `create` method
+  - Test successful data insertion
+  - Test error handling for database errors

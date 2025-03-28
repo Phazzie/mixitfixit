@@ -35,3 +35,66 @@ class AnalysisRepository implements IRepository<Analysis> {
     return data as Analysis;
   }
 }
+
+// Tests for AnalysisRepository
+describe('AnalysisRepository', () => {
+  let analysisRepository: AnalysisRepository;
+  let mockDataSource: IDataSource;
+  let mockLogger: ILogger;
+
+  beforeEach(() => {
+    mockDataSource = {
+      query: jest.fn()
+    };
+    mockLogger = {
+      error: jest.fn()
+    };
+    analysisRepository = new AnalysisRepository(mockDataSource, mockLogger);
+  });
+
+  it('should find analysis by id successfully', async () => {
+    const mockAnalysis = { id: '1', statement1: 'Statement 1', statement2: 'Statement 2', result: 'Result' };
+    (mockDataSource.query as jest.Mock).mockResolvedValue(mockAnalysis);
+
+    const result = await analysisRepository.find('1');
+
+    expect(result.success).toBe(true);
+    expect(result.data).toEqual(mockAnalysis);
+  });
+
+  it('should handle errors when finding analysis by id', async () => {
+    const mockError = new Error('Database error');
+    (mockDataSource.query as jest.Mock).mockRejectedValue(mockError);
+
+    const result = await analysisRepository.find('1');
+
+    expect(result.success).toBe(false);
+    expect(result.error).toBeInstanceOf(RepositoryError);
+    expect(result.error.message).toBe('Failed to find analysis');
+    expect(mockLogger.error).toHaveBeenCalledWith('Failed to find analysis', mockError);
+  });
+
+  it('should create analysis successfully', async () => {
+    const mockAnalysis = { statement1: 'Statement 1', statement2: 'Statement 2', result: 'Result' };
+    const mockInsertId = 1;
+    (mockDataSource.query as jest.Mock).mockResolvedValue({ insertId: mockInsertId });
+
+    const result = await analysisRepository.create(mockAnalysis);
+
+    expect(result.success).toBe(true);
+    expect(result.data).toEqual({ ...mockAnalysis, id: mockInsertId });
+  });
+
+  it('should handle errors when creating analysis', async () => {
+    const mockAnalysis = { statement1: 'Statement 1', statement2: 'Statement 2', result: 'Result' };
+    const mockError = new Error('Database error');
+    (mockDataSource.query as jest.Mock).mockRejectedValue(mockError);
+
+    const result = await analysisRepository.create(mockAnalysis);
+
+    expect(result.success).toBe(false);
+    expect(result.error).toBeInstanceOf(RepositoryError);
+    expect(result.error.message).toBe('Failed to create analysis');
+    expect(mockLogger.error).toHaveBeenCalledWith('Failed to create analysis', mockError);
+  });
+});
